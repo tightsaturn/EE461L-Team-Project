@@ -4,7 +4,7 @@ const Delivery = () => {
     return (
         <div>
             <h1>Delivery</h1>
-            <p>Delivery Content</p>
+            <p>WEEEEEEEEEEEEEEEE</p>
         </div>
     );
 }
