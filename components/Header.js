@@ -2,6 +2,7 @@ import React from "react"
 import 'bootstrap/dist/css/bootstrap.min.css'
 import "../App.css"
 import logo from "../images/logo4.png"
+import { Link } from 'react-router-dom';
 import headerImg from "../images/headerImg.jpeg"
 
 
@@ -35,20 +36,20 @@ const Header = () => {
     return (
         <div>
             <nav className="navbar" style={navBar}>
-                <a href='#' className="navbar-brand" style={{color: "#f2c858",
+                <Link to={"/"}> <a className="navbar-brand" style={{color: "#f2c858",
                     fontFamily: "Chilanka",
-                    marginLeft: "100px"}}>Recipes</a>
-                <a href='#' className="navbar-brand" style={modelLink}>News</a>
+                    marginLeft: "100px"}}> Home</a> </Link>
+                <Link to={"/recipes"}><a className="navbar-brand" style={modelLink} >Recipes</a></Link>
+                <Link to={"/news"}> <a className="navbar-brand" style={modelLink}>News</a> </Link>
 
-                <img src={logo} className="navbar-brand" style={logoBlock}/>
-
-                <a href='#' className="navbar-brand" style={modelLink}>Restaurants</a>
-                <a href='#' className="navbar-brand" style={modelLink}>Delivery</a>
+                <Link to={"/"}><img src={logo} className="navbar-brand" style={logoBlock}/></Link>
+                <Link to={"/restaurants"}> <a className="navbar-brand" style={modelLink}>Restaurants</a> </Link>
+                <Link to={"/delivery"}> <a className="navbar-brand" style={modelLink}>Delivery</a> </Link>
+                <Link to={"/aboutus"}> <a className="navbar-brand" style={modelLink}>About Us</a> </Link>
                 <button className="btn-sm btn-success">Log In</button>
             </nav>
-
-            <div class="jumbotron">Search will go here later</div>
         </div>
+
     )
 }
 
