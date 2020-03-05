@@ -4,8 +4,8 @@ import Header from './components/Header';
 import Pokemon from './components/Pokemon';
 import AboutUS from './components/AboutUS';
 import Error from './components/Error';
-import Recipes from './components/Recipes';
-import Moves from './components/Recipes';
+import Abilities from './components/Abilities';
+import Moves from './components/Moves';
 import PokemonInfo from "./components/PokemonInfo";
 import PokemonLocation from "./components/PokemonLocation";
 import Background from "./components/Background"
@@ -20,7 +20,7 @@ class App extends Component {
                 <div>
                     <Switch>
                         <Route exact path="/" component={Homepage}/>
-                        <Route exact path="/abilities" component={Recipes}/>
+                        <Route exact path="/abilities" component={Abilities}/>
                         <Route exact path="/aboutus" component={AboutUS}/>
                         <Route exact path="/moves" component={Moves}/>
                         <Route exact path="/pokemon/info" component={PokemonInfo}/>
