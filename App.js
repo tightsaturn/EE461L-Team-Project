@@ -8,18 +8,17 @@ import Recipes from './components/Recipes';
 import Delivery from './components/Recipes';
 import RestaurantInfo from "./components/RestaurantInfo";
 import RestaurantLocation from "./components/RestaurantLocation";
-import { Map, GoogleApiWrapper } from 'google-maps-react';
+import Background from "./components/Background"
 
 
 class App extends Component {
     render() {
         return (
             <BrowserRouter>
-                <Header />
                 <div>
                     <Switch>
                         <Route path="/" component={Header} exact/>
-                        <Route path="/restaurants" component={Restaurants}/>
+                        <Route path="/" component={Restaurants}/>
                         <Route path="/recipes" component={Recipes}/>
                         <Route path="/aboutus" component={AboutUS}/>
                         <Route path="/delivery" component={Delivery}/>
@@ -28,8 +27,8 @@ class App extends Component {
                         <Route component={Error}/>
                     </Switch>
                 </div>
+                <Background/>
             </BrowserRouter>
-
         );
     }
 }
