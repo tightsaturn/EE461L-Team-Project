@@ -44,7 +44,7 @@ const Header = () => {
 
                 <Link to={"/"}><img src={logo} className="navbar-brand" style={logoBlock}/></Link>
                 <Link to={"/restaurants"}> <a className="navbar-brand" style={modelLink}>Restaurants</a> </Link>
-                <Link to={"/delivery"}> <a className="navbar-brand" style={modelLink}>Delivery</a> </Link>
+                <Link to={"/movedex"}> <a className="navbar-brand" style={modelLink}>Movedex</a> </Link>
                 <Link to={"/aboutus"}> <a className="navbar-brand" style={modelLink}>About Us</a> </Link>
                 <button className="btn-sm btn-success">Log In</button>
             </nav>

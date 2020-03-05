@@ -5,7 +5,7 @@ import Restaurants from './components/Restaurants';
 import AboutUS from './components/AboutUS';
 import Error from './components/Error';
 import Recipes from './components/Recipes';
-import Delivery from './components/Recipes';
+import Movedex from './components/Movedex';
 import RestaurantInfo from "./components/RestaurantInfo";
 import RestaurantLocation from "./components/RestaurantLocation";
 import { Map, GoogleApiWrapper } from 'google-maps-react';
@@ -15,14 +15,14 @@ class App extends Component {
     render() {
         return (
             <BrowserRouter>
-                <Header />
+                <Header/>
                 <div>
                     <Switch>
                         <Route path="/" component={Header} exact/>
                         <Route path="/restaurants" component={Restaurants}/>
                         <Route path="/recipes" component={Recipes}/>
                         <Route path="/aboutus" component={AboutUS}/>
-                        <Route path="/delivery" component={Delivery}/>
+                        <Route path="/movedex" component={Movedex}/>
                         <Route path="/restaurant/info" component={RestaurantInfo}/>
                         <Route path="/restaurant/location" component={RestaurantLocation}/>
                         <Route component={Error}/>
