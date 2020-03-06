@@ -3,16 +3,19 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import "../css/Homepage.scss"
 import img1 from "../images/bulbasaur.png"
 import imgb1 from "../images/bulbasaur_background.jpg"
-import img2 from "../images/img2.jpg"
-import img3 from "../images/background_art.png"
+import img2 from "../images/eevee.png"
+import imgb2 from "../images/eevee_background.jpg"
+import img3 from "../images/pikachu.png"
+import imgb3 from "../images/pikachu_background.png"
+
 import img4 from "../images/background_art.png"
 import ImagComp from "./ImagComp";
 
 const Homepage = () => {
 
     let sliderArr = [<ImagComp src={imgb1} pokemon={img1}/>,
-        <ImagComp src={img1}/>,
-        <ImagComp src={img1}/>,
+        <ImagComp src={imgb2} pokemon={img2}/>,
+        <ImagComp src={imgb3} pokemon={img3}/>,
         <ImagComp src={img1}/>]
     const [x, setX] = useState(0)
 
