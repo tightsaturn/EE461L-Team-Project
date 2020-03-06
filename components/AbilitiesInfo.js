@@ -16,19 +16,13 @@ const tableabilities = {
 
 const PokemonInfo = () => {
     return (
-        <div className="container-fluid" style ={tableabilities} align={"center"}>
-            <div className="card">
+        <div className="container-fluid" style ={tableabilities} >
+        <div className="card" align={"center"}>
             <div className="col-md-5 p-lg-5 mx-auto my-5">
-                <h1 id = "pname"className="display-4 font-weight-normal">Pokemon Name</h1>
-                <p id = "pinfo" className="lead font-weight-normal">Some more Info</p>
-                <div className="pokemon"></div>
-                <Link to={"/pokemon/location"}>
-                    <a className="btn btn-outline-secondary" href="#">Location</a>
-                </Link>
+                <h1 id = "pname"className="display-4 font-weight-normal">Ability Name</h1>
+                <p id = "pinfo" className="lead font-weight-normal">Some more ability Info</p>
             </div>
-            </div>
-            <div class ="pokemon"></div>
-            <script src={pokemonData.js}></script>
+        </div>
         </div>
     );
 }
