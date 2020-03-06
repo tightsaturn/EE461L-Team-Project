@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Header from './components/Header';
+import Homepage from './components/Homepage'
 import Restaurants from './components/Restaurants';
 import AboutUS from './components/AboutUS';
 import Error from './components/Error';
@@ -15,15 +16,15 @@ class App extends Component {
     render() {
         return (
             <BrowserRouter>
+                <Header/>
                 <div>
                     <Switch>
-                        <Route path="/" component={Header} exact/>
-                        <Route path="/" component={Restaurants}/>
-                        <Route path="/recipes" component={Recipes}/>
-                        <Route path="/aboutus" component={AboutUS}/>
-                        <Route path="/delivery" component={Delivery}/>
-                        <Route path="/restaurant/info" component={RestaurantInfo}/>
-                        <Route path="/restaurant/location" component={RestaurantLocation}/>
+                        <Route exact path="/" component={Homepage}/>
+                        <Route exact path="/recipes" component={Recipes}/>
+                        <Route exact path="/aboutus" component={AboutUS}/>
+                        <Route exact path="/delivery" component={Delivery}/>
+                        <Route exact path="/restaurant/info" component={RestaurantInfo}/>
+                        <Route exact path="/restaurant/location" component={RestaurantLocation}/>
                         <Route component={Error}/>
                     </Switch>
                 </div>

@@ -26,7 +26,6 @@
     width: 125px;
     background-color: black;
     border-radius: 50%;
-    z-index: -1;
 }
 
 .Inside-pokeball-dot {
