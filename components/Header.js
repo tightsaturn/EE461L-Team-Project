@@ -8,7 +8,7 @@ import headerImg from "../images/headerImg.jpeg"
 
 const navBar = {
     backgroundColor: "black",
-    height:"12vh"
+    height:"130px"
 };
 
 const modelLink = {
@@ -51,6 +51,6 @@ const Header = () => {
         </div>
 
     )
-}
+};
 
 export default Header
