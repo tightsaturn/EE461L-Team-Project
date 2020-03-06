@@ -8,25 +8,22 @@ import Table from 'react-bootstrap/Table';
 import {Link} from "react-router-dom";
 import Header from "./Header";
 import pokemonData from './pokemonData.js';
+import SearchFitler from "./SearchFilter";
 
 const tableabilities = {
-    marginLeft: "200px",
-    marginTop: "70px",
+    marginLeft: "400px",
+    marginTop: "15px",
     marginRight: "100px",
 }
 
 const Pokemon = () => {
     return (
         <div className="App">
-            <header>
-                <div class="float-right">
-                <Form inline>
-                    <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-                    <Button variant="outline-success">Search</Button>
-                </Form>
-                </div>
-            </header>
             <div className="container" style={tableabilities}>
+                <h1>Pokemon</h1>
+                <br/>
+                <br/>
+           <SearchFitler />
                 <div className="row mt-5">
                     <div className="col-lg-4 mb-4 grid-margin">
                         <div className="card h-100 ">

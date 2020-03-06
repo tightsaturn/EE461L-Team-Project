@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link} from "react-router-dom";
+import SearchFitler from "./SearchFilter";
 
 const tableitems = {
     marginLeft: "200px",
@@ -12,6 +13,8 @@ const Items = () => {
 
         <div style={tableitems}>
             <h1>Items</h1>
+            <br/>
+            <SearchFitler/>
             <br/>
             <table className="table">
                 <thead className="thead-dark">
@@ -26,25 +29,26 @@ const Items = () => {
                 <tr>
                     <th scope="row">001</th>
                     <Link to={"/items/info"}>
+                        <td>Master-Ball</td>
                     </Link>
-                    <td>By releasing stench when attacking, this Pokémon may cause the target to flinch.	</td>
-                    <td>III</td>
+                    <td>Used in battle : Catches a wild Pokémon without fail. If used in a trainer battle, nothing happens and the ball is lost.</td>
+                    <td>X</td>
                 </tr>
                 <tr>
                     <th scope="row">002</th>
                     <Link to={"/items/info"}>
-                        <td>Drizzle</td>
+                        <td>Ultra-Ball</td>
                     </Link>
-                    <td>The Pokémon makes it rain when it enters a battle.	</td>
-                    <td>III</td>
+                    <td>Used in battle : Attempts to catch a wild Pokémon, using a catch rate of 2×. If used in a trainer battle, nothing happens and the ball is lost.</td>
+                    <td>X</td>
                 </tr>
                 <tr>
                     <th scope="row">003</th>
                     <Link to={"/items/info"}>
-                        <td>Speed Boost</td>
+                        <td>Great-Ball</td>
                     </Link>
-                    <td>Its Speed stat is boosted every turn.</td>
-                    <td>III</td>
+                    <td>Used in battle : Attempts to catch a wild Pokémon, using a catch rate of 1.5×. If used in a trainer battle, nothing happens and the ball is lost.</td>
+                    <td>X</td>
                 </tr>
                 <tr>
                     <th scope="row">#</th>
@@ -52,7 +56,7 @@ const Items = () => {
                         <td>Move Name</td>
                     </Link>
                     <td>Move Description</td>
-                    <td></td>
+                    <td>X</td>
                 </tr>
                 <tr>
                     <th scope="row">...</th>

@@ -1,6 +1,7 @@
 
 import React from 'react';
 import {Link} from "react-router-dom";
+import SearchFitler from "./SearchFilter";
 
 const tableabilities = {
     marginLeft: "200px",
@@ -13,6 +14,8 @@ const Abilities = () => {
 
         <div style={tableabilities}>
             <h1>Abilities</h1>
+            <br/>
+            <SearchFitler/>
             <br/>
             <table className="table">
                 <thead className="thead-dark">
