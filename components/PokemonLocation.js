@@ -1,33 +1,48 @@
 import React, { Component } from 'react';
-import GoogleMapReact from 'google-map-react';
+import 'bootstrap/dist/css/bootstrap.min.css'
+import "../App.css"
+import bulby from "../images/bulbasaur.png"
+import {Link} from "react-router-dom";
+import pokemonData from "./pokemonData";
 
-const AnyReactComponent = ({ text }) => <div>{text}</div>;
+const tablelocations = {
+    marginTop: "70px",
+    paddingLeft: "200px",
+    paddingRight: "120px",
 
-class PokemonLocation extends Component {
-    static defaultProps = {
-        center: {
-            lat: 59.95,
-            lng: 30.33
-        },
-        zoom: 11
-    };
+}
 
-    render() {
-        return (
-            <div style={{ height: '100vh', width: '100%' }}>
-                <GoogleMapReact
-                    defaultCenter={this.props.center}
-                    defaultZoom={this.props.zoom}
-                >
-                    <AnyReactComponent
-                        lat={30.2672}
-                        lng={97.7431}
-                        text="My Marker"
-                    />
-                </GoogleMapReact>
-            </div>
-        );
-    }
+const pokemonBlock = {
+    display: "block",
+    maxHeight: "130px",
+    maxWidth: "200px",
+    height: "auto",
+    width: "auto",
+    paddingBottom: "20px",
+    marginRight: "auto",
+    marginLeft: "auto"
+};
+
+const PokemonLocation = () => {
+    return (
+        <div style={tablelocations}>
+                <h1 align={"center"}> #001 Bulbasaur <img src={bulby} style={pokemonBlock}/> </h1>
+
+            <br/>
+            <table className="table">
+                <thead className="thead-dark">
+                <tr>
+                    <th>Locations</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                        <a><td>Cannot be found in the wild</td></a>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    );
 }
 
 export default PokemonLocation;
