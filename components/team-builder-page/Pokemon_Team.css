@@ -1,0 +1,16 @@
+/*.card-body {*/
+/*    max-width: 20vw;*/
+/*    max-height: 20vh;*/
+/*}*/
+
+.card {
+    width: 200px;
+}
+
+#card-img {
+    width: 200px;
+    height: 200px;
+    /*margin-top: 7%;*/
+    /*margin-left: 20%;*/
+    /*margin-right: 10%;*/
+}
