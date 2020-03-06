@@ -8,7 +8,7 @@ import Table from 'react-bootstrap/Table';
 import {Link} from "react-router-dom";
 import Header from "./Header";
 
-const Restaurants = () => {
+const Pokemon = () => {
     return (
         <div className="App">
             <header>
@@ -145,4 +145,4 @@ const Restaurants = () => {
     );
 }
 
-export default Restaurants;
+export default Pokemon;

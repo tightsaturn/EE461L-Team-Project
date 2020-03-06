@@ -1,18 +1,18 @@
 import React from "react"
 import 'bootstrap/dist/css/bootstrap.min.css'
 import "../App.css"
-import logo from "../images/logo4.png"
+import logo from "../images/logo.jpg"
 import { Link } from 'react-router-dom';
 import headerImg from "../images/headerImg.jpeg"
 
 
 const navBar = {
-    backgroundColor:"#c24e4e",
+    backgroundColor: "black",
     height:"130px"
 };
 
 const modelLink = {
-    color: "#f2c858",
+    color: "yellow",
     textAlign: "center",
     fontFamily: "Chilanka",
 };
@@ -36,15 +36,13 @@ const Header = () => {
     return (
         <div>
             <nav className="navbar" style={navBar}>
-                <Link to={"/"}> <a className="navbar-brand" style={{color: "#f2c858",
-                    fontFamily: "Chilanka",
-                    marginLeft: "100px"}}> Home</a> </Link>
-                <Link to={"/recipes"}><a className="navbar-brand" style={modelLink} >Recipes</a></Link>
-                <Link to={"/news"}> <a className="navbar-brand" style={modelLink}>News</a> </Link>
+
+                <Link to={"/pokemon"}><a className="navbar-brand" style={modelLink}>Pokedex</a></Link>
+                <Link to={"/moves"}> <a className="navbar-brand" style={modelLink}>Moves</a> </Link>
+                <Link to={"/abilities"}> <a className="navbar-brand" style={modelLink}>Abilities</a> </Link>
 
                 <Link to={"/"}><img src={logo} className="navbar-brand" style={logoBlock}/></Link>
-                <Link to={"/restaurants"}> <a className="navbar-brand" style={modelLink}>Restaurants</a> </Link>
-                <Link to={"/delivery"}> <a className="navbar-brand" style={modelLink}>Delivery</a> </Link>
+                <Link to={"/items"}> <a className="navbar-brand" style={modelLink}>Items</a> </Link>
                 <Link to={"/aboutus"}> <a className="navbar-brand" style={modelLink}>About Us</a> </Link>
                 <button className="btn-sm btn-success">Log In</button>
             </nav>

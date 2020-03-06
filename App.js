@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Header from './components/Header';
-import Restaurants from './components/Restaurants';
+import Pokemon from './components/Pokemon';
 import AboutUS from './components/AboutUS';
 import Error from './components/Error';
-import Recipes from './components/Recipes';
-import Delivery from './components/Recipes';
-import RestaurantInfo from "./components/RestaurantInfo";
-import RestaurantLocation from "./components/RestaurantLocation";
-import { Map, GoogleApiWrapper } from 'google-maps-react';
+import Abilities from './components/Abilities';
+import Moves from './components/Moves';
+import PokemonInfo from "./components/PokemonInfo";
+import PokemonLocation from "./components/PokemonLocation";
+import Background from "./components/Background"
+import Homepage from "./components/Homepage"
 
 
 class App extends Component {
@@ -18,18 +19,18 @@ class App extends Component {
                 <Header />
                 <div>
                     <Switch>
-                        <Route path="/" component={Header} exact/>
-                        <Route path="/restaurants" component={Restaurants}/>
-                        <Route path="/recipes" component={Recipes}/>
-                        <Route path="/aboutus" component={AboutUS}/>
-                        <Route path="/delivery" component={Delivery}/>
-                        <Route path="/restaurant/info" component={RestaurantInfo}/>
-                        <Route path="/restaurant/location" component={RestaurantLocation}/>
+                        <Route exact path="/" component={Homepage}/>
+                        <Route exact path="/abilities" component={Abilities}/>
+                        <Route exact path="/aboutus" component={AboutUS}/>
+                        <Route exact path="/moves" component={Moves}/>
+                        <Route exact path="/pokemon/info" component={PokemonInfo}/>
+                        <Route exact path="/pokemon" component={Pokemon}/>
+                        <Route exact path="/pokemon/location" component={PokemonLocation}/>
                         <Route component={Error}/>
                     </Switch>
                 </div>
+                <Background/>
             </BrowserRouter>
-
         );
     }
 }

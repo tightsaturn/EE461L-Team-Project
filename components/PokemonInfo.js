@@ -8,13 +8,13 @@ import Table from 'react-bootstrap/Table';
 import {Link} from "react-router-dom";
 import pokemonData from './pokemonData.js';
 
-const RestaurantInfo = () => {
+const PokemonInfo = () => {
     return (
         <div className="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
             <div className="col-md-5 p-lg-5 mx-auto my-5">
                 <h1 id = "pname"className="display-4 font-weight-normal">Pokemon Name</h1>
                 <p id = "pinfo" className="lead font-weight-normal">Some more Info</p>
-                <Link to={"/restaurant/location"}>
+                <Link to={"/pokemon/location"}>
                     <a className="btn btn-outline-secondary" href="#">Location</a>
                 </Link>
             </div>
@@ -25,4 +25,4 @@ const RestaurantInfo = () => {
     );
 }
 
-export default RestaurantInfo;
+export default PokemonInfo;

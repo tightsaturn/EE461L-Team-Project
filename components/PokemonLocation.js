@@ -3,7 +3,7 @@ import GoogleMapReact from 'google-map-react';
 
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
-class RestaurantLocation extends Component {
+class PokemonLocation extends Component {
     static defaultProps = {
         center: {
             lat: 59.95,
@@ -30,4 +30,4 @@ class RestaurantLocation extends Component {
     }
 }
 
-export default RestaurantLocation;
+export default PokemonLocation;
