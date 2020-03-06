@@ -8,12 +8,12 @@ import headerImg from "../images/headerImg.jpeg"
 
 const navBar = {
     backgroundColor: "black",
-    height:"130px"
+    height:"12vh"
 };
 
 const modelLink = {
     marginBottom: "10px",
-    color: "yellow",
+    color: "white",
     textAlign: "center",
     fontFamily: "Chilanka",
 };

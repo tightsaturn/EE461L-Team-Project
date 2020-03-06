@@ -29,15 +29,18 @@
 
 %btn-styles{
      position: absolute;
-     top: 50%;
+     top: 44%;
      transform: translateY(-50%);
      width: 150px;
-     height: 100%;
+     margin-top: 12vh;
+     height: 88%;
      background: none;
      border: none;
      outline: none;
      transition: 0.5s;
      &:hover {
+        position: absolute;
+        margin-top: 12vh;
         background: rgba(0, 0, 0, 0.356);
         cursor: pointer;
         i{
