@@ -1,3 +1,4 @@
+
 import React from 'react';
 import {Link} from "react-router-dom";
 
@@ -66,5 +67,4 @@ const Abilities = () => {
         </div>
     );
 }
-
 export default Abilities;

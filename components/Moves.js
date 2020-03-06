@@ -66,5 +66,4 @@ const Moves = () => {
         </div>
     );
 }
-
 export default Moves;

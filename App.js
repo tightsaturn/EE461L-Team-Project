@@ -15,6 +15,7 @@ import MovesInfo from "./components/MovesInfo"
 import Items from "./components/Items"
 import ItemsInfo from "./components/ItemsInfo"
 
+
 class App extends Component {
     render() {
         return (
@@ -23,6 +24,7 @@ class App extends Component {
                 <div>
                     <Switch>
                         <Route exact path="/" component={Homepage}/>
+
                         <Route exact path="/aboutus" component={AboutUS}/>
                         <Route exact path="/abilities" component={Abilities}/>
                         <Route exact path='/abilities/info' component={AbilitiesInfo}/>
