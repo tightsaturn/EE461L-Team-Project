@@ -12,7 +12,7 @@ const tableabilities = {
     marginTop: "70px",
     paddingLeft: "200px",
     paddingRight: "120px"
-}
+};
 
 const PokemonInfo = () => {
     return (
@@ -31,6 +31,6 @@ const PokemonInfo = () => {
             <script src={pokemonData.js}></script>
         </div>
     );
-}
+};
 
 export default PokemonInfo;

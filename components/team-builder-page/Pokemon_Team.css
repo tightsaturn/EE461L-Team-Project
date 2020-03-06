@@ -1,0 +1,23 @@
+/*.card-body {*/
+/*    max-width: 20vw;*/
+/*    max-height: 20vh;*/
+/*}*/
+
+#partycards {
+    margin-left: 0;
+    width: 180px;
+}
+
+#card-col {
+    margin-left: 0;
+    display: flex;
+    justify-content: left;
+}
+
+#card-img {
+    width: 180px;
+    height: 200px;
+    /*margin-top: 7%;*/
+    /*margin-left: 20%;*/
+    /*margin-right: 10%;*/
+}

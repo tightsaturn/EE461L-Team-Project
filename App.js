@@ -14,17 +14,20 @@ import AbilitiesInfo from "./components/AbilitiesInfo"
 import MovesInfo from "./components/MovesInfo"
 import Items from "./components/Items"
 import ItemsInfo from "./components/ItemsInfo"
+import TeamBuilder from "./components/team-builder-page/Team_Builder_App"
+import Types from "./components/Types"
+import TypeDisplay from "./components/TypesDisplay"
+import Feedback from "./components/Feedback"
 
 
 class App extends Component {
     render() {
         return (
             <BrowserRouter>
-                <Header />
+                <Header/>
                 <div>
                     <Switch>
                         <Route exact path="/" component={Homepage}/>
-
                         <Route exact path="/aboutus" component={AboutUS}/>
                         <Route exact path="/abilities" component={Abilities}/>
                         <Route exact path='/abilities/info' component={AbilitiesInfo}/>
@@ -35,6 +38,10 @@ class App extends Component {
                         <Route exact path="/pokemon" component={Pokemon}/>
                         <Route exact path="/pokemon/info" component={PokemonInfo}/>
                         <Route exact path="/pokemon/location" component={PokemonLocation}/>
+                        <Route exact path="/types" component={Types}/>
+                        <Route exact path="/types/:type" component={TypeDisplay}/>
+                        <Route exact path="/feedback" component={Feedback}/>
+                        <Route exact path = "/teambuilder" component = {TeamBuilder}/>
                         <Route component={Error}/>
                     </Switch>
                 </div>

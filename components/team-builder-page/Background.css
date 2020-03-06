@@ -21,17 +21,18 @@
 .Outside-pokeball-dot {
     position: absolute;
     left: 50px;
-    top: 280px;
+    top: 200px;
     height: 125px;
     width: 125px;
     background-color: black;
     border-radius: 50%;
+    z-index: -1;
 }
 
 .Inside-pokeball-dot {
     position: absolute;
     left: 75px;
-    top: 305px;
+    top: 225px;
     height: 75px;
     width: 75px;
     background-color: white;
