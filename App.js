@@ -10,6 +10,7 @@ import PokemonInfo from "./components/PokemonInfo";
 import PokemonLocation from "./components/PokemonLocation";
 import Background from "./components/Background"
 import Homepage from "./components/Homepage"
+import TeamBuilder from "./components/team-builder-page/Team_Builder_App"
 
 
 class App extends Component {
@@ -26,6 +27,7 @@ class App extends Component {
                         <Route exact path="/pokemon/info" component={PokemonInfo}/>
                         <Route exact path="/pokemon" component={Pokemon}/>
                         <Route exact path="/pokemon/location" component={PokemonLocation}/>
+                        <Route exact path = "/teambuilder" component = {TeamBuilder}/>
                         <Route component={Error}/>
                     </Switch>
                 </div>

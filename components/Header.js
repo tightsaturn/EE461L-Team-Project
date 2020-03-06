@@ -40,6 +40,7 @@ const Header = () => {
                 <Link to={"/pokemon"}><a className="navbar-brand" style={modelLink}>Pokedex</a></Link>
                 <Link to={"/moves"}> <a className="navbar-brand" style={modelLink}>Moves</a> </Link>
                 <Link to={"/abilities"}> <a className="navbar-brand" style={modelLink}>Abilities</a> </Link>
+                <Link to={"/teambuilder"}> <a className="navbar-brand" style={modelLink}>Team Builder</a> </Link>
 
                 <Link to={"/"}><img src={logo} className="navbar-brand" style={logoBlock}/></Link>
                 <Link to={"/items"}> <a className="navbar-brand" style={modelLink}>Items</a> </Link>
