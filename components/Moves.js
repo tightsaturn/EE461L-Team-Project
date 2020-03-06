@@ -28,33 +28,25 @@ const Moves = () => {
                 <tbody>
                 <tr>
                     <th scope="row">001</th>
-                    <Link to={"/moves/info"}>
-                        <a><td>Pound</td></a>
-                    </Link>
+                    <td><Link to={"/moves/info"}>Pound</Link></td>
                     <td>Inflicts regular damage with no additional effect.</td>
                     <td>Normal</td>
                 </tr>
                 <tr>
                     <th scope="row">002</th>
-                    <Link to={"/moves/info"}>
-                        <td>Karate-Chop</td>
-                    </Link>
+                    <td><Link to={"/moves/info"}>Karate-Chop</Link></td>
                     <td>Inflicts regular damage. User's critical hit rate is one level higher when using this move.</td>
                     <td>Normal</td>
                 </tr>
                 <tr>
                     <th scope="row">003</th>
-                    <Link to={"/moves/info"}>
-                        <td>Double-Slap</td>
-                    </Link>
+                    <td><Link to={"/moves/info"}>Double-Slap</Link></td>
                     <td>Inflicts regular damage. Hits 2–5 times in one turn. Has a 3/8 chance each to hit 2 or 3 times, and a 1/8 chance each to hit 4 or 5 times. Averages to 3 hits per use.</td>
                     <td>Normal</td>
                 </tr>
                 <tr>
                     <th scope="row">#</th>
-                    <Link to={"/moves/info"}>
-                        <td>Move Name</td>
-                    </Link>
+                    <td><Link to={"/moves/info"}>Move Name</Link></td>
                     <td>Move Description</td>
                     <td></td>
                 </tr>

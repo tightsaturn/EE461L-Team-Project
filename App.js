@@ -18,7 +18,8 @@ import TeamBuilder from "./components/team-builder-page/Team_Builder_App"
 import Types from "./components/Types"
 import TypeDisplay from "./components/TypesDisplay"
 import Feedback from "./components/Feedback"
-
+import Thankyou from "./components/Thankyou";
+import AddPokemon from "./components/AddPokemon"
 
 class App extends Component {
     render() {
@@ -41,7 +42,9 @@ class App extends Component {
                         <Route exact path="/types" component={Types}/>
                         <Route exact path="/types/:type" component={TypeDisplay}/>
                         <Route exact path="/feedback" component={Feedback}/>
+                        <Route exact path="/feedback/thankyou" component={Thankyou}/>
                         <Route exact path = "/teambuilder" component = {TeamBuilder}/>
+                        <Route exact path = "/teambuilder/addpokemon" component = {AddPokemon}/>
                         <Route component={Error}/>
                     </Switch>
                 </div>

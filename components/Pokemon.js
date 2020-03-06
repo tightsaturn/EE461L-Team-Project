@@ -2,11 +2,7 @@ import React from "react"
 import 'bootstrap/dist/css/bootstrap.min.css'
 import "../App.css"
 import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import FormControl from 'react-bootstrap/FormControl';
-import Table from 'react-bootstrap/Table';
 import {Link} from "react-router-dom";
-import Header from "./Header";
 import pokemonData from './pokemonData.js';
 import SearchFitler from "./SearchFilter";
 
