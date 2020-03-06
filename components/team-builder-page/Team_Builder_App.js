@@ -3,18 +3,18 @@ import Background from "./Background";
 import Pokemon_Team from "./Pokemon_Team";
 import squirtle from './squirtle.png'
 
-const tableabilities = {
-    marginTop: "70px",
-    paddingLeft: "200px",
-    paddingRight: "120px"
+const tableAbilities = {
+ //   backgroundColor: "blue",
+    marginTop: "150px",
+    marginLeft: "300px",
+    marginRight: "150px",
+    width: "70%"
 }
 
 function Team_Builder_App() {
     return (
-        <div className="container">ss
+        <div className="container-fluid" style={tableAbilities}>
             <Background/>
-
-            <div className="container">
                 <h1>Team Builder</h1>
                 <h3>Build the Ultimate Team</h3>
                 <br></br>
@@ -45,7 +45,6 @@ function Team_Builder_App() {
                     name6 = "Squrtle"
                     type6 = "Water"
                 />
-            </div>
         </div>
     )
 }
