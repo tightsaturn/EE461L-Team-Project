@@ -31,14 +31,14 @@ class App extends Component {
                         <Route exact path="/" component={Homepage}/>
                         <Route exact path="/aboutus" component={AboutUS}/>
                         <Route exact path="/abilities" component={Abilities}/>
-                        <Route exact path='/abilities/info' component={AbilitiesInfo}/>
+                        <Route exact path='/abilities/:ability' component={AbilitiesInfo}/>
                         <Route exact path="/moves" component={Moves}/>
-                        <Route exact path="/moves/info" component={MovesInfo}/>
+                        <Route exact path="/moves/:move" component={MovesInfo}/>
                         <Route exact path="/items" component={Items}/>
-                        <Route exact path="/items/info" component={ItemsInfo}/>
+                        <Route exact path="/items/:item" component={ItemsInfo}/>
                         <Route exact path="/pokemon" component={Pokemon}/>
-                        <Route exact path="/pokemon/info" component={PokemonInfo}/>
-                        <Route exact path="/pokemon/location" component={PokemonLocation}/>
+                        <Route exact path="/pokemon/:pokemons" component={PokemonInfo}/>
+                        <Route exact path="/pokemon/:pokemons/location" component={PokemonLocation}/>
                         <Route exact path="/types" component={Types}/>
                         <Route exact path="/types/:type" component={TypeDisplay}/>
                         <Route exact path="/feedback" component={Feedback}/>

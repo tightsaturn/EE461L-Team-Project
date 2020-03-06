@@ -28,25 +28,25 @@ const Items = () => {
                 <tbody>
                 <tr>
                     <th scope="row">001</th>
-                    <td><Link to={"/items/info"}>Master-Ball</Link></td>
+                    <td><Link to={"/items/master-ball"}>Master-Ball</Link></td>
                     <td>Used in battle : Catches a wild Pokémon without fail. If used in a trainer battle, nothing happens and the ball is lost.</td>
                     <td>X</td>
                 </tr>
                 <tr>
                     <th scope="row">002</th>
-                    <td><Link to={"/items/info"}>Ultra-Ball</Link></td>
+                    <td><Link to={"/items/utlra-ball"}>Ultra-Ball</Link></td>
                     <td>Used in battle : Attempts to catch a wild Pokémon, using a catch rate of 2×. If used in a trainer battle, nothing happens and the ball is lost.</td>
                     <td>X</td>
                 </tr>
                 <tr>
                     <th scope="row">003</th>
-                    <td><Link to={"/items/info"}>Great-Ball</Link></td>
+                    <td><Link to={"/items/great-ball"}>Great-Ball</Link></td>
                     <td>Used in battle : Attempts to catch a wild Pokémon, using a catch rate of 1.5×. If used in a trainer battle, nothing happens and the ball is lost.</td>
                     <td>X</td>
                 </tr>
                 <tr>
                     <th scope="row">#</th>
-                    <td><Link to={"/items/info"}>Item Name</Link></td>
+                    <td><Link to={"/items/item name"}>Item Name</Link></td>
                     <td>Item Description</td>
                     <td>X</td>
                 </tr>
