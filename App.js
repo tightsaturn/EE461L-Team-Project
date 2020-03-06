@@ -1,30 +1,40 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Header from './components/Header';
-import Homepage from './components/Homepage'
-import Restaurants from './components/Restaurants';
+import Pokemon from './components/Pokemon';
 import AboutUS from './components/AboutUS';
 import Error from './components/Error';
-import Recipes from './components/Recipes';
-import Delivery from './components/Recipes';
-import RestaurantInfo from "./components/RestaurantInfo";
-import RestaurantLocation from "./components/RestaurantLocation";
+import Abilities from './components/Abilities';
+import Moves from './components/Moves';
+import PokemonInfo from "./components/PokemonInfo";
+import PokemonLocation from "./components/PokemonLocation";
 import Background from "./components/Background"
+import Homepage from "./components/Homepage"
+import AbilitiesInfo from "./components/AbilitiesInfo"
+import MovesInfo from "./components/MovesInfo"
+import Items from "./components/Items"
+import ItemsInfo from "./components/ItemsInfo"
 
 
 class App extends Component {
     render() {
         return (
             <BrowserRouter>
-                <Header/>
+                <Header />
                 <div>
                     <Switch>
                         <Route exact path="/" component={Homepage}/>
-                        <Route exact path="/recipes" component={Recipes}/>
+
                         <Route exact path="/aboutus" component={AboutUS}/>
-                        <Route exact path="/delivery" component={Delivery}/>
-                        <Route exact path="/restaurant/info" component={RestaurantInfo}/>
-                        <Route exact path="/restaurant/location" component={RestaurantLocation}/>
+                        <Route exact path="/abilities" component={Abilities}/>
+                        <Route exact path='/abilities/info' component={AbilitiesInfo}/>
+                        <Route exact path="/moves" component={Moves}/>
+                        <Route exact path="/moves/info" component={MovesInfo}/>
+                        <Route exact path="/items" component={Items}/>
+                        <Route exact path="/items/info" component={ItemsInfo}/>
+                        <Route exact path="/pokemon" component={Pokemon}/>
+                        <Route exact path="/pokemon/info" component={PokemonInfo}/>
+                        <Route exact path="/pokemon/location" component={PokemonLocation}/>
                         <Route component={Error}/>
                     </Switch>
                 </div>

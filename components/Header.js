@@ -38,12 +38,12 @@ const Header = () => {
     return (
         <div>
             <nav className="navbar" style={navBar}>
-                <Link to={"/recipes"}><a className="navbar-brand" style={modelLink}>Pokedex</a></Link>
-                <Link to={"/news"}> <a className="navbar-brand" style={modelLink}>Moves</a> </Link>
-                <Link to={"/restaurants"}> <a className="navbar-brand" style={modelLink}>Abilities</a> </Link>
+                <Link to={"/pokemon"}><a className="navbar-brand" style={modelLink}>Pokedex</a></Link>
+                <Link to={"/moves"}> <a className="navbar-brand" style={modelLink}>Moves</a> </Link>
+                <Link to={"/abilities"}> <a className="navbar-brand" style={modelLink}>Abilities</a> </Link>
 
                 <Link to={"/"}><img src={logo} className="navbar-brand" style={logoBlock}/></Link>
-                <Link to={"/delivery"}> <a className="navbar-brand" style={modelLink}>Items</a> </Link>
+                <Link to={"/items"}> <a className="navbar-brand" style={modelLink}>Items</a> </Link>
                 <Link to={"/aboutus"}> <a className="navbar-brand" style={modelLink}>About Us</a> </Link>
                 <button className="btn-sm btn-success" style={logIn}>Log In</button>
             </nav>
