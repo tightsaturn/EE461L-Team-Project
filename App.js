@@ -14,18 +14,21 @@ import MovesInfo from "./components/MovesInfo"
 import Items from "./components/Items"
 import ItemsInfo from "./components/ItemsInfo"
 import TeamBuilder from "./components/team-builder-page/Team_Builder_App"
+import Types from "./components/Types"
+import TypeDisplay from "./components/TypesDisplay"
+import Feedback from "./components/Feedback"
+import Thankyou from "./components/Thankyou";
+import AddPokemon from "./components/AddPokemon"
 import AboutUs from "./components/about-us-page/AboutUs_App"
-
 
 class App extends Component {
     render() {
         return (
             <BrowserRouter>
-                <Header />
+                <Header/>
                 <div>
                     <Switch>
                         <Route exact path="/" component={Homepage}/>
-
                         <Route exact path="/abilities" component={Abilities}/>
                         <Route exact path='/abilities/info' component={AbilitiesInfo}/>
                         <Route exact path="/moves" component={Moves}/>
@@ -35,7 +38,12 @@ class App extends Component {
                         <Route exact path="/pokemon" component={Pokemon}/>
                         <Route exact path="/pokemon/info" component={PokemonInfo}/>
                         <Route exact path="/pokemon/location" component={PokemonLocation}/>
+                        <Route exact path="/types" component={Types}/>
+                        <Route exact path="/types/:type" component={TypeDisplay}/>
+                        <Route exact path="/feedback" component={Feedback}/>
+                        <Route exact path="/feedback/thankyou" component={Thankyou}/>
                         <Route exact path = "/teambuilder" component = {TeamBuilder}/>
+                        <Route exact path = "/teambuilder/addpokemon" component = {AddPokemon}/>
                         <Route exact path = "/aboutus" component = {AboutUs}/>
                         <Route component={Error}/>
                     </Switch>

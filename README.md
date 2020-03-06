@@ -7,4 +7,6 @@ npm install react-router-dom
 
 npm install --save google-maps-react
 
+npm install node-sass
+
 npm install @material-ui/core

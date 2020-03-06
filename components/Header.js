@@ -13,7 +13,7 @@ const navBar = {
 
 const modelLink = {
     marginBottom: "10px",
-    color: "yellow",
+    color: "white",
     textAlign: "center",
     fontFamily: "Chilanka",
 };
@@ -41,16 +41,18 @@ const Header = () => {
                 <Link to={"/pokemon"}><a className="navbar-brand" style={modelLink}>Pokedex</a></Link>
                 <Link to={"/moves"}> <a className="navbar-brand" style={modelLink}>Moves</a> </Link>
                 <Link to={"/abilities"}> <a className="navbar-brand" style={modelLink}>Abilities</a> </Link>
+                <Link to={"/items"}> <a className="navbar-brand" style={modelLink}>Items</a> </Link>
 
                 <Link to={"/"}><img src={logo} className="navbar-brand" style={logoBlock}/></Link>
+                <Link to={"/types"}> <a className="navbar-brand" style={modelLink}>Types</a> </Link>
                 <Link to={"/teambuilder"}> <a className="navbar-brand" style={modelLink}>Team Builder</a> </Link>
-                <Link to={"/items"}> <a className="navbar-brand" style={modelLink}>Items</a> </Link>
                 <Link to={"/aboutus"}> <a className="navbar-brand" style={modelLink}>About Us</a> </Link>
+                <Link to={"/feedback"}> <a className="navbar-brand" style={modelLink}>Feedback</a> </Link>
                 <button className="btn-sm btn-success" style={logIn}>Log In</button>
             </nav>
         </div>
 
     )
-}
+};
 
 export default Header

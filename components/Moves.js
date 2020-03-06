@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link} from "react-router-dom";
+import SearchFitler from "./SearchFilter";
 
 const tablemoves = {
     marginLeft: "200px",
@@ -13,6 +14,8 @@ const Moves = () => {
         <div style={tablemoves}>
             <h1>Moves</h1>
             <br/>
+            <SearchFitler/>
+            <br/>
             <table className="table">
                 <thead className="thead-dark">
                 <tr>
@@ -25,33 +28,25 @@ const Moves = () => {
                 <tbody>
                 <tr>
                     <th scope="row">001</th>
-                    <Link to={"/moves/info"}>
-                        <a><td>Stench</td></a>
-                    </Link>
-                    <td>By releasing stench when attacking, this Pokémon may cause the target to flinch.	</td>
-                    <td>III</td>
+                    <td><Link to={"/moves/info"}>Pound</Link></td>
+                    <td>Inflicts regular damage with no additional effect.</td>
+                    <td>Normal</td>
                 </tr>
                 <tr>
                     <th scope="row">002</th>
-                    <Link to={"/moves/info"}>
-                        <td>Drizzle</td>
-                    </Link>
-                    <td>The Pokémon makes it rain when it enters a battle.	</td>
-                    <td>III</td>
+                    <td><Link to={"/moves/info"}>Karate-Chop</Link></td>
+                    <td>Inflicts regular damage. User's critical hit rate is one level higher when using this move.</td>
+                    <td>Normal</td>
                 </tr>
                 <tr>
                     <th scope="row">003</th>
-                    <Link to={"/moves/info"}>
-                        <td>Speed Boost</td>
-                    </Link>
-                    <td>Its Speed stat is boosted every turn.</td>
-                    <td>III</td>
+                    <td><Link to={"/moves/info"}>Double-Slap</Link></td>
+                    <td>Inflicts regular damage. Hits 2–5 times in one turn. Has a 3/8 chance each to hit 2 or 3 times, and a 1/8 chance each to hit 4 or 5 times. Averages to 3 hits per use.</td>
+                    <td>Normal</td>
                 </tr>
                 <tr>
                     <th scope="row">#</th>
-                    <Link to={"/moves/info"}>
-                        <td>Move Name</td>
-                    </Link>
+                    <td><Link to={"/moves/info"}>Move Name</Link></td>
                     <td>Move Description</td>
                     <td></td>
                 </tr>

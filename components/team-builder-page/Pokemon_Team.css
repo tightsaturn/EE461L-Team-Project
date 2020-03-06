@@ -3,12 +3,19 @@
 /*    max-height: 20vh;*/
 /*}*/
 
-.card {
-    width: 200px;
+#partycards {
+    margin-left: 0;
+    width: 180px;
+}
+
+#card-col {
+    margin-left: 0;
+    display: flex;
+    justify-content: left;
 }
 
 #card-img {
-    width: 200px;
+    width: 180px;
     height: 200px;
     /*margin-top: 7%;*/
     /*margin-left: 20%;*/

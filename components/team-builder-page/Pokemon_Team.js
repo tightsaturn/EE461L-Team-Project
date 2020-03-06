@@ -1,27 +1,29 @@
 import React from "react";
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-
 import './Pokemon_Team.css';
+const tableAbilities = {
+   // marginLeft: "350px",
+    marginTop: "40px",
+    marginRight: "50px",
+    width: "80%",
+    height: "100%",
+}
 
 function Pokemon_Card(props) {
     return (
-        <div class="card">
-            <img class = "card-img-top" id = "card-img" src = {props.image} alt = {props.name}/>
-            <div class="card-body">
-                <h4 class = "card-title"> Pokemon #{props.number}</h4>
-                <p class = "card-text">{props.name}</p>
-                <p class = "card-text">Type: {props.type}</p>
+            <div class="card" id={"partycards"}>
+                <img class = "card-img-top" id = "card-img" src = {props.image} alt = {props.name}/>
+                <div class="card-body">
+                    <h4 class = "card-title"> Pokemon #{props.number}</h4>
+                    <p class = "card-text">{props.name}</p>
+                    <p class = "card-text">Type: {props.type}</p>
+                </div>
             </div>
-        </div>
     )
 }
 
 function Pokemon_Team(props) {
     return (
-        <div className = "container">
+        <div style={{width: "100%"}}>
             <div class = "row">
                 <div class = "col-lg-2 grid-margin" id = "card-col">
                     <Pokemon_Card

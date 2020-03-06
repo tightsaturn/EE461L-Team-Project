@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link} from "react-router-dom";
+import SearchFitler from "./SearchFilter";
 
 const tableitems = {
     marginLeft: "200px",
@@ -13,6 +14,8 @@ const Items = () => {
         <div style={tableitems}>
             <h1>Items</h1>
             <br/>
+            <SearchFitler/>
+            <br/>
             <table className="table">
                 <thead className="thead-dark">
                 <tr>
@@ -25,35 +28,27 @@ const Items = () => {
                 <tbody>
                 <tr>
                     <th scope="row">001</th>
-                    <Link to={"/items/info"}>
-                        <a><td>Stench</td></a>
-                    </Link>
-                    <td>By releasing stench when attacking, this Pokémon may cause the target to flinch.	</td>
-                    <td>III</td>
+                    <td><Link to={"/items/info"}>Master-Ball</Link></td>
+                    <td>Used in battle : Catches a wild Pokémon without fail. If used in a trainer battle, nothing happens and the ball is lost.</td>
+                    <td>X</td>
                 </tr>
                 <tr>
                     <th scope="row">002</th>
-                    <Link to={"/items/info"}>
-                        <td>Drizzle</td>
-                    </Link>
-                    <td>The Pokémon makes it rain when it enters a battle.	</td>
-                    <td>III</td>
+                    <td><Link to={"/items/info"}>Ultra-Ball</Link></td>
+                    <td>Used in battle : Attempts to catch a wild Pokémon, using a catch rate of 2×. If used in a trainer battle, nothing happens and the ball is lost.</td>
+                    <td>X</td>
                 </tr>
                 <tr>
                     <th scope="row">003</th>
-                    <Link to={"/items/info"}>
-                        <td>Speed Boost</td>
-                    </Link>
-                    <td>Its Speed stat is boosted every turn.</td>
-                    <td>III</td>
+                    <td><Link to={"/items/info"}>Great-Ball</Link></td>
+                    <td>Used in battle : Attempts to catch a wild Pokémon, using a catch rate of 1.5×. If used in a trainer battle, nothing happens and the ball is lost.</td>
+                    <td>X</td>
                 </tr>
                 <tr>
                     <th scope="row">#</th>
-                    <Link to={"/items/info"}>
-                        <td>Move Name</td>
-                    </Link>
-                    <td>Move Description</td>
-                    <td></td>
+                    <td><Link to={"/items/info"}>Item Name</Link></td>
+                    <td>Item Description</td>
+                    <td>X</td>
                 </tr>
                 <tr>
                     <th scope="row">...</th>

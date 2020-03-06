@@ -1,6 +1,7 @@
 
 import React from 'react';
 import {Link} from "react-router-dom";
+import SearchFitler from "./SearchFilter";
 
 const tableabilities = {
     marginLeft: "200px",
@@ -14,6 +15,8 @@ const Abilities = () => {
         <div style={tableabilities}>
             <h1>Abilities</h1>
             <br/>
+            <SearchFitler/>
+            <br/>
             <table className="table">
                 <thead className="thead-dark">
                 <tr>
@@ -26,33 +29,25 @@ const Abilities = () => {
                 <tbody>
                 <tr>
                     <th scope="row">001</th>
-                    <Link to={"/abilities/info"}>
-                        <a><td>Stench</td></a>
-                    </Link>
+                    <td><Link to={"/abilities/info"}>Stench</Link></td>
                     <td>By releasing stench when attacking, this Pokémon may cause the target to flinch.	</td>
                     <td>III</td>
                 </tr>
                 <tr>
                     <th scope="row">002</th>
-                    <Link to={"/abilities/info"}>
-                        <td>Drizzle</td>
-                    </Link>
+                    <td><Link to={"/abilities/info"}>Drizzle</Link></td>
                     <td>The Pokémon makes it rain when it enters a battle.	</td>
                     <td>III</td>
                 </tr>
                 <tr>
                     <th scope="row">003</th>
-                    <Link to={"/abilities/info"}>
-                    <td>Speed Boost</td>
-                    </Link>
+                    <td><Link to={"/abilities/info"}>Speed-Boost</Link></td>
                     <td>Its Speed stat is boosted every turn.</td>
                     <td>III</td>
                 </tr>
                 <tr>
                     <th scope="row">#</th>
-                    <Link to={"/abilities/info"}>
-                        <td>Ability Name</td>
-                    </Link>
+                    <td><Link to={"/abilities/info"}>Ability Name</Link></td>
                     <td>Effect Description</td>
                     <td>From what Generation</td>
                 </tr>
