@@ -10,6 +10,10 @@ import PokemonInfo from "./components/PokemonInfo";
 import PokemonLocation from "./components/PokemonLocation";
 import Background from "./components/Background"
 import Homepage from "./components/Homepage"
+import AbilitiesInfo from "./components/AbilitiesInfo"
+import MovesInfo from "./components/MovesInfo"
+import Items from "./components/Items"
+import ItemsInfo from "./components/ItemsInfo"
 
 
 class App extends Component {
@@ -20,11 +24,16 @@ class App extends Component {
                 <div>
                     <Switch>
                         <Route exact path="/" component={Homepage}/>
-                        <Route exact path="/abilities" component={Abilities}/>
+
                         <Route exact path="/aboutus" component={AboutUS}/>
+                        <Route exact path="/abilities" component={Abilities}/>
+                        <Route exact path='/abilities/info' component={AbilitiesInfo}/>
                         <Route exact path="/moves" component={Moves}/>
-                        <Route exact path="/pokemon/info" component={PokemonInfo}/>
+                        <Route exact path="/moves/info" component={MovesInfo}/>
+                        <Route exact path="/items" component={Items}/>
+                        <Route exact path="/items/info" component={ItemsInfo}/>
                         <Route exact path="/pokemon" component={Pokemon}/>
+                        <Route exact path="/pokemon/info" component={PokemonInfo}/>
                         <Route exact path="/pokemon/location" component={PokemonLocation}/>
                         <Route component={Error}/>
                     </Switch>
