@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Header from './components/Header';
 import Pokemon from './components/Pokemon';
-import AboutUS from './components/AboutUS';
 import Error from './components/Error';
 import Abilities from './components/Abilities';
 import Moves from './components/Moves';
@@ -15,6 +14,7 @@ import MovesInfo from "./components/MovesInfo"
 import Items from "./components/Items"
 import ItemsInfo from "./components/ItemsInfo"
 import TeamBuilder from "./components/team-builder-page/Team_Builder_App"
+import AboutUs from "./components/about-us-page/AboutUs_App"
 
 
 class App extends Component {
@@ -26,7 +26,6 @@ class App extends Component {
                     <Switch>
                         <Route exact path="/" component={Homepage}/>
 
-                        <Route exact path="/aboutus" component={AboutUS}/>
                         <Route exact path="/abilities" component={Abilities}/>
                         <Route exact path='/abilities/info' component={AbilitiesInfo}/>
                         <Route exact path="/moves" component={Moves}/>
@@ -37,6 +36,7 @@ class App extends Component {
                         <Route exact path="/pokemon/info" component={PokemonInfo}/>
                         <Route exact path="/pokemon/location" component={PokemonLocation}/>
                         <Route exact path = "/teambuilder" component = {TeamBuilder}/>
+                        <Route exact path = "/aboutus" component = {AboutUs}/>
                         <Route component={Error}/>
                     </Switch>
                 </div>
