@@ -1,11 +1,6 @@
 import React from "react"
 import 'bootstrap/dist/css/bootstrap.min.css'
 import "../App.css"
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import FormControl from 'react-bootstrap/FormControl';
-import {Link} from "react-router-dom";
-import pokemonData from './pokemonData.js';
 import TypeBox from "./TypeBox"
 import bug from "../images/Types/Bug.png";
 import dark from "../images/Types/Dark.png";

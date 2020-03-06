@@ -29,25 +29,25 @@ const Abilities = () => {
                 <tbody>
                 <tr>
                     <th scope="row">001</th>
-                    <td><Link to={"/abilities/info"}>Stench</Link></td>
+                    <td><Link to={"/abilities/stench"}>Stench</Link></td>
                     <td>By releasing stench when attacking, this Pokémon may cause the target to flinch.	</td>
                     <td>III</td>
                 </tr>
                 <tr>
                     <th scope="row">002</th>
-                    <td><Link to={"/abilities/info"}>Drizzle</Link></td>
+                    <td><Link to={"/abilities/drizzle"}>Drizzle</Link></td>
                     <td>The Pokémon makes it rain when it enters a battle.	</td>
                     <td>III</td>
                 </tr>
                 <tr>
                     <th scope="row">003</th>
-                    <td><Link to={"/abilities/info"}>Speed-Boost</Link></td>
+                    <td><Link to={"/abilities/speed-boost"}>Speed-Boost</Link></td>
                     <td>Its Speed stat is boosted every turn.</td>
                     <td>III</td>
                 </tr>
                 <tr>
                     <th scope="row">#</th>
-                    <td><Link to={"/abilities/info"}>Ability Name</Link></td>
+                    <td><Link to={"/abilities/ability name"}>Ability Name</Link></td>
                     <td>Effect Description</td>
                     <td>From what Generation</td>
                 </tr>
