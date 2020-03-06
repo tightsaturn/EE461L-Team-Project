@@ -4,9 +4,15 @@ import Title from "./Title"
 import Pokemon_Team from "./Pokemon_Team";
 import squirtle from './squirtle.png'
 
+const tableabilities = {
+    marginTop: "70px",
+    paddingLeft: "200px",
+    paddingRight: "120px"
+}
+
 function Team_Builder_App() {
     return (
-        <div>
+        <div style={tableabilities}>
             <Background/>
             <Title
                 title = "Team Builder"

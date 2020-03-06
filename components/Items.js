@@ -26,7 +26,6 @@ const Items = () => {
                 <tr>
                     <th scope="row">001</th>
                     <Link to={"/items/info"}>
-                        <a><td>Stench</td></a>
                     </Link>
                     <td>By releasing stench when attacking, this Pokémon may cause the target to flinch.	</td>
                     <td>III</td>
