@@ -7,8 +7,8 @@ import img2 from "../images/eevee.png"
 import imgb2 from "../images/eevee_background.jpg"
 import img3 from "../images/pikachu.png"
 import imgb3 from "../images/pikachu_background.png"
-
-import img4 from "../images/background_art.png"
+import img4 from "../images/togepi.jpg"
+import imgb4 from "../images/togepi_background.jpg"
 import ImagComp from "./ImagComp";
 
 const Homepage = () => {
@@ -16,7 +16,7 @@ const Homepage = () => {
     let sliderArr = [<ImagComp src={imgb1} pokemon={img1}/>,
         <ImagComp src={imgb2} pokemon={img2}/>,
         <ImagComp src={imgb3} pokemon={img3}/>,
-        <ImagComp src={img1}/>]
+        <ImagComp src={imgb4} pokemon={img4}/>]
     const [x, setX] = useState(0)
 
     let slidesArray = sliderArr.map((item, index) => {
@@ -47,7 +47,6 @@ const Homepage = () => {
                 <i className="fas fa-chevron-right buttonImg"></i>
 
             </button>
-
         </div>
     )
 }
