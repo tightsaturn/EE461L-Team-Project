@@ -24,7 +24,7 @@ class App extends Component {
     render() {
         return (
             <BrowserRouter>
-                <Header />
+                <Header/>
                 <div>
                     <Switch>
                         <Route exact path="/" component={Homepage}/>
