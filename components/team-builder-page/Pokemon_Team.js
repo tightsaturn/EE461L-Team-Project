@@ -6,23 +6,23 @@ import Typography from '@material-ui/core/Typography';
 
 import './Pokemon_Team.css';
 
-const Pokemon_Card_Style = makeStyles(theme => ({
-    pokemon_card: {
-        flexGrow: 1,
-    },
-    pokemon_card_paper: {
-        padding: theme.spacing(2),
-        margin: 'auto',
-        elevation: 24,
-    },
-    pokemon_card_img: {
-        width: 50,
-        height: 50,
-    },
-}));
+// const Pokemon_Card_Style = makeStyles(theme => ({
+//     pokemon_card: {
+//         flexGrow: 1,
+//     },
+//     pokemon_card_paper: {
+//         padding: theme.spacing(2),
+//         margin: 'auto',
+//         elevation: 24,
+//     },
+//     pokemon_card_img: {
+//         width: 50,
+//         height: 50,
+//     },
+// }));
 
 function Pokemon_Card(props) {
-    const classes = Pokemon_Card_Style();
+    // const classes = Pokemon_Card_Style();
 
     return (
         //  <div className={classes.pokemon_card}>
@@ -44,16 +44,14 @@ function Pokemon_Card(props) {
         //     </Paper>
         // </div>
 
-        <div class = "container" id = "card">
-            <div id = "card_number">
-                <h3>Pokemon #{props.number}</h3>
+        <div className="card h-100 ">
+            <h4 className="card-header"> Pokemon #{props.number}</h4>
+            <div className="card-body">
+                <img id = "card-img" src = {props.image} alt = {props.name}/>
             </div>
-            <div id = "card_image_cont">
-                <img id = "card_image" src = {props.image} alt = {props.name}/>
-            </div>
-            <div id = "card_info">
-                <h5>{props.name}</h5>
-                <h5>Type: {props.type}</h5>
+            <div className="card-footer">
+                <p>{props.name}</p>
+                <p>Type: {props.type}</p>
             </div>
         </div>
     )
@@ -62,16 +60,29 @@ function Pokemon_Card(props) {
 //
 function Pokemon_Team(props) {
     return (
-        <React.Fragment>
-            <Grid item xs = {2}>
-                <Pokemon_Card
-                    number = "1"
-                    image = {props.image}
-                    name = {props.name}
-                    type = {props.type}
-                />
-            </Grid>
-        </React.Fragment>
+        // <React.Fragment>
+        //     <Grid item xs = {2}>
+        //         <Pokemon_Card
+        //             number = "1"
+        //             image = {props.image}
+        //             name = {props.name}
+        //             type = {props.type}
+        //         />
+        //     </Grid>
+        // </React.Fragment>
+
+        <div className = "container">
+            <div className = "row">
+                <div className = "col-lg-4 mb-4 grid-margin">
+                    <Pokemon_Card
+                       number = '1'
+                       image = {props.image}
+                       name = {props.name}
+                       type = {props.type}
+                    />
+                </div>
+            </div>
+        </div>
     )
 }
 

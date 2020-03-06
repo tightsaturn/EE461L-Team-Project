@@ -1,7 +1,13 @@
-#card {
-    background-color: aqua;
+.card-body {
+    max-width: 30vw;
+    max-height: 30vh;
 }
-#card_image {
-    width: 75%;
-    height: 75%;
+
+#card-img {
+    border: 5px solid blue;
+    width: 60%;
+    height: 80%;
+    margin-top: 7%;
+    margin-left: 20%;
+    margin-right: 10%;
 }
