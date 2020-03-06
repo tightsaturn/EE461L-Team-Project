@@ -6,79 +6,74 @@ import Typography from '@material-ui/core/Typography';
 
 import './Pokemon_Team.css';
 
-// const Pokemon_Card_Style = makeStyles(theme => ({
-//     pokemon_card: {
-//         flexGrow: 1,
-//     },
-//     pokemon_card_paper: {
-//         padding: theme.spacing(2),
-//         margin: 'auto',
-//         elevation: 24,
-//     },
-//     pokemon_card_img: {
-//         width: 50,
-//         height: 50,
-//     },
-// }));
-
 function Pokemon_Card(props) {
-    // const classes = Pokemon_Card_Style();
-
     return (
-        //  <div className={classes.pokemon_card}>
-        //     <Paper className={classes.pokemon_card_paper} elevation={24}>
-        //         <Grid container spacing = {2}>
-        //             <Grid item xs = {12} sm container direction = "column" spacing = {2}>
-        //                 <Grid item xs>
-        //                     <Typography variant={"body1"}>Pokemon #{props.number}</Typography>
-        //                 </Grid>
-        //                 <Grid item xs>
-        //                     <img className={classes.pokemon_card_img} src = {props.image} alt = {props.name}/>
-        //                 </Grid>
-        //                 <Grid item xs>
-        //                     <Typography gutterBottom variant = "subtitle1">{props.name}</Typography>
-        //                     <Typography variant = "body2" gutterBottom>Type: {props.type}</Typography>
-        //                 </Grid>
-        //             </Grid>
-        //         </Grid>
-        //     </Paper>
-        // </div>
-
-        <div className="card h-100 ">
-            <h4 className="card-header"> Pokemon #{props.number}</h4>
-            <div className="card-body">
-                <img id = "card-img" src = {props.image} alt = {props.name}/>
-            </div>
-            <div className="card-footer">
-                <p>{props.name}</p>
-                <p>Type: {props.type}</p>
+        <div class="card">
+            <img class = "card-img-top" id = "card-img" src = {props.image} alt = {props.name}/>
+            <div class="card-body">
+                <h4 class = "card-title"> Pokemon #{props.number}</h4>
+                <p class = "card-text">{props.name}</p>
+                <p class = "card-text">Type: {props.type}</p>
             </div>
         </div>
     )
 }
 
-//
 function Pokemon_Team(props) {
     return (
-        // <React.Fragment>
-        //     <Grid item xs = {2}>
-        //         <Pokemon_Card
-        //             number = "1"
-        //             image = {props.image}
-        //             name = {props.name}
-        //             type = {props.type}
-        //         />
-        //     </Grid>
-        // </React.Fragment>
-
         <div className = "container">
-            <div className = "row">
-                <div className = "col-lg-4 mb-4 grid-margin">
+            <div class = "row">
+                <div class = "col-lg-2 grid-margin" id = "card-col">
                     <Pokemon_Card
                        number = '1'
-                       image = {props.image}
-                       name = {props.name}
-                       type = {props.type}
+                       image = {props.image1}
+                       name = {props.name1}
+                       type = {props.type1}
+                    />
+                </div>
+
+                <div class = "col-lg-2 grid-margin" id = "card-col">
+                    <Pokemon_Card
+                        number = '2'
+                        image = {props.image2}
+                        name = {props.name2}
+                        type = {props.type2}
+                    />
+                </div>
+
+                <div class = "col-lg-2 grid-margin" id = "card-col">
+                    <Pokemon_Card
+                        number = '3'
+                        image = {props.image3}
+                        name = {props.name3}
+                        type = {props.type3}
+                    />
+                </div>
+
+                <div class = "col-lg-2 grid-margin" id = "card-col">
+                    <Pokemon_Card
+                        number = '4'
+                        image = {props.image4}
+                        name = {props.name4}
+                        type = {props.type4}
+                    />
+                </div>
+
+                <div class = "col-lg-2 grid-margin" id = "card-col">
+                    <Pokemon_Card
+                        number = '5'
+                        image = {props.image5}
+                        name = {props.name5}
+                        type = {props.type5}
+                    />
+                </div>
+
+                <div class = "col-lg-2 grid-margin" id = "card-col">
+                    <Pokemon_Card
+                        number = '6'
+                        image = {props.image6}
+                        name = {props.name6}
+                        type = {props.type6}
                     />
                 </div>
             </div>
