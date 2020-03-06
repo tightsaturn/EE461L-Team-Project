@@ -20,7 +20,7 @@ const modelLink = {
 
 const logoBlock = {
     display: "block",
-    maxHeight: "120px",
+    maxHeight: "12vh",
     maxWidth: "200px",
     height: "auto",
     width: "auto",
