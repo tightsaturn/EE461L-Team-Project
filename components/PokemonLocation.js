@@ -9,8 +9,7 @@ const tablelocations = {
     marginTop: "70px",
     paddingLeft: "200px",
     paddingRight: "120px",
-
-}
+};
 
 const pokemonBlock = {
     display: "block",
@@ -43,6 +42,6 @@ const PokemonLocation = () => {
             </table>
         </div>
     );
-}
+};
 
 export default PokemonLocation;
