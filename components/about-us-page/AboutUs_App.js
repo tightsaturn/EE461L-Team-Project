@@ -140,15 +140,15 @@ function AboutUs_App() {
                 <h4>Website Description</h4>
                 <p>This website will provide the necessary information
                 needed by any Pokemon trainer. Everything from the listing
-                of every single Pokemon to a listing of each one's
+                of all Pokemon to a listing of each one's
                 characteristics can be found. Become the best trainer
-                by learning how to fully utilize items and even build
-                the best team possible. Welcome to a new realm of
+                by learning how to fully utilize items and form
+                the ultimate team. Welcome to a new realm of
                 possibilities.</p>
                 <br></br>
 
                 <p>In creating this website, we hoped to spread the joy
-                for the worldwide phenomenon of Pokemon to more people. The
+                of the worldwide phenomenon of Pokemon to more people. The
                 site's intended purpose is to expose a user of any experience
                 level to the vast world of Pokemon by providing a wiki-like
                 reference site. Users can learn about the unique characteristics
@@ -158,13 +158,13 @@ function AboutUs_App() {
                 and align their expectations towards the abilities of such team.
                 Along with this, users may explore the vast library of items
                 available to learn more about what they just picked-up in game
-                or the holy grail for them to pursue.</p>
+                or to find the next holy grail for them to pursue.</p>
 
                 <br></br>
 
-                <p>Unltimately, this website is for users of any age. As long
-                as they have the faintest interest in pocket monsters, we hope
-                that this website will prove useful for them.</p>
+                <p>Ultimately, this website is for users of any age. As long
+                as the user has the faintest interest in pocket monsters, we hope
+                that this website will prove to be a useful utility for them.</p>
 
                 <br></br>
 
