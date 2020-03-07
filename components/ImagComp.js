@@ -16,12 +16,26 @@ const background_img = {
     height: "100vh"
 }
 
+const text = {
+    position: "absolute",
+    top: "8%",
+    left: "230px",
+    background: "rgb(0, 0, 0, 0.0)",
+    color: "white",
+  //  width: "30%",
+    fontSize: 80,
+    fontWeight: "bold"
+}
+
 
 function ImagComp(props){
     return (
         <div>
-            <img src={props.pokemon} style={pokemon}/>
-            <img src={props.src} style={background_img} alt="slide-img"/>
+            {/*<img src={props.pokemon} style={pokemon}/>*/}
+            <div style={text}>
+                {props.text}
+            </div>
+            <img src={props.src} style={background_img} alt="slide-img"></img>
         </div>
     )
 }

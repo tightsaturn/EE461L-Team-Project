@@ -28,27 +28,27 @@ function Team_Builder_App() {
                 <h5>Team Members:</h5>
                 <Pokemon_Team
                     image1 = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png"
-                    name1 = "Squrtle"
+                    name1 = "Squirtle"
                     type1 = "Water"
 
                     image2 = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png"
-                    name2 = "Squrtle"
+                    name2 = "Squirtle"
                     type2 = "Water"
 
                     image3 = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png"
-                    name3 = "Squrtle"
+                    name3 = "Squirtle"
                     type3 = "Water"
 
                     image4 = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png"
-                    name4 = "Squrtle"
+                    name4 = "Squirtle"
                     type4 = "Water"
 
                     image5 = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png"
-                    name5 = "Squrtle"
+                    name5 = "Squirtle"
                     type5 = "Water"
 
                     image6 = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png"
-                    name6 = "Squrtle"
+                    name6 = "Squirtle"
                     type6 = "Water"
                 />
         </div>
