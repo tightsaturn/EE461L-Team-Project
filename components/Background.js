@@ -3,7 +3,7 @@ import './Background.css';
 
 function Background() {
     return (
-        <div>
+        <div className="pokedex">
             <span className="Left-border"></span>
             <span className="Center-border"></span>
             <span className="Outside-pokeball-dot"></span>

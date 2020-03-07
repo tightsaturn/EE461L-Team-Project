@@ -21,12 +21,17 @@ import Thankyou from "./components/Thankyou";
 import AddPokemon from "./components/AddPokemon"
 import AboutUs from "./components/about-us-page/AboutUs_App"
 
+const wholePage = {
+   // border: "5px solid red",
+   // backgroundColor: "blue"
+}
+
 class App extends Component {
     render() {
         return (
-            <BrowserRouter>
+            <BrowserRouter >
                 <Header/>
-                <div>
+                <div style={wholePage}>
                     <Switch>
                         <Route exact path="/" component={Homepage}/>
                         <Route exact path="/abilities" component={Abilities}/>
@@ -47,8 +52,9 @@ class App extends Component {
                         <Route exact path = "/aboutus" component = {AboutUs}/>
                         <Route component={Error}/>
                     </Switch>
+                    <Background/>
+
                 </div>
-                <Background/>
             </BrowserRouter>
         );
     }
