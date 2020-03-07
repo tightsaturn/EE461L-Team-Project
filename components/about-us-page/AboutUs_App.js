@@ -1,9 +1,13 @@
 import React from 'react'
-import Background from "./AboutUs_Background"
-import tristan from "./tristan.png"
+import "../Background.css"
+import Background from "../Background"
+import tristan from "./tristan.jpeg"
 import jaime from "./jaime.jpg"
+import jimmy from "./jimmy.jpg"
+import mihir from "./mihir.jpg"
 
 import "./AboutUs_Background.css"
+import "./About_App.css"
 
 fetch('https://api.github.com/orgs/nodejs')
     .then(response => response.json())
@@ -56,8 +60,7 @@ function Developer_Card(props) {
             <img class = "card-img-top" id = "dev-card-img" src = {props.image} alt = {props.name}/>
             <div class="card-body">
                 <h4 class = "dev-card-title"> {props.name}</h4>
-                {/*<p class = "card-text">{props.name}</p>*/}
-                {/*<p class = "card-text">Type: {props.type}</p>*/}
+                <p class = "card-text">Track: {props.track}</p>
             </div>
         </div>
     )
@@ -108,6 +111,7 @@ function AboutUs_App() {
                         <Developer_Card
                             image = {jaime}
                             name = "Jaime Tan Leon"
+                            track = "Software and Academic Enrichment"
                         />
                     </div>
 
@@ -115,6 +119,23 @@ function AboutUs_App() {
                         <Developer_Card
                             image = {tristan}
                             name = "Tristan McDaniel"
+                            track = "Embedded Systems/Computer Architecture and Software"
+                        />
+                    </div>
+
+                    <div className="col-lg-3 grid-margin" id="card-col">
+                        <Developer_Card
+                            image = {jimmy}
+                            name = "Jimmy Phan"
+                            track = "Data Science and Academic Enrichment"
+                        />
+                    </div>
+
+                    <div className="col-lg-3 grid-margin" id="card-col">
+                        <Developer_Card
+                            image = {mihir}
+                            name = "Mihir Shah"
+                            track = "Embedded Systems/Computer Architecture and Integrated Circuits"
                         />
                     </div>
                 </div>
