@@ -1,9 +1,9 @@
 import React from "react";
-import './Background.css';
+import './AboutUs_Background.css';
 
-function Background() {
+function AboutUs_Background() {
     return (
-        <div className="pokedex">
+        <div>
             <span className="Left-border"></span>
             <span className="Center-border"></span>
             <span className="Outside-pokeball-dot"></span>
@@ -13,4 +13,4 @@ function Background() {
     )
 }
 
-export default Background
+export default AboutUs_Background

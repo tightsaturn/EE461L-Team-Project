@@ -1,25 +1,22 @@
 import React,{useState} from "react"
 import "bootstrap/dist/css/bootstrap.min.css"
 import "../css/Homepage.scss"
-import img1 from "../images/background_art.png"
-import img2 from "../images/img2.jpg"
-import img3 from "../images/background_art.png"
-import img4 from "../images/background_art.png"
-
-
-
-import pikachu from "../images/pikachu.png"
-import bulbasaur from "../images/bulbasaur.png"
-import image from "../images/logo.jpg"
-import Slider from "./Slider"
-
+import img1 from "../images/togepi.png"
+import imgb1 from "../images/togepi_background.jpg"
+import img2 from "../images/eevee.png"
+import imgb2 from "../images/eevee_background.jpg"
+import img3 from "../images/pikachu.png"
+import imgb3 from "../images/pikachu_background.png"
+import ImagComp from "./ImagComp";
+import img4 from "../images/bulbasaur.png"
+import imgb4 from "../images/bulbasaur_background.jpg"
 
 const Homepage = () => {
 
-    let sliderArr = [<img className="slideImg" src={img2}/>,
-        <img className="slideImg" src={img2}/>,
-        <img className="slideImg" src={img3}/>,
-        <img className="slideImg" src={img4}/>]
+    let sliderArr = [<ImagComp src={imgb1} pokemon={img1} text="Welcome to Togepedia"/>,
+        <ImagComp src={imgb2} pokemon={img2} text="Explore Pokemon"/>,
+        <ImagComp src={imgb3} pokemon={img3} text="Learn more Info"/>,
+        <ImagComp src={imgb4} pokemon={img4} text="Build Teams"/>]
     const [x, setX] = useState(0)
 
     let slidesArray = sliderArr.map((item, index) => {
@@ -50,7 +47,6 @@ const Homepage = () => {
                 <i className="fas fa-chevron-right buttonImg"></i>
 
             </button>
-
         </div>
     )
 }

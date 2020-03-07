@@ -3,24 +3,23 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import "../App.css"
 import logo from "../images/logo.jpg"
 import { Link } from 'react-router-dom';
-import headerImg from "../images/headerImg.jpeg"
-
+import GoogleLogin from "react-google-login";
 
 const navBar = {
     backgroundColor: "black",
-    height:"130px"
+    height:"12vh"
 };
 
 const modelLink = {
     marginBottom: "10px",
-    color: "yellow",
+    color: "white",
     textAlign: "center",
     fontFamily: "Chilanka",
 };
 
 const logoBlock = {
     display: "block",
-    maxHeight: "120px",
+    maxHeight: "12vh",
     maxWidth: "200px",
     height: "auto",
     width: "auto",
@@ -32,12 +31,14 @@ const logIn = {
     fontFamily: "Calibri"
 };
 
-
+const responseGoogle = (response) => {
+    console.log(response)
+}
 
 const Header = () => {
     return (
         <div>
-            <nav className="navbar" style={navBar}>
+            <div className="navbar" style={navBar}>
                 <Link to={"/pokemon"}><a className="navbar-brand" style={modelLink}>Pokedex</a></Link>
                 <Link to={"/moves"}> <a className="navbar-brand" style={modelLink}>Moves</a> </Link>
                 <Link to={"/abilities"}> <a className="navbar-brand" style={modelLink}>Abilities</a> </Link>
@@ -45,13 +46,22 @@ const Header = () => {
 
                 <Link to={"/"}><img src={logo} className="navbar-brand" style={logoBlock}/></Link>
                 <Link to={"/types"}> <a className="navbar-brand" style={modelLink}>Types</a> </Link>
-                <Link to={"/teambuilder"}> <a className="navbar-brand" style={modelLink}>Team Builder</a> </Link>
+                <Link to={"/teambuil" +
+                "der"}> <a className="navbar-brand" style={modelLink}>Team Builder</a> </Link>
                 <Link to={"/aboutus"}> <a className="navbar-brand" style={modelLink}>About Us</a> </Link>
                 <Link to={"/feedback"}> <a className="navbar-brand" style={modelLink}>Feedback</a> </Link>
-                <button className="btn-sm btn-success" style={logIn}>Log In</button>
-            </nav>
+                {/*<button className="btn-sm btn-success" style={logIn}>Log In</button>*/}
+                <div className="navbar-brand">
+                    <GoogleLogin
+                        clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
+                        buttonText="Login"
+                        onSuccess={responseGoogle}
+                        onFailure={responseGoogle}
+                        cookiePolicy={'single_host_origin'}
+                    />
+                </div>
+            </div>
         </div>
-
     )
 };
 

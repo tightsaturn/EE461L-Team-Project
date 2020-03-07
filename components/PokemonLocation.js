@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import "../App.css"
 import bulby from "../images/bulbasaur.png"
-import {Link} from "react-router-dom";
-import pokemonData from "./pokemonData";
 
 const tablelocations = {
     marginTop: "70px",

@@ -10,3 +10,5 @@ npm install --save google-maps-react
 npm install node-sass
 
 npm install @material-ui/core
+
+npm install react-google-login
