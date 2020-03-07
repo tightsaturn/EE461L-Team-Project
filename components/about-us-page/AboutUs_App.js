@@ -24,20 +24,18 @@ const tableaboutus = {
 
 function GetGitInfo() {
     var xhr = new XMLHttpRequest();
-    let json;
     let info;
-
+    let contributions = [0, 0, 0, 0]
 
     // open method parameters: type of request, url/file, bool async
-    xhr.open('GET', 'https://api.github.com/users/tmcdaniel511', false);
+    xhr.open('GET', 'https://api.github.com/repos/tmcdaniel511/EE461L-Team-Project/contributors', false);
+    xhr.setRequestHeader('Authorization', 'token 564ef390402388a2d945ee4f05b4321fef34a616')
 
     xhr.onload = function(e){
         if (xhr.readyState === 4){
             if (xhr.status === 200){
-                json = JSON.parse(xhr.response).avatar_url
-                info = JSON.parse(JSON.stringify(xhr.response));
+                info = JSON.parse(xhr.response)
                 console.log(info);
-                console.log(JSON.parse(info).avatar_url)
             } else {
                 console.error(xhr.statusText)
             }
@@ -46,10 +44,75 @@ function GetGitInfo() {
 
     xhr.send()
 
-    console.log(info);
+    let totalCommits = 0;
+    for(let i = 0; i < info.length; i++){
+        contributions[i] = info[i].contributions;
+        totalCommits += contributions[i];
+    }
+
+    var xhr2 = new XMLHttpRequest();
+    let info2;
+
+    // open method parameters: type of request, url/file, bool async
+    xhr2.open('GET', 'https://api.github.com/repos/tmcdaniel511/EE461L-Team-Project/issues', false);
+    xhr2.setRequestHeader('Authorization', 'token 564ef390402388a2d945ee4f05b4321fef34a616')
+
+    xhr2.onload = function(e){
+        if (xhr2.readyState === 4){
+            if (xhr2.status === 200){
+                info2 = JSON.parse(xhr2.response)
+                console.log(info2);
+            } else {
+                console.error(xhr2.statusText)
+            }
+        }
+    }
+
+    xhr2.send()
+
+    let numOpenIssues = info2.length;
+
+    var xhr3 = new XMLHttpRequest();
+    let info3;
+
+    // open method parameters: type of request, url/file, bool async
+    xhr3.open('GET', 'https://api.github.com/repos/tmcdaniel511/EE461L-Team-Project/issues?state=closed', false);
+    xhr3.setRequestHeader('Authorization', 'token 564ef390402388a2d945ee4f05b4321fef34a616')
+
+    xhr3.onload = function(e){
+        if (xhr3.readyState === 4){
+            if (xhr3.status === 200){
+                info3 = JSON.parse(xhr3.response)
+                console.log(info3);
+            } else {
+                console.error(xhr3.statusText)
+            }
+        }
+    }
+
+    xhr3.send()
+
+    let numClosedIssues = 0;
+    for(let i = 0; i < info3.length; i++){
+        let str = info3[i].title
+        console.log(str)
+        if(str.includes("Issue")){
+            numClosedIssues++;
+        }
+    }
+
     return (
         <div>
-            {JSON.parse(info).avatar_url}
+            Number of commits: <br></br>
+            Tristan: {contributions[0]} <br></br>
+            Jaime: {contributions[1]} <br></br>
+            Jimmy: {contributions[2]} <br></br>
+            Mihir: {contributions[3]} <br></br>
+            Total commits: {totalCommits} <br></br>
+            Number of Closed Issues: {numClosedIssues} <br></br>
+            Number of Open Issues: {numOpenIssues} <br></br>
+            Total number of Issues: {numClosedIssues + numOpenIssues} <br></br>
+            Number of tests: 0 <br></br>
         </div>
     );
 }

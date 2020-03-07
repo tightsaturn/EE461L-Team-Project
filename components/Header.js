@@ -51,15 +51,7 @@ const Header = () => {
                 <Link to={"/aboutus"}> <a className="navbar-brand" style={modelLink}>About Us</a> </Link>
                 <Link to={"/feedback"}> <a className="navbar-brand" style={modelLink}>Feedback</a> </Link>
                 {/*<button className="btn-sm btn-success" style={logIn}>Log In</button>*/}
-                <div className="navbar-brand">
-                    <GoogleLogin
-                        clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
-                        buttonText="Login"
-                        onSuccess={responseGoogle}
-                        onFailure={responseGoogle}
-                        cookiePolicy={'single_host_origin'}
-                    />
-                </div>
+
             </div>
         </div>
     )
