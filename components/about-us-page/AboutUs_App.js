@@ -9,13 +9,6 @@ import mihir from "./mihir.jpg"
 import "./AboutUs_Background.css"
 import "./About_App.css"
 
-fetch('https://api.github.com/orgs/nodejs')
-    .then(response => response.json())
-    .then(data => {
-        console.log(data) // Prints result from `response.json()` in getRequest
-    })
-    .catch(error => console.error(error))
-
 const tableaboutus = {
     marginLeft: "200px",
     marginTop: "70px",
@@ -29,7 +22,6 @@ function GetGitInfo() {
 
     // open method parameters: type of request, url/file, bool async
     xhr.open('GET', 'https://api.github.com/repos/tmcdaniel511/EE461L-Team-Project/contributors', false);
-    xhr.setRequestHeader('Authorization', 'token 564ef390402388a2d945ee4f05b4321fef34a616')
 
     xhr.onload = function(e){
         if (xhr.readyState === 4){
@@ -45,9 +37,11 @@ function GetGitInfo() {
     xhr.send()
 
     let totalCommits = 0;
-    for(let i = 0; i < info.length; i++){
-        contributions[i] = info[i].contributions;
-        totalCommits += contributions[i];
+    if(info != undefined){
+        for(let i = 0; i < info.length; i++){
+            contributions[i] = info[i].contributions;
+            totalCommits += contributions[i];
+        }
     }
 
     var xhr2 = new XMLHttpRequest();
@@ -55,7 +49,6 @@ function GetGitInfo() {
 
     // open method parameters: type of request, url/file, bool async
     xhr2.open('GET', 'https://api.github.com/repos/tmcdaniel511/EE461L-Team-Project/issues', false);
-    xhr2.setRequestHeader('Authorization', 'token 564ef390402388a2d945ee4f05b4321fef34a616')
 
     xhr2.onload = function(e){
         if (xhr2.readyState === 4){
@@ -70,14 +63,16 @@ function GetGitInfo() {
 
     xhr2.send()
 
-    let numOpenIssues = info2.length;
+    let numOpenIssues=0;
+    if(info2 != undefined){
+        numOpenIssues = info2.length;
+    }
 
     var xhr3 = new XMLHttpRequest();
     let info3;
 
     // open method parameters: type of request, url/file, bool async
     xhr3.open('GET', 'https://api.github.com/repos/tmcdaniel511/EE461L-Team-Project/issues?state=closed', false);
-    xhr3.setRequestHeader('Authorization', 'token 564ef390402388a2d945ee4f05b4321fef34a616')
 
     xhr3.onload = function(e){
         if (xhr3.readyState === 4){
@@ -93,11 +88,13 @@ function GetGitInfo() {
     xhr3.send()
 
     let numClosedIssues = 0;
-    for(let i = 0; i < info3.length; i++){
-        let str = info3[i].title
-        console.log(str)
-        if(str.includes("Issue")){
-            numClosedIssues++;
+    if(info3 != undefined){
+        for(let i = 0; i < info3.length; i++){
+            let str = info3[i].title
+            console.log(str)
+            if(str.includes("Issue")){
+                numClosedIssues++;
+            }
         }
     }
 
@@ -124,6 +121,7 @@ function Developer_Card(props) {
             <div class="card-body">
                 <h4 class = "dev-card-title"> {props.name}</h4>
                 <p class = "card-text">Track: {props.track}</p>
+                <p class ="card-text">Responsibilities: {props.res} </p>
             </div>
         </div>
     )
@@ -175,6 +173,7 @@ function AboutUs_App() {
                             image = {jaime}
                             name = "Jaime Tan Leon"
                             track = "Software and Academic Enrichment"
+                            res = "Created the format of our models and worked to format all the elements in our website"
                         />
                     </div>
 
@@ -183,6 +182,7 @@ function AboutUs_App() {
                             image = {tristan}
                             name = "Tristan McDaniel"
                             track = "Embedded Systems/Computer Architecture and Software"
+                            res = "Focused on Team Builder and About Us Page - Worked on Github API"
                         />
                     </div>
 
@@ -191,6 +191,7 @@ function AboutUs_App() {
                             image = {jimmy}
                             name = "Jimmy Phan"
                             track = "Data Science and Academic Enrichment"
+                            res = "Styled and fixed formatting issues and wrote React code for dynamic components"
                         />
                     </div>
 
@@ -199,6 +200,7 @@ function AboutUs_App() {
                             image = {mihir}
                             name = "Mihir Shah"
                             track = "Embedded Systems/Computer Architecture and Integrated Circuits"
+                            res = "Moves Page, Location Page - Formatting on Report and UML"
                         />
                     </div>
                 </div>
@@ -208,6 +210,27 @@ function AboutUs_App() {
                 <h4>Development Statistics</h4>
                 <GetGitInfo/>
                 {/*<button id = "gitButton" onClick={getGitInfo()}>Get Git Data</button>*/}
+                <br/>
+                <h4>Data Sources</h4>
+                <a href={"https://pokeapi.co/"}>https://pokeapi.co</a>/- Python Script into Mongodb
+                <br/>
+                <a href={"https://api.github.com/"}>https://api.github.com/ </a> - Fetching from URL using
+                <br/>
+                <br/>
+                <h4>Tools</h4>
+                <p>Implementation of the front-end this phase of the project was completed through JavaScript and React. React provided enhanced abilities than those offered by vanilla JavaScript and HTML that often took the form of grids and formatting. Bootstrap was also utilized in order to provide nicer elements such as buttons. Compilation of the JavaScript files was conducted through NodeJS.
+
+                    During development, our team attempted to implement styling functionality from MaterialUI when trying to create grids and AG Grid when trying to implement tables. Ultimately, our team decided against the use of these resources in order to have coherency with web pages created by other team members using the tools provided by React.
+
+                    In order to implement API calls to GitHub, we utilized AJAX such that data concerning the repository use could be dynamically displayed on the about page. To collect and store data from the various APIs that we will utilize for the project, we utilize Python scripts and MongoDB respectively. React Router was later implemented to link web pages and provide a flow among each site.
+
+                    Development by each member of the team was conducted in WebStorm by JetBrains. The app was ultimately deployed in Google Cloud Platform.
+                </p>
+                <br/>
+                <h4>Github</h4>
+                <a href={"https://github.com/tmcdaniel511/EE461L-Team-Project"}>Our Github Page</a>
+                <br/>
+                <br/>
             </div>
         </div>
     )
