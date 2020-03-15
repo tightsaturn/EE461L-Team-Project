@@ -3,7 +3,7 @@ import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
 import React from "react";
 
-const SearchFitler = (props) => {
+const SearchFilter = (props) => {
     return (
         <Form inline>
             <FormControl type="text" placeholder="Search" className="mr-sm-2 mr-5"/>
@@ -14,4 +14,4 @@ const SearchFitler = (props) => {
     )
 }
 
-export default SearchFitler
+export default SearchFilter

@@ -1,6 +1,6 @@
 import React from "react"
-import pikachu from "../images/pikachu.png"
-import bulbasaur from "../images/bulbasaur.png"
+import pikachu from "../../images/pikachu.png"
+import bulbasaur from "../../images/bulbasaur.png"
 
 
 const pokemon = {
@@ -22,7 +22,6 @@ const text = {
     left: "230px",
     background: "rgb(0, 0, 0, 0.0)",
     color: "white",
-  //  width: "30%",
     fontSize: 80,
     fontWeight: "bold"
 }

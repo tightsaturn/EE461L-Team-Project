@@ -1,15 +1,15 @@
 import React,{useState} from "react"
 import "bootstrap/dist/css/bootstrap.min.css"
-import "../css/Homepage.scss"
-import img1 from "../images/togepi.png"
-import imgb1 from "../images/togepi_background.jpg"
-import img2 from "../images/eevee.png"
-import imgb2 from "../images/eevee_background.jpg"
-import img3 from "../images/pikachu.png"
-import imgb3 from "../images/pikachu_background.png"
+import "../../css/Homepage.scss"
+import img1 from "../../images/togepi.png"
+import imgb1 from "../../images/togepi_background.jpg"
+import img2 from "../../images/eevee.png"
+import imgb2 from "../../images/eevee_background.jpg"
+import img3 from "../../images/pikachu.png"
+import imgb3 from "../../images/pikachu_background.png"
+import img4 from "../../images/bulbasaur.png"
+import imgb4 from "../../images/bulbasaur_background.jpg"
 import ImagComp from "./ImagComp";
-import img4 from "../images/bulbasaur.png"
-import imgb4 from "../images/bulbasaur_background.jpg"
 
 const Homepage = () => {
 
@@ -33,7 +33,6 @@ const Homepage = () => {
         (x === 0) ? setX(0): setX(x + 100)
     }
     let goR = () => {
-        console.log(x);
         (x === -100*(sliderArr.length-1)) ? setX(0): setX(x - 100)
     }
 

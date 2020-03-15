@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from "react-router-dom";
-import SearchFitler from "./SearchFilter";
+import SearchFitler from "../SearchFilter";
 
 const tableitems = {
     marginLeft: "200px",

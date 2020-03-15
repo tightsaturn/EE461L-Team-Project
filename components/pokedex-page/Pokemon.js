@@ -1,9 +1,9 @@
 import React from "react"
 import 'bootstrap/dist/css/bootstrap.min.css'
-import "../App.css"
+import "../../App.css"
 import Button from 'react-bootstrap/Button';
 import {Link} from "react-router-dom";
-import SearchFitler from "./SearchFilter";
+import SearchFitler from "../SearchFilter";
 
 const tableabilities = {
     marginLeft: "400px",

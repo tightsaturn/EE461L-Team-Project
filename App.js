@@ -1,37 +1,33 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Header from './components/Header';
-import Pokemon from './components/Pokemon';
-import Error from './components/Error';
-import Abilities from './components/Abilities';
-import Moves from './components/Moves';
-import PokemonInfo from "./components/PokemonInfo";
-import PokemonLocation from "./components/PokemonLocation";
-import Background from "./components/Background"
-import Homepage from "./components/Homepage"
-import AbilitiesInfo from "./components/AbilitiesInfo"
-import MovesInfo from "./components/MovesInfo"
-import Items from "./components/Items"
-import ItemsInfo from "./components/ItemsInfo"
+import Homepage from "./components/home-page/Homepage"
+import Pokemon from './components/pokedex-page/Pokemon';
+import PokemonInfo from "./components/pokedex-page/PokemonInfo";
+import AddPokemon from "./components/pokedex-page/AddPokemon"
+import PokemonLocation from "./components/pokedex-page/PokemonLocation";
+import Abilities from './components/abilities-page/Abilities';
+import AbilitiesInfo from "./components/abilities-page/AbilitiesInfo"
+import Moves from './components/moves-page/Moves';
+import MovesInfo from "./components/moves-page/MovesInfo"
+import Items from "./components/items-page/Items"
+import ItemsInfo from "./components/items-page/ItemsInfo"
+import Types from "./components/types-page/Types"
+import TypeDisplay from "./components/types-page/TypesDisplay"
 import TeamBuilder from "./components/team-builder-page/Team_Builder_App"
-import Types from "./components/Types"
-import TypeDisplay from "./components/TypesDisplay"
-import Feedback from "./components/Feedback"
-import Thankyou from "./components/Thankyou";
-import AddPokemon from "./components/AddPokemon"
 import AboutUs from "./components/about-us-page/AboutUs_App"
+import Thankyou from "./components/feedback-page/Thankyou";
+import Feedback from "./components/feedback-page/Feedback"
+import Error from './components/Error';
+import Header from './components/Header';
+import Background from "./components/Background"
 
-const wholePage = {
-   // border: "5px solid red",
-   // backgroundColor: "blue"
-}
 
 class App extends Component {
     render() {
         return (
             <BrowserRouter >
                 <Header/>
-                <div style={wholePage}>
+                <div>
                     <Switch>
                         <Route exact path="/" component={Homepage}/>
                         <Route exact path="/abilities" component={Abilities}/>
@@ -53,7 +49,6 @@ class App extends Component {
                         <Route component={Error}/>
                     </Switch>
                     <Background/>
-
                 </div>
             </BrowserRouter>
         );

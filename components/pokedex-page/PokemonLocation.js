@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import "../App.css"
-import bulby from "../images/bulbasaur.png"
+import "../../App.css"
+import bulby from "../../images/bulbasaur.png"
 
 const tablelocations = {
     marginTop: "70px",
