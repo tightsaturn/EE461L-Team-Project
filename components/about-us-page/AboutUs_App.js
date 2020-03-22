@@ -2,10 +2,10 @@ import React from 'react'
 import "../Background.css"
 import Developer_Card from "./Developer_Card";
 import Background from "../Background"
-import tristan from "./tristan.jpeg"
-import jaime from "./jaime.jpg"
-import jimmy from "./jimmy.jpg"
-import mihir from "./mihir.jpg"
+import tristan from "./css/tristan.jpeg"
+import jaime from "./css/jaime.jpg"
+import jimmy from "./css/jimmy.jpg"
+import mihir from "./css/mihir.jpg"
 
 import "./css/AboutUs_Background.css"
 import "./css/About_App.css"
