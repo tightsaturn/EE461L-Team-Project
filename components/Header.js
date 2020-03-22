@@ -3,8 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import "../App.css"
 import logo from "../images/logo.jpg"
 import { Link } from 'react-router-dom';
-import headerImg from "../images/headerImg.jpeg"
-
+import GoogleLogin from "react-google-login";
 
 const navBar = {
     backgroundColor: "black",
@@ -32,12 +31,14 @@ const logIn = {
     fontFamily: "Calibri"
 };
 
-
+const responseGoogle = (response) => {
+    console.log(response)
+}
 
 const Header = () => {
     return (
         <div>
-            <nav className="navbar" style={navBar}>
+            <div className="navbar" style={navBar}>
                 <Link to={"/pokemon"}><a className="navbar-brand" style={modelLink}>Pokedex</a></Link>
                 <Link to={"/moves"}> <a className="navbar-brand" style={modelLink}>Moves</a> </Link>
                 <Link to={"/abilities"}> <a className="navbar-brand" style={modelLink}>Abilities</a> </Link>
@@ -45,13 +46,14 @@ const Header = () => {
 
                 <Link to={"/"}><img src={logo} className="navbar-brand" style={logoBlock}/></Link>
                 <Link to={"/types"}> <a className="navbar-brand" style={modelLink}>Types</a> </Link>
-                <Link to={"/teambuilder"}> <a className="navbar-brand" style={modelLink}>Team Builder</a> </Link>
+                <Link to={"/teambuil" +
+                "der"}> <a className="navbar-brand" style={modelLink}>Team Builder</a> </Link>
                 <Link to={"/aboutus"}> <a className="navbar-brand" style={modelLink}>About Us</a> </Link>
                 <Link to={"/feedback"}> <a className="navbar-brand" style={modelLink}>Feedback</a> </Link>
-                <button className="btn-sm btn-success" style={logIn}>Log In</button>
-            </nav>
-        </div>
+                {/*<button className="btn-sm btn-success" style={logIn}>Log In</button>*/}
 
+            </div>
+        </div>
     )
 };
 

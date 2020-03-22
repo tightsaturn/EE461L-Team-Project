@@ -1,5 +1,5 @@
 import React from "react";
-import './css/AboutUs_Background.css';
+import './AboutUs_Background.css';
 
 function AboutUs_Background() {
     return (

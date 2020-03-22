@@ -1,7 +1,7 @@
 import React from "react";
-import './css/AboutUs_Background.css';
+import './Background.css';
 
-function AboutUs_Background() {
+function Background() {
     return (
         <div>
             <span className="Left-border"></span>
@@ -13,4 +13,4 @@ function AboutUs_Background() {
     )
 }
 
-export default AboutUs_Background
+export default Background
