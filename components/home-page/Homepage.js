@@ -1,6 +1,6 @@
 import React,{useState} from "react"
 import "bootstrap/dist/css/bootstrap.min.css"
-import "../../css/Homepage.scss"
+import "./css/Homepage.scss"
 import img1 from "../../images/togepi.png"
 import imgb1 from "../../images/togepi_background.jpg"
 import img2 from "../../images/eevee.png"
