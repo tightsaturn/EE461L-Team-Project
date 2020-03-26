@@ -1,7 +1,7 @@
 import React from 'react';
 import Background from "./Background";
 import Pokemon_Team from "./Pokemon_Team";
-import squirtle from './squirtle.png'
+import squirtle from './css/squirtle.png'
 import {Link} from "react-router-dom";
 import Button from "react-bootstrap/Button";
 
@@ -26,31 +26,7 @@ function Team_Builder_App() {
             <br></br>
             <br></br>
                 <h5>Team Members:</h5>
-                <Pokemon_Team
-                    image1 = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png"
-                    name1 = "Squirtle"
-                    type1 = "Water"
-
-                    image2 = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png"
-                    name2 = "Squirtle"
-                    type2 = "Water"
-
-                    image3 = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png"
-                    name3 = "Squirtle"
-                    type3 = "Water"
-
-                    image4 = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png"
-                    name4 = "Squirtle"
-                    type4 = "Water"
-
-                    image5 = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png"
-                    name5 = "Squirtle"
-                    type5 = "Water"
-
-                    image6 = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png"
-                    name6 = "Squirtle"
-                    type6 = "Water"
-                />
+                <Pokemon_Team/>
         </div>
     )
 }
