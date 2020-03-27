@@ -4,6 +4,9 @@ let Pokemon = require('../models/pokemon.model');           // link and require 
 // Setup paths that can be called and the action that will occur
 router.route('/').get((req, res) => {               // Generic url with /pokemon/
     console.log("URL /pokemon/ has been called");
+    Pokemon.findOne({}, function (error, documents) {
+        console.log(JSON.stringify(documents))
+    });
     Pokemon.find()                                  // Finds all pokemon in database
         .then(pokemon => res.json(pokemon))         // Returns JSON with list of all pokemon
         .catch(err => res.status(400).json('Error: ' + err));
