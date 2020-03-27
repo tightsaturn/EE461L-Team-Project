@@ -21,9 +21,17 @@ connection.once('open', () => {
 
 // Import Router Files
 const pokemonRouter = require('./routes/pokemon');
+const itemsRouter = require('./routes/items');
+const abilitiesRouter = require('./routes/abilities');
+const movesRouter = require('./routes/moves');
+
 
 // Setup paths for routers
 app.use('/pokemon', pokemonRouter);
+app.use('/items', itemsRouter);
+app.use('/abilities', abilitiesRouter);
+app.use('/moves', movesRouter);
+
 
 // Start the server
 app.listen(port, () => {

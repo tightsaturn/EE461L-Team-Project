@@ -2,8 +2,16 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
+const ability = new Schema({
+                    name: String,
+                    url: String, });
+
 const pokemonSchema = new Schema({
-    abilities: Array,
+    abilities: [{
+        ability: [ability],
+        is_hidden: Boolean,
+        slot: Number
+    }],
     base_experience: Number,
     forms: Array,
     game_indices: Array,
