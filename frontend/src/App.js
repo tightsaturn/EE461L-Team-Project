@@ -3,6 +3,8 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Homepage from "./components/home-page/Homepage"
 import Pokemon from './components/pokedex-page/Pokemon';
 import PokemonInfo from "./components/pokedex-page/PokemonInfo";
+import AddPokemon_Pokedex from "./components/pokedex-page/AddPokemon";
+import AddPokemon_TeamBuilder from "./components/team-builder-page/AddPokemon";
 import PokemonLocation from "./components/pokedex-page/PokemonLocation";
 import Abilities from './components/abilities-page/Abilities';
 import AbilitiesInfo from "./components/abilities-page/AbilitiesInfo"
@@ -44,7 +46,7 @@ class App extends Component {
                         <Route exact path="/feedback" component={Feedback}/>
                         <Route exact path="/feedback/thankyou" component={Thankyou}/>
                         <Route exact path = "/teambuilder" component = {TeamBuilder}/>
-                        <Route exact path = "/teambuilder/addpokemon" component = {AddPokemon}/>
+                        <Route exact path = "/teambuilder/addpokemon" component = {AddPokemon_TeamBuilder}/>
                         <Route exact path = "/aboutus" component = {AboutUs}/>
                         <Route component={Error}/>
                     </Switch>
