@@ -1,9 +1,9 @@
 import React from 'react';
 import Background from "./Background";
 import Pokemon_Team from "./Pokemon_Team";
-import squirtle from './css/squirtle.png'
 import {Link} from "react-router-dom";
 import Button from "react-bootstrap/Button";
+import axios from 'axios'
 
 const tableAbilities = {
  //   backgroundColor: "blue",
