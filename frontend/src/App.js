@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Homepage from "./components/home-page/Homepage"
 import Pokemon from './components/pokedex-page/Pokemon';
 import PokemonInfo from "./components/pokedex-page/PokemonInfo";
-import AddPokemon_Pokedex from "./components/pokedex-page/AddPokemon";
 import AddPokemon_TeamBuilder from "./components/team-builder-page/AddPokemon";
 import PokemonLocation from "./components/pokedex-page/PokemonLocation";
 import Abilities from './components/abilities-page/Abilities';
