@@ -15,6 +15,7 @@ import ItemsInfo from "./components/items-page/ItemsInfo"
 import Types from "./components/types-page/Types"
 import TypeDisplay from "./components/types-page/TypesDisplay"
 import TeamBuilder from "./components/team-builder-page/Team_Builder_App"
+import AddPokemon from "./components/team-builder-page/AddPokemon"
 import AboutUs from "./components/about-us-page/AboutUs_App"
 import Thankyou from "./components/feedback-page/Thankyou";
 import Feedback from "./components/feedback-page/Feedback"

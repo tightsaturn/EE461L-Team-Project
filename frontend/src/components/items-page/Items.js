@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 import SearchFitler from "../SearchFilter";
+import ItemsBox from "../items-page/ItemsBox";
 
 const tableitems = {
     marginLeft: "200px",
@@ -8,58 +9,90 @@ const tableitems = {
     marginRight: "100px",
 }
 
-const Items = () => {
-    return (
+class Items extends React.Component{
+    constructor(){
+        super();
+        this.state = {
+            item: new Array(953),
+            itemJSON: ""
+        }
+        this.fetchItem = this.fetchItem.bind(this)
+        this.capitalize = this.capitalize.bind(this)
+    }
 
-        <div style={tableitems}>
-            <h1>Items</h1>
-            <br/>
-            <SearchFitler/>
-            <br/>
-            <table className="table">
-                <thead className="thead-dark">
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Item</th>
-                    <th scope="col">Effect</th>
-                    <th scope="col">Picture</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <th scope="row">001</th>
-                    <td><Link to={"/items/master-ball"}>Master-Ball</Link></td>
-                    <td>Used in battle : Catches a wild Pokémon without fail. If used in a trainer battle, nothing happens and the ball is lost.</td>
-                    <td>X</td>
-                </tr>
-                <tr>
-                    <th scope="row">002</th>
-                    <td><Link to={"/items/utlra-ball"}>Ultra-Ball</Link></td>
-                    <td>Used in battle : Attempts to catch a wild Pokémon, using a catch rate of 2×. If used in a trainer battle, nothing happens and the ball is lost.</td>
-                    <td>X</td>
-                </tr>
-                <tr>
-                    <th scope="row">003</th>
-                    <td><Link to={"/items/great-ball"}>Great-Ball</Link></td>
-                    <td>Used in battle : Attempts to catch a wild Pokémon, using a catch rate of 1.5×. If used in a trainer battle, nothing happens and the ball is lost.</td>
-                    <td>X</td>
-                </tr>
-                <tr>
-                    <th scope="row">#</th>
-                    <td><Link to={"/items/item name"}>Item Name</Link></td>
-                    <td>Item Description</td>
-                    <td>X</td>
-                </tr>
-                <tr>
-                    <th scope="row">...</th>
-                    <td>...</td>
-                    <td>...</td>
-                    <td>...</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    );
+    fetchItem(){
+        // fetch from mongodb
+        let doneFetching = false
+        let id = 1
+
+        for(let id = 1; id < 954; id++){
+            // fetch each item and add to state
+            let url = 'https://pokeapi.co/api/v2/item/' + id;
+            fetch(url)
+                .then((response) => {
+                    if(response.ok){
+                        return response.json();
+                    } else {
+                        throw new Error("failed to get response");
+                    }
+                })
+                .then(data => {
+                    // get number of commits and update state
+                    console.log(data);
+                    this.setState(prevState => {
+                        let itemArray = [...prevState.item]
+                        itemArray[id] =
+                            <ItemsBox
+                                picture={data.sprites.default}
+                                effect={data.effect_entries[0].short_effect}
+                                name={this.capitalize(data.name)}
+                                id = {data.id}
+                            />;
+
+                        return {
+                            item: itemArray
+                        }
+                    })
+                })
+                .catch((err) =>{
+                    console.log(err)
+                });
+        }
+    }
+
+    capitalize(name) {
+        let firstLetter = name.charAt(0).toUpperCase()
+        return (firstLetter + name.substring(1))
+    }
+
+    componentDidMount() {
+        this.fetchItem();
+    }
+    render()
+    {
+        return (
+
+            <div style={tableitems}>
+                <h1>Items</h1>
+                <br/>
+                <SearchFitler/>
+                <br/>
+                <table className="table">
+                    <thead className="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Item</th>
+                        <th scope="col">Effect</th>
+                        <th scope="col">Picture</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {this.state.item}
+                    </tbody>
+                </table>
+            </div>
+        );
+    }
 }
 
 export default Items;

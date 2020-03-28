@@ -35,7 +35,7 @@ router.route(`/:id`).get((req, res) => {
     console.log("URL /pokemon/" + req.params.id + " has been called");
     Pokemon.findOne({id: req.params.id})
         .then(pokemon => res.json(pokemon))
-        .catch(err => res.status(400).json('Error: ' + err));
+        .catch(err => res.status(400).json('Error:a' + err));
 });
 
 // Get a list of Pokemon within the inclusive range provided. Range is in terms of the id specified
