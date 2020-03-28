@@ -53,7 +53,7 @@ router.route('/:start_id/:end_id').get((req, res) => {
     for (let i = req.params.start_id; i <= req.params.end_id; i++) {
         Pokemon.findOne({id: i})
             .then(pokemon => {
-                result.push(pokemon)
+                result[pokemon.id - req.params.start_id] = pokemon
                 status[req.params.end_id - i] = true
             })
             .catch(err => res.status(400).json('Error: ' + err));
