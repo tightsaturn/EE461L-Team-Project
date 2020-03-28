@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import "../../App.css"
 import Button from 'react-bootstrap/Button';
 import {Link} from "react-router-dom";
-import SearchFitler from "../SearchFilter";
+import SearchFilter from "../SearchFilter";
 import PokemonBox from "./PokemonBox";
 
 const tableabilities = {
@@ -79,7 +79,7 @@ class Pokemon extends React.Component {
                     <h1>Pokemon</h1>
                     <br/>
                     <br/>
-                    <SearchFitler/>
+                    <SearchFilter/>
                     <div className="row mt-5">
                         {this.state.pokemon}
                     </div>

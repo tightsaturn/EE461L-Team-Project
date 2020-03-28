@@ -2,6 +2,8 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 import SearchFilter from "../SearchFilter";
+import AbilitiesBox from "./AbilitiesBox";
+import PokemonBox from "../pokedex-page/PokemonBox";
 
 const tableabilities = {
     marginLeft: "200px",
@@ -9,57 +11,94 @@ const tableabilities = {
     marginRight: "100px",
 }
 
-const Abilities = () => {
-    return (
+class Abilities extends React.Component {
+    constructor(){
+        super();
+        this.state = {
+            ability: new Array(232),
+            abilityJSON: ""
+        }
+        this.fetchAbility = this.fetchAbility.bind(this)
+        this.capitalize = this.capitalize.bind(this)
+    }
 
-        <div style={tableabilities}>
-            <h1>Abilities</h1>
-            <br/>
-            <SearchFilter/>
-            <br/>
-            <table className="table">
-                <thead className="thead-dark">
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Effect</th>
-                    <th scope="col">Generation</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <th scope="row">001</th>
-                    <td><Link to={"/abilities/stench"}>Stench</Link></td>
-                    <td>By releasing stench when attacking, this Pokémon may cause the target to flinch.	</td>
-                    <td>III</td>
-                </tr>
-                <tr>
-                    <th scope="row">002</th>
-                    <td><Link to={"/abilities/drizzle"}>Drizzle</Link></td>
-                    <td>The Pokémon makes it rain when it enters a battle.	</td>
-                    <td>III</td>
-                </tr>
-                <tr>
-                    <th scope="row">003</th>
-                    <td><Link to={"/abilities/speed-boost"}>Speed-Boost</Link></td>
-                    <td>Its Speed stat is boosted every turn.</td>
-                    <td>III</td>
-                </tr>
-                <tr>
-                    <th scope="row">#</th>
-                    <td><Link to={"/abilities/ability name"}>Ability Name</Link></td>
-                    <td>Effect Description</td>
-                    <td>From what Generation</td>
-                </tr>
-                <tr>
-                    <th scope="row">...</th>
-                    <td>...</td>
-                    <td>...</td>
-                    <td>...</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    );
+    fetchAbility(){
+        // fetch from mongodb
+        let doneFetching = false
+        let id = 1
+
+        for(let id = 1; id < 233; id++){
+            // fetch each ability and add to state
+            let url = 'https://pokeapi.co/api/v2/ability/' + id;
+            fetch(url)
+                .then((response) => {
+                    if(response.ok){
+                        return response.json();
+                    } else {
+                        throw new Error("failed to get response");
+                    }
+                })
+                .then(data => {
+                    // get number of commits and update state
+                    console.log(data);
+                    this.setState(prevState => {
+                        let abilityArray = [...prevState.ability]
+                        abilityArray[id] =
+                            <AbilitiesBox
+                                generation={this.capitalizeG(data.generation.name)}
+                                description={data.effect_entries[0].short_effect}
+                                name={this.capitalize(data.name)}
+                                id={data.id}
+                            />;
+
+                        return {
+                            ability: abilityArray
+                        }
+                    })
+                })
+                .catch((err) =>{
+                    console.log(err)
+                });
+        }
+    }
+
+    capitalize(name) {
+        let firstLetter = name.charAt(0).toUpperCase()
+        return (firstLetter + name.substring(1))
+    }
+
+    capitalizeG(generation) {
+        let firstLetter = generation.charAt(0).toUpperCase()
+        let romanGeneration = generation.substring(11).toUpperCase()
+        return (firstLetter + generation.substring(1,11) + romanGeneration)
+    }
+
+    componentDidMount() {
+        this.fetchAbility();
+    }
+    render()
+    {
+        return (
+            <div style={tableabilities}>
+                <h1>Abilities</h1>
+                <br/>
+                <SearchFilter/>
+                <br/>
+                <table className="table">
+                    <thead className="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Effect</th>
+                        <th scope="col">Generation</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {this.state.ability}
+                    </tbody>
+                </table>
+            </div>
+        );
+    }
 }
 export default Abilities;
