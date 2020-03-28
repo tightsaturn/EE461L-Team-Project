@@ -18,6 +18,7 @@ class Abilities extends React.Component {
             ability: new Array(232),
             abilityJSON: ""
         }
+
         this.fetchAbility = this.fetchAbility.bind(this)
         this.capitalize = this.capitalize.bind(this)
     }
@@ -76,6 +77,7 @@ class Abilities extends React.Component {
     componentDidMount() {
         this.fetchAbility();
     }
+
     render()
     {
         return (
