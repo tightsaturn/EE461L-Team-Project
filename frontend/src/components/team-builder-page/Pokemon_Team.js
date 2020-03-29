@@ -2,6 +2,7 @@ import React from "react";
 import {Link} from "react-router-dom";
 import './css/Pokemon_Team.css';
 import BlankPokemon from './css/BlankPokemon.png'
+import axios from 'axios'
 
 const tableAbilities = {
    // marginLeft: "350px",
@@ -26,8 +27,8 @@ function Pokemon_Card(props) {
 }
 
 class Pokemon_Team extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             pokemonCards : [
                 {
@@ -64,8 +65,53 @@ class Pokemon_Team extends React.Component {
         }
     }
 
+    componentWillMount() {
+        const savedState = JSON.parse(localStorage.getItem('teamBuilderState'));
+        this.setState(savedState);
+    }
+
     componentDidMount() {
-        // This is where you will get data from the database
+        // Check URL to see if an action needs to be done
+        console.log(window.location.pathname);
+        var path = window.location.pathname.split('/')
+        console.log(path);
+
+        if (path.length == 5 && path[2].localeCompare("change") == 0) {             // If '/teambuilder/change/:memberNum/:pokemonId', update the team member with the new pokemon
+            var memberNum = Number(path[3]);
+            var pokemonId = Number(path[4]);
+
+            console.log("memberNum: " + memberNum);
+            console.log("pokemonId: " + pokemonId);
+
+            // fetch the pokemon
+            axios.get('http://localhost:5000/pokemon/' + pokemonId)
+            .then(response => {
+                console.log(response.data)
+                let new_state = this.state.pokemonCards.slice();
+                new_state[memberNum - 1].image = response.data.sprites.front_default;
+                new_state[memberNum - 1].name = response.data.name;
+                new_state[memberNum - 1].type = "Insert type";
+                this.setState({ pokemonCards: new_state})
+
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+        }
+        else if (path.length == 3 && path[2].localeCompare("resetTeam") == 0) {
+            console.log("Resetting pokemon team");
+            let new_state = this.state.pokemonCards.slice();
+            for (let i = 0; i < 6; i++) {
+                new_state[i].image = BlankPokemon;
+                new_state[i].name = "Who's that Pokemon?";
+                new_state[i].type = "Unknown";
+            }
+            this.setState({ pokemonCards: new_state })
+        }
+    }
+
+    componentWillUnmount() {
+        localStorage.setItem('teamBuilderState', JSON.stringify(this.state));
     }
 
     render() {

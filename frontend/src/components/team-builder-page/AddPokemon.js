@@ -23,7 +23,7 @@ const PokemonRow = props => (
             <img src = {props.image} alt = {props.name}/>
         </td>
         <td>
-            <Link to = "/teambuilder">
+            <Link to = {"/teambuilder/change/" + props.memberNum + "/" + props.id}>
                 <Button variant="outline-info">+ Add</Button>
             </Link>
         </td>
@@ -31,8 +31,8 @@ const PokemonRow = props => (
 )
 
 class AddPokemon extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         // initialize 2D array that will map all of the pokemon to a page, the outside
         // array will be all of the page numbers and the inner arrays will hold all of
@@ -93,6 +93,7 @@ class AddPokemon extends React.Component {
                                 name = {data.name}
                                 type = {data.types}
                                 image = {data.sprites.front_default}
+                                memberNum = {this.props.match.params.memberNum}
                             />;
 
                         return {
@@ -125,6 +126,7 @@ class AddPokemon extends React.Component {
         //         console.log(error);
         //     })
 
+        console.log("Team member being changed: " + this.props.match.params.memberNum)
         this.fetchPokemon();
     }
 

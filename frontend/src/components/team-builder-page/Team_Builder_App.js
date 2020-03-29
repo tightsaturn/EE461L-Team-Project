@@ -19,14 +19,16 @@ function Team_Builder_App() {
             <Background/>
                 <h1>Team Builder</h1>
                 <h3>Build the Ultimate Team</h3>
-            <br></br>
-            <Link to = "/teambuilder/addpokemon">
-                <Button variant="outline-success">+ Add Pokemon to Team</Button>
+            <br/>
+
+            <Link to = "/teambuilder/resetTeam">
+                <Button variant="outline-danger">Reset Team</Button>
             </Link>
-            <br></br>
-            <br></br>
-                <h5>Team Members:</h5>
-                <Pokemon_Team/>
+            <br/>
+            <br/>
+
+            <h5>Team Members:</h5>
+            <Pokemon_Team/>
         </div>
     )
 }
