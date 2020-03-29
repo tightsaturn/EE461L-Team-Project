@@ -38,8 +38,8 @@ class App extends Component {
                         <Route exact path="/items" component={Items}/>
                         <Route exact path="/items/:item" component={ItemsInfo}/>
                         <Route exact path="/pokemon" component={Pokemon}/>
-                        <Route exact path="/pokemon/:pokemons" component={PokemonInfo}/>
-                        <Route exact path="/pokemon/:pokemons/location" component={PokemonLocation}/>
+                        <Route exact path="/pokemon/:id" component={PokemonInfo}/>
+                        <Route exact path="/pokemon/:id/location" component={PokemonLocation}/>
                         <Route exact path="/types" component={Types}/>
                         <Route exact path="/types/:type" component={TypeDisplay}/>
                         <Route exact path="/feedback" component={Feedback}/>
