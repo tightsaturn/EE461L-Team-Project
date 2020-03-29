@@ -7,6 +7,15 @@ const pokemonCard = {
     height: "auto",
     object: "contain"
 }
+.img  ={
+    maxWidth: "100%",
+    maxHeight: "100%"
+}
+
+.portrait = {
+    height: "auto",
+    width: "auto"
+}
 
 const ItemsBox = (props) => {
     return (
@@ -14,7 +23,7 @@ const ItemsBox = (props) => {
             <th scope="row">{props.id}</th>
             <td><Link to={"/items/" + props.name}>{props.name}</Link></td>
             <td>{props.effect}</td>
-            <td><img className="card-img-top" src={props.picture} alt="Card image cap" style={pokemonCard}/></td>
+            <td><img className="portrait" src={props.picture} alt="Card image cap" style={pokemonCard}/></td>
         </tr>
     )
 }
