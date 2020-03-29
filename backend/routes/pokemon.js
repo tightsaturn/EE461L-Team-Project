@@ -38,8 +38,35 @@ router.route(`/:id`).get((req, res) => {
         .catch(err => res.status(400).json('Error:a' + err));
 });
 
+// Get total number of Pokemon in database.
+// NOTE: This function does NOT work. DO NOT USE FOR NOW. The problem is tha
+//       it returns the following error:
+//       "Error:aCastError: Cast to number failed for value \"totalNumPokemon\" at path \"id\" for model \"Pokemon\""
+router.route('/totalNumPokemon').get((req, res) => {
+    console.log("URL /totalNumPokemon has been called");
+    // Pokemon.countDocuments({}, function (err, count) {
+    //     console.log('Count: ' + count);
+    //     res = count;
+    // });
+    Pokemon.estimatedDocumentCount()
+        .then(count => {
+            console.log("count: " + count)
+            res.json(count)
+        })
+    // console.log("count: " + Pokemon.estimatedDocumentCount());
+    // res.json(Pokemon.estimatedDocumentCount());
+});
+
 // Get a list of Pokemon within the inclusive range provided. Range is in terms of the id specified
 // by PokeAPI (id field in pokemon database)
+// NOTE: This function does NOT work. DO NOT USE FOR NOW. The problem is that the array that
+//       is populated by the pokemon objects is returned as empty before the mongoose
+//       queries are able to finish. This is due to the fact that the queries seem to be
+//       asynchronous and will just occur whenever. In other routes, the function has to
+//       wait on the queries because the response is the result of the query. Here, the
+//       result array that is returned that is supposed to hold all of the results of the
+//       queries exists without the queries so the function returns the array without
+//       waiting on the queries to finish.
 router.route('/:start_id/:end_id').get((req, res) => {
     console.log("URL /pokemon/" + req.params.start_id + "/" + req.params.end_id + " has been called");
     var result = [];
