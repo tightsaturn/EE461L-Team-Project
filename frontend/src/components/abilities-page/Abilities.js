@@ -14,20 +14,25 @@ const tableabilities = {
 class Abilities extends React.Component {
     constructor(){
         super();
+        // initialize 2d array for pagination
+        let abilitiesArray = []
+        for(let i = 0; i < 30; i++){
+            abilitiesArray.push([])
+        }
+
         this.state = {
-            ability: new Array(232),
-            abilityJSON: ""
+            ability: abilitiesArray,
+            buttons: [],
+            currentPage: 0,
+            pageSize: 10
         }
 
         this.fetchAbility = this.fetchAbility.bind(this)
         this.capitalize = this.capitalize.bind(this)
+        this.handlePageClick = this.handlePageClick.bind(this)
     }
 
     fetchAbility(){
-        // fetch from mongodb
-        let doneFetching = false
-        let id = 1
-
         for(let id = 1; id < 233; id++){
             // fetch each ability and add to state
             let url = 'https://pokeapi.co/api/v2/ability/' + id;
@@ -40,11 +45,29 @@ class Abilities extends React.Component {
                     }
                 })
                 .then(data => {
+                    // get page number and update state
+                    let pageNum = Math.floor((id-1)/10);
+                    let index = (id-1)%10;
+
+                    // add a button for every new page
+                    if(index == 0) this.setState(prevState => {
+                        let buttonArray = [...prevState.buttons]
+                        buttonArray[pageNum] =
+                            <button type="button" id={pageNum} className="btn btn-light" onClick={this.handlePageClick}>
+                                {pageNum+1}
+                            </button>
+
+                        return {
+                            buttons: buttonArray
+                        }
+                    })
+
+
                     // get number of commits and update state
                     console.log(data);
                     this.setState(prevState => {
                         let abilityArray = [...prevState.ability]
-                        abilityArray[id] =
+                        abilityArray[pageNum][index] =
                             <AbilitiesBox
                                 generation={this.capitalizeG(data.generation.name)}
                                 description={data.effect_entries[0].short_effect}
@@ -74,6 +97,13 @@ class Abilities extends React.Component {
         return (firstLetter + generation.substring(1,11) + romanGeneration)
     }
 
+    handlePageClick(event) {
+        const {id} = event.target
+        this.setState({
+            currentPage: id
+        })
+    }
+
     componentDidMount() {
         this.fetchAbility();
     }
@@ -96,9 +126,12 @@ class Abilities extends React.Component {
                     </tr>
                     </thead>
                     <tbody>
-                        {this.state.ability}
+                    {this.state.ability[this.state.currentPage]}
                     </tbody>
                 </table>
+                <div className="row mt-2">
+                    {this.state.buttons}
+                </div>
             </div>
         );
     }

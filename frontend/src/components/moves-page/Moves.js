@@ -12,13 +12,22 @@ const tablemoves = {
 class Moves extends React.Component {
     constructor(){
         super();
+        // initialize 2d array for pagination
+        let movesArray = []
+        for(let i = 0; i < 75; i++){
+            movesArray.push([])
+        }
+
         this.state = {
-            move: new Array(727),
-            moveJSON: ""
+            move:  movesArray,
+            buttons: [],
+            currentPage: 0,
+            pageSize: 10
         }
 
         this.fetchMove = this.fetchMove.bind(this)
         this.capitalize = this.capitalize.bind(this)
+        this.handlePageClick = this.handlePageClick.bind(this)
     }
 
     fetchMove(){
@@ -38,11 +47,27 @@ class Moves extends React.Component {
                     }
                 })
                 .then(data => {
+                    let pageNum = Math.floor((id-1)/10);
+                    let index = (id-1)%10;
+
+                    // add a button for every new page
+                    if(index == 0) this.setState(prevState => {
+                        let buttonArray = [...prevState.buttons]
+                        buttonArray[pageNum] =
+                            <button type="button" id={pageNum} className="btn btn-light" onClick={this.handlePageClick}>
+                                {pageNum+1}
+                            </button>
+
+                        return {
+                            buttons: buttonArray
+                        }
+                    })
+
                     // get number of commits and update state
                     console.log(data);
                     this.setState(prevState => {
                         let moveArray = [...prevState.move]
-                        moveArray[id] =
+                        moveArray[pageNum][index] =
                             <MovesBox
                                 type={this.capitalize(data.type.name)}
                                 effect={data.effect_entries[0].effect}
@@ -70,6 +95,13 @@ class Moves extends React.Component {
         this.fetchMove();
     }
 
+    handlePageClick(event) {
+        const {id} = event.target
+        this.setState({
+            currentPage: id
+        })
+    }
+
     render()
     {
         return (
@@ -89,9 +121,12 @@ class Moves extends React.Component {
                     </tr>
                     </thead>
                     <tbody>
-                    {this.state.move}
+                    {this.state.move[this.state.currentPage]}
                     </tbody>
                 </table>
+                <div className="row mt-2">
+                    {this.state.buttons}
+                </div>
             </div>
         );
     }

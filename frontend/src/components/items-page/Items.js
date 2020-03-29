@@ -2,6 +2,7 @@ import React from 'react';
 import {Link} from "react-router-dom";
 import SearchFitler from "../SearchFilter";
 import ItemsBox from "../items-page/ItemsBox";
+import AbilitiesBox from "../abilities-page/AbilitiesBox";
 
 const tableitems = {
     marginLeft: "200px",
@@ -12,21 +13,27 @@ const tableitems = {
 class Items extends React.Component{
     constructor(){
         super();
-        this.state = {
-            item: new Array(953),
-            itemJSON: ""
+        // initialize 2d array for pagination
+        let itemsArray = []
+        for(let i = 0; i < 100; i++){
+            itemsArray.push([])
         }
+
+        this.state = {
+            item:  itemsArray,
+            buttons: [],
+            currentPage: 0,
+            pageSize: 10
+        }
+
         this.fetchItem = this.fetchItem.bind(this)
         this.capitalize = this.capitalize.bind(this)
+        this.handlePageClick = this.handlePageClick.bind(this)
     }
 
     fetchItem(){
         // fetch from mongodb
-        let doneFetching = false
-        let id = 1
-
         for(let id = 1; id < 954; id++){
-            // fetch each item and add to state
             let url = 'https://pokeapi.co/api/v2/item/' + id;
             fetch(url)
                 .then((response) => {
@@ -37,11 +44,29 @@ class Items extends React.Component{
                     }
                 })
                 .then(data => {
+                    // get page number and update state
+                    let pageNum = Math.floor((id-1)/10);
+                    let index = (id-1)%10;
+
+                    // add a button for every new page
+                    if(index == 0) this.setState(prevState => {
+                        let buttonArray = [...prevState.buttons]
+                        buttonArray[pageNum] =
+                            <button type="button" id={pageNum} className="btn btn-light" onClick={this.handlePageClick}>
+                                {pageNum+1}
+                            </button>
+
+                        return {
+                            buttons: buttonArray
+                        }
+                    })
+
+
                     // get number of commits and update state
                     console.log(data);
                     this.setState(prevState => {
                         let itemArray = [...prevState.item]
-                        itemArray[id] =
+                        itemArray[pageNum][index] =
                             <ItemsBox
                                 picture={data.sprites.default}
                                 effect={data.effect_entries[0].short_effect}
@@ -63,6 +88,13 @@ class Items extends React.Component{
     capitalize(name) {
         let firstLetter = name.charAt(0).toUpperCase()
         return (firstLetter + name.substring(1))
+    }
+
+    handlePageClick(event) {
+        const {id} = event.target
+        this.setState({
+            currentPage: id
+        })
     }
 
     componentDidMount() {
@@ -87,9 +119,12 @@ class Items extends React.Component{
                     </tr>
                     </thead>
                     <tbody>
-                    {this.state.item}
+                    {this.state.item[this.state.currentPage]}
                     </tbody>
                 </table>
+                <div className="row mt-2">
+                    {this.state.buttons}
+                </div>
             </div>
         );
     }
