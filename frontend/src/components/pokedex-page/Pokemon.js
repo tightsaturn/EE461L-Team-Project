@@ -1,9 +1,6 @@
 import React from "react"
-// import axios from 'axios'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import "../../App.css"
-import Button from 'react-bootstrap/Button';
-import {Link} from "react-router-dom";
 import SearchFilter from "../SearchFilter";
 import PokemonBox from "./PokemonBox";
 
@@ -16,19 +13,26 @@ const tableabilities = {
 class Pokemon extends React.Component {
     constructor(){
         super();
+
+        // initialize 2d array for pagination
+        let pokeArray = []
+        for(let i = 0; i < 50; i++){
+            pokeArray.push([])
+        }
+
         this.state = {
-            pokemon: new Array(807),
-            pokemonJSON: ""
+            pokemon: pokeArray,
+            buttons: [],
+            currentPage: 0,
+            pageSize: 30
         }
         this.fetchPokemon = this.fetchPokemon.bind(this)
         this.capitalize = this.capitalize.bind(this)
+        this.handlePageClick = this.handlePageClick.bind(this)
     }
 
     fetchPokemon(){
-        // fetch from mongodb
-        let doneFetching = false
-        let id = 1
-
+        // fetch each pokemon and add to state
         for(let id = 1; id < 808; id++){
             // fetch each pokemon and add to state
             let url = 'https://pokeapi.co/api/v2/pokemon/' + id;
@@ -41,11 +45,26 @@ class Pokemon extends React.Component {
                     }
                 })
                 .then(data => {
-                    // get number of commits and update state
-                    console.log(data);
+                    // get page number and update state
+                    let pageNum = Math.floor((id-1)/30);
+                    let index = (id-1)%30;
+
+                    // add a button for every new page
+                    if(index == 0) this.setState(prevState => {
+                        let buttonArray = [...prevState.buttons]
+                        buttonArray[pageNum] =
+                            <button type="button" id={pageNum} className="btn btn-light" onClick={this.handlePageClick}>
+                                {pageNum+1}
+                            </button>
+
+                        return {
+                            buttons: buttonArray
+                        }
+                    })
+
                     this.setState(prevState => {
                         let pokeArray = [...prevState.pokemon]
-                        pokeArray[id] =
+                        pokeArray[pageNum][index] =
                             <PokemonBox
                                 imgURL={data.sprites.front_default}
                                 id={id}
@@ -53,7 +72,7 @@ class Pokemon extends React.Component {
                             />;
 
                         return {
-                            pokemon: pokeArray
+                            pokemon: pokeArray,
                         }
                     })
                 })
@@ -68,11 +87,20 @@ class Pokemon extends React.Component {
         return (firstLetter + name.substring(1))
     }
 
+    // redirects user to page when button clicked
+    handlePageClick(event) {
+        const {id} = event.target
+        this.setState({
+            currentPage: id
+        })
+    }
+
     componentDidMount() {
-       this.fetchPokemon();
+        this.fetchPokemon();
     }
 
     render() {
+
         return (
             <div className="App">
                 <div className="container" style={tableabilities}>
@@ -81,7 +109,10 @@ class Pokemon extends React.Component {
                     <br/>
                     <SearchFilter/>
                     <div className="row mt-5">
-                        {this.state.pokemon}
+                        {this.state.pokemon[this.state.currentPage]}
+                    </div>
+                    <div className="row mt-2">
+                        {this.state.buttons}
                     </div>
                 </div>
             </div>
