@@ -24,7 +24,7 @@ class Pokemon extends React.Component {
             pokemon: pokeArray,
             buttons: [],
             currentPage: 0,
-            pageSize: 30
+            pageSize: 36
         }
         this.fetchPokemon = this.fetchPokemon.bind(this)
         this.capitalize = this.capitalize.bind(this)
@@ -46,14 +46,15 @@ class Pokemon extends React.Component {
                 })
                 .then(data => {
                     // get page number and update state
-                    let pageNum = Math.floor((id-1)/30);
-                    let index = (id-1)%30;
+                    let pageNum = Math.floor((id-1)/this.state.pageSize);
+                    let index = (id-1)%this.state.pageSize;
 
                     // add a button for every new page
                     if(index == 0) this.setState(prevState => {
                         let buttonArray = [...prevState.buttons]
+                        let buttonClass = "btn btn-light"
                         buttonArray[pageNum] =
-                            <button type="button" id={pageNum} className="btn btn-light" onClick={this.handlePageClick}>
+                            <button type="button" id={pageNum} className={buttonClass} onClick={this.handlePageClick}>
                                 {pageNum+1}
                             </button>
 
@@ -90,9 +91,7 @@ class Pokemon extends React.Component {
     // redirects user to page when button clicked
     handlePageClick(event) {
         const {id} = event.target
-        this.setState({
-            currentPage: id
-        })
+        this.setState({currentPage: id })
     }
 
     componentDidMount() {
@@ -100,7 +99,6 @@ class Pokemon extends React.Component {
     }
 
     render() {
-
         return (
             <div className="App">
                 <div className="container" style={tableabilities}>
@@ -111,9 +109,10 @@ class Pokemon extends React.Component {
                     <div className="row mt-5">
                         {this.state.pokemon[this.state.currentPage]}
                     </div>
-                    <div className="row mt-2">
+                    <div className="navbar" style={{marginBottom: "30px"}}>
                         {this.state.buttons}
                     </div>
+
                 </div>
             </div>
 

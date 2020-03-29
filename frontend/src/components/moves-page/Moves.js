@@ -22,7 +22,7 @@ class Moves extends React.Component {
             move:  movesArray,
             buttons: [],
             currentPage: 0,
-            pageSize: 10
+            pageSize: 30
         }
 
         this.fetchMove = this.fetchMove.bind(this)
@@ -47,8 +47,8 @@ class Moves extends React.Component {
                     }
                 })
                 .then(data => {
-                    let pageNum = Math.floor((id-1)/10);
-                    let index = (id-1)%10;
+                    let pageNum = Math.floor((id-1)/this.state.pageSize);
+                    let index = (id-1)%this.state.pageSize;
 
                     // add a button for every new page
                     if(index == 0) this.setState(prevState => {
@@ -63,8 +63,6 @@ class Moves extends React.Component {
                         }
                     })
 
-                    // get number of commits and update state
-                    console.log(data);
                     this.setState(prevState => {
                         let moveArray = [...prevState.move]
                         moveArray[pageNum][index] =
@@ -124,7 +122,7 @@ class Moves extends React.Component {
                     {this.state.move[this.state.currentPage]}
                     </tbody>
                 </table>
-                <div className="row mt-2">
+                <div className="navbar" style={{marginBottom: "30px"}}>
                     {this.state.buttons}
                 </div>
             </div>
