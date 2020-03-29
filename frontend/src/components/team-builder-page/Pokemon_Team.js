@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from "react-router-dom";
 import './css/Pokemon_Team.css';
 import BlankPokemon from './css/BlankPokemon.png'
 
@@ -18,6 +19,7 @@ function Pokemon_Card(props) {
                 <h4 class = "card-title"> Pokemon #{props.number}</h4>
                 <p class = "card-text">{props.name}</p>
                 <p class = "card-text">Type: {props.type}</p>
+                <Link to = {"/teambuilder/addpokemon/" + props.number}>Change</Link>
             </div>
         </div>
     )
@@ -27,36 +29,38 @@ class Pokemon_Team extends React.Component {
     constructor() {
         super();
         this.state = {
-            pokemon1: {
-                image: BlankPokemon,
-                name: "Who's that Pokemon?",
-                type: "Unknown"
-            },
-            pokemon2: {
-                image: BlankPokemon,
-                name: "Who's that Pokemon?",
-                type: "Unknown"
-            },
-            pokemon3: {
-                image: BlankPokemon,
-                name: "Who's that Pokemon?",
-                type: "Unknown"
-            },
-            pokemon4: {
-                image: BlankPokemon,
-                name: "Who's that Pokemon?",
-                type: "Unknown"
-            },
-            pokemon5: {
-                image: BlankPokemon,
-                name: "Who's that Pokemon?",
-                type: "Unknown"
-            },
-            pokemon6: {
-                image: BlankPokemon,
-                name: "Who's that Pokemon?",
-                type: "Unknown"
-            }
+            pokemonCards : [
+                {
+                    image: BlankPokemon,
+                    name: "Who's that Pokemon?",
+                    type: "Unknown" 
+                },
+                {
+                    image: BlankPokemon,
+                    name: "Who's that Pokemon?",
+                    type: "Unknown" 
+                },
+                {
+                    image: BlankPokemon,
+                    name: "Who's that Pokemon?",
+                    type: "Unknown" 
+                },
+                {
+                    image: BlankPokemon,
+                    name: "Who's that Pokemon?",
+                    type: "Unknown" 
+                },
+                {
+                    image: BlankPokemon,
+                    name: "Who's that Pokemon?",
+                    type: "Unknown" 
+                },
+                {
+                    image: BlankPokemon,
+                    name: "Who's that Pokemon?",
+                    type: "Unknown" 
+                },
+            ]
         }
     }
 
@@ -71,54 +75,54 @@ class Pokemon_Team extends React.Component {
                     <div class = "col-lg-2 grid-margin" id = "card-col">
                         <Pokemon_Card
                             number = '1'
-                            image = {this.state.pokemon1.image}
-                            name = {this.state.pokemon1.name}
-                            type = {this.state.pokemon1.type}
+                            image = {this.state.pokemonCards[0].image}
+                            name = {this.state.pokemonCards[0].name}
+                            type = {this.state.pokemonCards[0].type}
                         />
                     </div>
 
                     <div class = "col-lg-2 grid-margin" id = "card-col">
                         <Pokemon_Card
                             number = '2'
-                            image = {this.state.pokemon2.image}
-                            name = {this.state.pokemon2.name}
-                            type = {this.state.pokemon2.type}
+                            image = {this.state.pokemonCards[1].image}
+                            name = {this.state.pokemonCards[1].name}
+                            type = {this.state.pokemonCards[1].type}
                         />
                     </div>
 
                     <div class = "col-lg-2 grid-margin" id = "card-col">
                         <Pokemon_Card
                             number = '3'
-                            image = {this.state.pokemon3.image}
-                            name = {this.state.pokemon3.name}
-                            type = {this.state.pokemon3.type}
+                            image = {this.state.pokemonCards[2].image}
+                            name = {this.state.pokemonCards[2].name}
+                            type = {this.state.pokemonCards[2].type}
                         />
                     </div>
 
                     <div class = "col-lg-2 grid-margin" id = "card-col">
                         <Pokemon_Card
                             number = '4'
-                            image = {this.state.pokemon4.image}
-                            name = {this.state.pokemon4.name}
-                            type = {this.state.pokemon4.type}
+                            image = {this.state.pokemonCards[3].image}
+                            name = {this.state.pokemonCards[3].name}
+                            type = {this.state.pokemonCards[3].type}
                         />
                     </div>
 
                     <div class = "col-lg-2 grid-margin" id = "card-col">
                         <Pokemon_Card
                             number = '5'
-                            image = {this.state.pokemon5.image}
-                            name = {this.state.pokemon5.name}
-                            type = {this.state.pokemon5.type}
+                            image = {this.state.pokemonCards[4].image}
+                            name = {this.state.pokemonCards[4].name}
+                            type = {this.state.pokemonCards[4].type}
                         />
                     </div>
 
                     <div class = "col-lg-2 grid-margin" id = "card-col">
                         <Pokemon_Card
                             number = '6'
-                            image = {this.state.pokemon6.image}
-                            name = {this.state.pokemon6.name}
-                            type = {this.state.pokemon6.type}
+                            image = {this.state.pokemonCards[5].image}
+                            name = {this.state.pokemonCards[5].name}
+                            type = {this.state.pokemonCards[5].type}
                         />
                     </div>
                 </div>
