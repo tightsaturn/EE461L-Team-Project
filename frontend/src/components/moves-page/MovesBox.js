@@ -10,7 +10,7 @@ const MovesBox = (props) => {
     return (
         <tr>
             <th scope="row">{props.id}</th>
-            <td><Link to={"/abilities/" + props.name}>{props.name}</Link></td>
+            <td><Link to={"/moves/" + props.id}>{props.name}</Link></td>
             <td>{props.effect}</td>
             <td>{props.type}</td>
         </tr>

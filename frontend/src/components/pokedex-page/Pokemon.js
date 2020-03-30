@@ -35,7 +35,7 @@ class Pokemon extends React.Component {
         // fetch each pokemon and add to state
         for(let id = 1; id < 808; id++){
             // fetch each pokemon and add to state
-            let url = 'https://pokeapi.co/api/v2/pokemon/' + id;
+            let url = 'https://pokebackend-461l.appspot.com/pokemoncards/' + id;
             fetch(url)
                 .then((response) => {
                     if(response.ok){
@@ -67,7 +67,7 @@ class Pokemon extends React.Component {
                         let pokeArray = [...prevState.pokemon]
                         pokeArray[pageNum][index] =
                             <PokemonBox
-                                imgURL={data.sprites.front_default}
+                                imgURL={data.frontSprite}
                                 id={id}
                                 name={this.capitalize(data.name)}
                             />;

@@ -35,7 +35,7 @@ class Abilities extends React.Component {
     fetchAbility(){
         for(let id = 1; id < 233; id++){
             // fetch each ability and add to state
-            let url = 'https://pokeapi.co/api/v2/ability/' + id;
+            let url = 'https://pokebackend-461l.appspot.com/abilitycards/' + id;
             fetch(url)
                 .then((response) => {
                     if(response.ok){
@@ -67,8 +67,8 @@ class Abilities extends React.Component {
                         let abilityArray = [...prevState.ability]
                         abilityArray[pageNum][index] =
                             <AbilitiesBox
-                                generation={this.capitalizeG(data.generation.name)}
-                                description={data.effect_entries[0].short_effect}
+                                generation={this.capitalizeG(data.generation[0].name)}
+                                description={data.effect[0].short_effect}
                                 name={this.capitalize(data.name)}
                                 id={data.id}
                             />;

@@ -34,7 +34,7 @@ class Items extends React.Component{
     fetchItem(){
         // fetch from mongodb
         for(let id = 1; id < 954; id++){
-            let url = 'https://pokeapi.co/api/v2/item/' + id;
+            let url = 'https://pokebackend-461l.appspot.com/itemcards/' + id;
             fetch(url)
                 .then((response) => {
                     if(response.ok){
@@ -67,8 +67,8 @@ class Items extends React.Component{
                             let itemArray = [...prevState.item]
                             itemArray[pageNum][index] =
                                 <ItemsBox
-                                    picture={data.sprites.default}
-                                    effect={data.effect_entries[0].short_effect}
+                                    picture={data.sprite}
+                                    effect={data.effect[0].effect}
                                     name={this.capitalize(data.name)}
                                     id={data.id}
                                 />;
