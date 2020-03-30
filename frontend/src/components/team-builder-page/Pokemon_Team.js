@@ -90,7 +90,7 @@ class Pokemon_Team extends React.Component {
             .then(response => {
                 console.log(response.data)
                 let new_state = this.state.pokemonCards.slice();
-                new_state[memberNum - 1].image = response.data.sprites.front_default;
+                new_state[memberNum - 1].image = response.data.sprites[0].front_default;
                 new_state[memberNum - 1].name = response.data.name;
                 new_state[memberNum - 1].type = "Insert type";
                 this.setState({ pokemonCards: new_state})
