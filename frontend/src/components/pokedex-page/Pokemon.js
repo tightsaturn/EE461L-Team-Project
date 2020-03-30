@@ -91,7 +91,7 @@ class Pokemon extends React.Component {
     // redirects user to page when button clicked
     handlePageClick(event) {
         const {id} = event.target
-        this.setState({currentPage: id })
+        this.setState({currentPage: id})
     }
 
     componentDidMount() {
