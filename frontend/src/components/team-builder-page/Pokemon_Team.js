@@ -63,6 +63,8 @@ class Pokemon_Team extends React.Component {
                 },
             ]
         }
+
+        this.resetTeam = this.resetTeam.bind(this);
     }
 
     componentWillMount() {
@@ -114,9 +116,26 @@ class Pokemon_Team extends React.Component {
         localStorage.setItem('teamBuilderState', JSON.stringify(this.state));
     }
 
+    resetTeam() {
+        console.log("Resetting pokemon team");
+        let new_state = this.state.pokemonCards.slice();
+        for (let i = 0; i < 6; i++) {
+            new_state[i].image = BlankPokemon;
+            new_state[i].name = "Who's that Pokemon?";
+            new_state[i].type = "Unknown";
+        }
+        this.setState({ pokemonCards: new_state }) 
+    }
+
     render() {
         return (
             <div style={{width: "100%"}}>
+                {/* <Link to = "/teambuilder/resetTeam"> */}
+                    <button variant="outline-danger" onClick = {this.resetTeam}>Reset Team</button>
+                {/* </Link> */}
+                <br/>
+                <br/>
+
                 <div class = "row">
                     <div class = "col-lg-2 grid-margin" id = "card-col">
                         <Pokemon_Card
