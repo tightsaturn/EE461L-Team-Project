@@ -50,7 +50,13 @@ const Header = () => {
                 "der"}> <a className="navbar-brand" style={modelLink}>Team Builder</a> </Link>
                 <Link to={"/aboutus"}> <a className="navbar-brand" style={modelLink}>About Us</a> </Link>
                 <Link to={"/feedback"}> <a className="navbar-brand" style={modelLink}>Feedback</a> </Link>
-                {/*<button className="btn-sm btn-success" style={logIn}>Log In</button>*/}
+                <GoogleLogin
+                    clientId="415407691181-n8n6knf6tbhc1gsm0rd2cuk2lmgv84nt.apps.googleusercontent.com"
+                    buttonText="Login"
+                    onSuccess={responseGoogle}
+                    onFailure={responseGoogle}
+                    cookiePolicy={'single_host_origin'}
+                />
 
             </div>
         </div>

@@ -8,7 +8,7 @@ const header = {
     paddingRight: "120px"
 }
 
-const Feedback = (props) => {
+function Feedback()  {
     return (
         <div className="container-fluid" style={header}>
             <div className="row-cols-2">
@@ -19,17 +19,17 @@ const Feedback = (props) => {
                     </p>
                 </div>
                 <div>
-                <form>
-                    <div className="form-group">
-                        <label htmlFor="exampleFormControlInput1">Email address</label>
-                        <input type="email" className="form-control" id="exampleFormControlInput1"
-                               placeholder="name@example.com"></input>
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="exampleFormControlTextarea1">Feedback</label>
-                        <textarea className="form-control" id="exampleFormControlTextarea1" rows="6"></textarea>
-                    </div>
-                </form>
+                    <form>
+                        <div className="form-group">
+                            <label htmlFor="exampleFormControlInput1">Email address</label>
+                            <input type="email" className="form-control" id="exampleFormControlInput1"
+                                   placeholder="name@example.com"></input>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="exampleFormControlTextarea1">Feedback</label>
+                            <textarea className="form-control" id="exampleFormControlTextarea1" rows="6"></textarea>
+                        </div>
+                    </form>
                     <Link to = "/feedback/thankyou">
                         <Button variant="outline-success">Submit</Button>
                     </Link>
