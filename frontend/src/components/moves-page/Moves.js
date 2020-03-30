@@ -37,7 +37,7 @@ class Moves extends React.Component {
 
         for(let id = 1; id < 726; id++){
             // fetch each move and add to state
-            let url = 'https://pokeapi.co/api/v2/move/' + id;
+            let url = 'https://pokebackend-461l.appspot.com/movecards/' + id;
             fetch(url)
                 .then((response) => {
                     if(response.ok){
@@ -67,8 +67,8 @@ class Moves extends React.Component {
                         let moveArray = [...prevState.move]
                         moveArray[pageNum][index] =
                             <MovesBox
-                                type={this.capitalize(data.type.name)}
-                                effect={data.effect_entries[0].effect}
+                                type={this.capitalize(data.type[0].name)}
+                                effect={data.effect[0].effect}
                                 name={this.capitalize(data.name)}
                                 id={data.id}
                             />;

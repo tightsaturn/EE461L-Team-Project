@@ -21,7 +21,7 @@ const ItemsBox = (props) => {
     return (
         <tr>
             <th scope="row">{props.id}</th>
-            <td><Link to={"/items/" + props.name}>{props.name}</Link></td>
+            <td><Link to={"/items/" + props.id}>{props.name}</Link></td>
             <td>{props.effect}</td>
             <td><img className="portrait" src={props.picture} alt="Card image cap" style={pokemonCard}/></td>
         </tr>

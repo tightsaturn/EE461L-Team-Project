@@ -25,13 +25,14 @@ class PokemonInfo extends React.Component {
 
     componentDidMount() {
         let id = this.props.match.params.id
-        let url = 'https://pokeapi.co/api/v2/pokemon/' + id;
+        let url = 'https://pokebackend-461l.appspot.com/pokemon/' + id;
 
         fetch(url)
             .then((response) => {
                 return response.json();
             })
             .then(data => {
+                console.log(data)
                 let movesArray = []
                 let typesArray = []
 
@@ -41,7 +42,7 @@ class PokemonInfo extends React.Component {
 
                 this.setState({
                     name: data.name,
-                    imgURL: data.sprites.front_default,
+                    imgURL: data.frontSprite,
                     moves: movesArray,
                     types: typesArray
                 })

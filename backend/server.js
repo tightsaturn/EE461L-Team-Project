@@ -24,13 +24,20 @@ const pokemonRouter = require('./routes/pokemon');
 const itemsRouter = require('./routes/items');
 const abilitiesRouter = require('./routes/abilities');
 const movesRouter = require('./routes/moves');
-
+const pokemonCardsRouter = require('./routes/pokemonCards');
+const itemCardsRouter = require('./routes/itemCards');
+const moveCardsRouter = require('./routes/moveCards');
+const abilitiesCardsRouter = require('./routes/abilitiesCards');
 
 // Setup paths for routers
 app.use('/pokemon', pokemonRouter);
 app.use('/items', itemsRouter);
 app.use('/abilities', abilitiesRouter);
 app.use('/moves', movesRouter);
+app.use('/pokemoncards', pokemonCardsRouter);
+app.use('/itemcards', itemCardsRouter);
+app.use('/movecards', moveCardsRouter);
+app.use('/abilitycards', abilitiesCardsRouter);
 
 
 // Start the server
