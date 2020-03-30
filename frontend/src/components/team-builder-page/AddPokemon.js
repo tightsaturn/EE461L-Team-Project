@@ -18,7 +18,7 @@ const PokemonRow = props => (
     <tr>
         <td>{props.id}</td>
         <td>{props.name}</td>
-        <td>Insert Type Here</td>
+        <td>{props.type}</td>
         <td>
             <img src = {props.image} alt = {props.name}/>
         </td>
@@ -87,11 +87,17 @@ class AddPokemon extends React.Component {
 
                     this.setState(prevState => {
                         let pokeArray = [...prevState.pokemonDisplayed]
+
+                        var type = "";
+                        for (let i = 0; i < data.types.length; i++) {
+                            type += data.types[i].type.name + "\n";
+                        }
+
                         pokeArray[pageNum][index] =
                             <PokemonRow
                                 id = {id}
                                 name = {data.name}
-                                type = {data.types}
+                                type = {type}
                                 image = {data.sprites.front_default}
                                 memberNum = {this.props.match.params.memberNum}
                             />;

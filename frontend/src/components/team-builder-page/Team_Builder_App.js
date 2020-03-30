@@ -21,12 +21,6 @@ function Team_Builder_App() {
                 <h3>Build the Ultimate Team</h3>
             <br/>
 
-            <Link to = "/teambuilder/resetTeam">
-                <Button variant="outline-danger">Reset Team</Button>
-            </Link>
-            <br/>
-            <br/>
-
             <h5>Team Members:</h5>
             <Pokemon_Team/>
         </div>

@@ -63,6 +63,8 @@ class Pokemon_Team extends React.Component {
                 },
             ]
         }
+
+        this.resetTeam = this.resetTeam.bind(this);
     }
 
     componentWillMount() {
@@ -88,9 +90,15 @@ class Pokemon_Team extends React.Component {
             .then(response => {
                 console.log(response.data)
                 let new_state = this.state.pokemonCards.slice();
-                new_state[memberNum - 1].image = response.data.sprites.front_default;
+                var type = "";
+                new_state[memberNum - 1].image = response.data.sprites[0].front_default;
                 new_state[memberNum - 1].name = response.data.name;
-                new_state[memberNum - 1].type = "Insert type";
+
+                for (let i = 0; i < response.data.types.length; i++) {
+                    type += response.data.types[i].type.name + "\n";
+                }
+
+                new_state[memberNum - 1].type = type;
                 this.setState({ pokemonCards: new_state})
 
             })
@@ -114,9 +122,26 @@ class Pokemon_Team extends React.Component {
         localStorage.setItem('teamBuilderState', JSON.stringify(this.state));
     }
 
+    resetTeam() {
+        console.log("Resetting pokemon team");
+        let new_state = this.state.pokemonCards.slice();
+        for (let i = 0; i < 6; i++) {
+            new_state[i].image = BlankPokemon;
+            new_state[i].name = "Who's that Pokemon?";
+            new_state[i].type = "Unknown";
+        }
+        this.setState({ pokemonCards: new_state }) 
+    }
+
     render() {
         return (
             <div style={{width: "100%"}}>
+                {/* <Link to = "/teambuilder/resetTeam"> */}
+                    <button variant="outline-danger" onClick = {this.resetTeam}>Reset Team</button>
+                {/* </Link> */}
+                <br/>
+                <br/>
+
                 <div class = "row">
                     <div class = "col-lg-2 grid-margin" id = "card-col">
                         <Pokemon_Card
