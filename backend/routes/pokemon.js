@@ -1,5 +1,6 @@
 const router = require('express').Router();
 let Pokemon = require('../models/pokemon.model');           // link and require the mongoose model created for the Pokemon database
+const mongoose = require('mongoose');
 
 async function getPokemonInRange(props) {
     var result = [];
@@ -38,39 +39,39 @@ router.route(`/:id`).get((req, res) => {
         .catch(err => res.status(400).json('Error:a' + err));
 });
 
+// Get total number of Pokemon in database.
+// NOTE: This function does NOT work. DO NOT USE FOR NOW. The problem is tha
+//       it returns the following error:
+//       "Error:aCastError: Cast to number failed for value \"totalNumPokemon\" at path \"id\" for model \"Pokemon\""
+router.route('/totalNumPokemon').get((req, res) => {
+    console.log("URL /totalNumPokemon has been called");
+    // Pokemon.countDocuments({}, function (err, count) {
+    //     console.log('Count: ' + count);
+    //     res = count;
+    // });
+    Pokemon.estimatedDocumentCount()
+        .then(count => {
+            console.log("count: " + count)
+            res.json(count)
+        })
+    // console.log("count: " + Pokemon.estimatedDocumentCount());
+    // res.json(Pokemon.estimatedDocumentCount());
+});
+
 // Get a list of Pokemon within the inclusive range provided. Range is in terms of the id specified
 // by PokeAPI (id field in pokemon database)
-router.route('/:start_id/:end_id').get((req, res) => {
+router.route('/:start_id/:end_id').get(async (req, res) => {
     console.log("URL /pokemon/" + req.params.start_id + "/" + req.params.end_id + " has been called");
-    var result = [];
-    var status = [];
-    for (let i = 0; i < (req.params.end_id - req.params.start_id); i++) {
-        status.push(false);
-    }
+    var result_array = [];
     
-    console.log("Getting Pokemon:");
-    console.log("----------------");
+    var id_array = [];
     for (let i = req.params.start_id; i <= req.params.end_id; i++) {
-        Pokemon.findOne({id: i})
-            .then(pokemon => {
-                result[pokemon.id - req.params.start_id] = pokemon
-                status[req.params.end_id - i] = true
-            })
-            .catch(err => res.status(400).json('Error: ' + err));
+        id_array.push(i);
     }
 
-    for (let i = 0; i < (req.params.end_id - req.params.start_id); i++) {
-        if (status[i] == false) {
-            i = 0;
-        }
-    }
-
-    console.log("result:");
-    console.log("---------------------------------------------");
-    console.log(result);
-    // res.json(result);
-    res = result;
-    //res = getPokemonInRange(req.params.start_id, req.params.end_id);
+    Pokemon.find().where('id').in(id_array)
+        .then(pokemon => res.json(pokemon))
+        .catch(err => res.status(400).json('Error:a' + err));
 });
 
 module.exports = router;

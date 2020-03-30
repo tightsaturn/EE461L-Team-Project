@@ -44,37 +44,40 @@ class Items extends React.Component{
                     }
                 })
                 .then(data => {
-                    // get page number and update state
-                    let pageNum = Math.floor((id-1)/this.state.pageSize);
-                    let index = (id-1)%this.state.pageSize;
+                    if(data != null) {
+                        // get page number and update state
+                        let pageNum = Math.floor((id - 1) / this.state.pageSize);
+                        let index = (id - 1) % this.state.pageSize;
 
-                    // add a button for every new page
-                    if(index == 0) this.setState(prevState => {
-                        let buttonArray = [...prevState.buttons]
-                        buttonArray[pageNum] =
-                            <button type="button" id={pageNum} className="btn btn-light" onClick={this.handlePageClick}>
-                                {pageNum+1}
-                            </button>
+                        // add a button for every new page
+                        if (index == 0) this.setState(prevState => {
+                            let buttonArray = [...prevState.buttons]
+                            buttonArray[pageNum] =
+                                <button type="button" id={pageNum} className="btn btn-light"
+                                        onClick={this.handlePageClick}>
+                                    {pageNum + 1}
+                                </button>
 
-                        return {
-                            buttons: buttonArray
-                        }
-                    })
+                            return {
+                                buttons: buttonArray
+                            }
+                        })
 
-                    this.setState(prevState => {
-                        let itemArray = [...prevState.item]
-                        itemArray[pageNum][index] =
-                            <ItemsBox
-                                picture={data.sprites.default}
-                                effect={data.effect_entries[0].short_effect}
-                                name={this.capitalize(data.name)}
-                                id = {data.id}
-                            />;
+                        this.setState(prevState => {
+                            let itemArray = [...prevState.item]
+                            itemArray[pageNum][index] =
+                                <ItemsBox
+                                    picture={data.sprites.default}
+                                    effect={data.effect_entries[0].short_effect}
+                                    name={this.capitalize(data.name)}
+                                    id={data.id}
+                                />;
 
-                        return {
-                            item: itemArray
-                        }
-                    })
+                            return {
+                                item: itemArray
+                            }
+                        })
+                    }
                 })
                 .catch((err) =>{
                     console.log(err)
