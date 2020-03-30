@@ -14,7 +14,16 @@ const modelLink = {
     marginBottom: "10px",
     color: "white",
     textAlign: "center",
+    fontFamily: "Chilanka"
+};
+
+const modelLogin = {
+    marginBottom: "10px",
+    border: "none",
+    color: "white",
+    textAlign: "center",
     fontFamily: "Chilanka",
+    backgroundColor: "black"
 };
 
 const logoBlock = {
@@ -52,12 +61,14 @@ const Header = () => {
                 <Link to={"/feedback"}> <a className="navbar-brand" style={modelLink}>Feedback</a> </Link>
                 <GoogleLogin
                     clientId="415407691181-n8n6knf6tbhc1gsm0rd2cuk2lmgv84nt.apps.googleusercontent.com"
+                    render={renderProps => (
+                        <button onClick={renderProps.onClick} className="navbar-brand" style={modelLogin} disabled={renderProps.disabled}>Signin</button>
+                    )}
                     buttonText="Login"
                     onSuccess={responseGoogle}
                     onFailure={responseGoogle}
                     cookiePolicy={'single_host_origin'}
                 />
-
             </div>
         </div>
     )

@@ -56,7 +56,6 @@ class App extends Component {
                             <Route exact path = "/aboutus" component = {AboutUs}/>
                             <Route component={Error}/>
                         </Switch>
-
                         <Background/>
                     </div>
                 </BrowserRouter>
