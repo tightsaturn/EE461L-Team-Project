@@ -86,12 +86,12 @@ class Pokemon_Team extends React.Component {
             console.log("pokemonId: " + pokemonId);
 
             // fetch the pokemon
-            axios.get('http://localhost:5000/pokemon/' + pokemonId)
+            axios.get('https://pokeapi.co/api/v2/pokemon/' + pokemonId)
             .then(response => {
                 console.log(response.data)
                 let new_state = this.state.pokemonCards.slice();
                 var type = "";
-                new_state[memberNum - 1].image = response.data.sprites[0].front_default;
+                new_state[memberNum - 1].image = response.data.sprites.front_default;
                 new_state[memberNum - 1].name = response.data.name;
 
                 for (let i = 0; i < response.data.types.length; i++) {
