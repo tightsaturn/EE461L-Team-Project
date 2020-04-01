@@ -29,6 +29,37 @@ class Pokemon extends React.Component {
         this.fetchPokemon = this.fetchPokemon.bind(this)
         this.capitalize = this.capitalize.bind(this)
         this.handlePageClick = this.handlePageClick.bind(this)
+        this.fetchOnePokemon = this.fetchOnePokemon.bind(this)
+    }
+
+    async fetchOnePokemon(id) {
+        let url = 'https://pokebackend-461l.appspot.com/pokemoncards/' + id;
+        await fetch(url)
+            .then((response) => {
+                return response.json();
+            })
+            .then(data => {
+                // get page number and update state
+                let pageNum = Math.floor((id-1)/this.state.pageSize);
+                let index = (id-1)%this.state.pageSize;
+
+                this.setState(prevState => {
+                    let pokeArray = [...prevState.pokemon]
+                    pokeArray[pageNum][index] =
+                        <PokemonBox
+                            imgURL={data.frontSprite}
+                            id={id}
+                            name={this.capitalize(data.name)}
+                        />;
+
+                    return {
+                        pokemon: pokeArray,
+                    }
+                })
+            })
+            .catch((err) =>{
+                console.log(err)
+            });
     }
 
     fetchPokemon(){

@@ -1,5 +1,5 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import {BrowserRouter, Link} from "react-router-dom";
 import './css/Pokemon_Team.css';
 import BlankPokemon from './css/BlankPokemon.png'
 import axios from 'axios'
@@ -14,13 +14,15 @@ const tableAbilities = {
 
 function Pokemon_Card(props) {
     return (
-        <div class="card" id={"partycards"}>
-            <img class = "card-img-top" id = "card-img" src = {props.image} alt = {props.name}/>
-            <div class="card-body">
-                <h4 class = "card-title"> Pokemon #{props.number}</h4>
-                <p class = "card-text">{props.name}</p>
-                <p class = "card-text">Type: {props.type}</p>
-                <Link to = {"/teambuilder/addpokemon/" + props.number}>Change</Link>
+        <div className="card" id={"partycards"}>
+            <img className = "card-img-top" id = "card-img" src = {props.image} alt = {props.name}/>
+            <div className="card-body">
+                <h4 className = "card-title"> Pokemon #{props.number}</h4>
+                <p className = "card-text">{props.name}</p>
+                <p className = "card-text">Type: {props.type}</p>
+                <BrowserRouter>
+                    <Link to = {"/teambuilder/addpokemon/" + props.number}>Change</Link>
+                </BrowserRouter>
             </div>
         </div>
     )
@@ -67,20 +69,20 @@ class Pokemon_Team extends React.Component {
         this.resetTeam = this.resetTeam.bind(this);
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         const savedState = JSON.parse(localStorage.getItem('teamBuilderState'));
         this.setState(savedState);
     }
 
     componentDidMount() {
         // Check URL to see if an action needs to be done
-        console.log(window.location.pathname);
-        var path = window.location.pathname.split('/')
-        console.log(path);
+        // console.log(window.location.pathname);
+        let path = window.location.pathname.split('/')
+        // console.log(path);
 
         if (path.length == 5 && path[2].localeCompare("change") == 0) {             // If '/teambuilder/change/:memberNum/:pokemonId', update the team member with the new pokemon
-            var memberNum = Number(path[3]);
-            var pokemonId = Number(path[4]);
+            let memberNum = Number(path[3]);
+            let pokemonId = Number(path[4]);
 
             console.log("memberNum: " + memberNum);
             console.log("pokemonId: " + pokemonId);
@@ -142,8 +144,8 @@ class Pokemon_Team extends React.Component {
                 <br/>
                 <br/>
 
-                <div class = "row">
-                    <div class = "col-lg-2 grid-margin" id = "card-col">
+                <div className = "row">
+                    <div className = "col-lg-2 grid-margin" id = "card-col">
                         <Pokemon_Card
                             number = '1'
                             image = {this.state.pokemonCards[0].image}
@@ -152,7 +154,7 @@ class Pokemon_Team extends React.Component {
                         />
                     </div>
 
-                    <div class = "col-lg-2 grid-margin" id = "card-col">
+                    <div className= "col-lg-2 grid-margin" id = "card-col">
                         <Pokemon_Card
                             number = '2'
                             image = {this.state.pokemonCards[1].image}
@@ -161,7 +163,7 @@ class Pokemon_Team extends React.Component {
                         />
                     </div>
 
-                    <div class = "col-lg-2 grid-margin" id = "card-col">
+                    <div className = "col-lg-2 grid-margin" id = "card-col">
                         <Pokemon_Card
                             number = '3'
                             image = {this.state.pokemonCards[2].image}
@@ -170,7 +172,7 @@ class Pokemon_Team extends React.Component {
                         />
                     </div>
 
-                    <div class = "col-lg-2 grid-margin" id = "card-col">
+                    <div className = "col-lg-2 grid-margin" id = "card-col">
                         <Pokemon_Card
                             number = '4'
                             image = {this.state.pokemonCards[3].image}
@@ -179,7 +181,7 @@ class Pokemon_Team extends React.Component {
                         />
                     </div>
 
-                    <div class = "col-lg-2 grid-margin" id = "card-col">
+                    <div className = "col-lg-2 grid-margin" id = "card-col">
                         <Pokemon_Card
                             number = '5'
                             image = {this.state.pokemonCards[4].image}
@@ -188,7 +190,7 @@ class Pokemon_Team extends React.Component {
                         />
                     </div>
 
-                    <div class = "col-lg-2 grid-margin" id = "card-col">
+                    <div className = "col-lg-2 grid-margin" id = "card-col">
                         <Pokemon_Card
                             number = '6'
                             image = {this.state.pokemonCards[5].image}

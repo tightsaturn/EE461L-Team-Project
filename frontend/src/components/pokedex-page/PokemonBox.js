@@ -1,5 +1,5 @@
 import React from "react"
-import {Link} from "react-router-dom";
+import {Link, BrowserRouter} from "react-router-dom";
 import Button from "react-bootstrap/Button";
 
 const pokemonCard = {
@@ -14,14 +14,16 @@ const PokemonBox = (props) => {
                     <div className="card-body">
                         <hr/>
                         <p className="card-text">
-                            # {props.id} <br/>
+                            # {props.id}<br/>
                             Name: {props.name}
                         </p>
                     </div>
                     <div className="card-footer">
-                        <Link to={"/pokemon/" + props.id}>
-                            <Button on variant="btn btn-danger">Learn more</Button>
-                        </Link>
+                        <BrowserRouter>
+                            <Link to={"/pokemon/" + props.id}>
+                                <Button on variant="btn btn-danger">Learn more</Button>
+                            </Link>
+                        </BrowserRouter>
                     </div>
             </div>
         </div>
