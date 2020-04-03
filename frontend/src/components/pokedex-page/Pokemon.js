@@ -16,13 +16,17 @@ class Pokemon extends React.Component {
 
         // initialize 2d array for pagination
         let pokeArray = []
+        let buttonsArray = []
         for(let i = 0; i < 50; i++){
             pokeArray.push([])
+        }
+        for(let i = 0; i < 23; i++){
+            buttonsArray.push({})
         }
 
         this.state = {
             pokemon: pokeArray,
-            buttons: [],
+            buttons: buttonsArray,
             currentPage: 0,
             pageSize: 36
         }
@@ -81,13 +85,12 @@ class Pokemon extends React.Component {
                     let index = (id-1)%this.state.pageSize;
 
                     // add a button for every new page
-                    if(index == 0) this.setState(prevState => {
+                    if(index === 0) this.setState(prevState => {
                         let buttonArray = [...prevState.buttons]
-                        let buttonClass = "btn btn-light"
-                        buttonArray[pageNum] =
-                            <button type="button" id={pageNum} className={buttonClass} onClick={this.handlePageClick}>
-                                {pageNum+1}
-                            </button>
+                        buttonArray[pageNum] = {
+                            type: "button",
+                            id: pageNum,
+                        }
 
                         return {
                             buttons: buttonArray
@@ -96,12 +99,11 @@ class Pokemon extends React.Component {
 
                     this.setState(prevState => {
                         let pokeArray = [...prevState.pokemon]
-                        pokeArray[pageNum][index] =
-                            <PokemonBox
-                                imgURL={data.frontSprite}
-                                id={id}
-                                name={this.capitalize(data.name)}
-                            />;
+                        pokeArray[pageNum][index] = {
+                                imgURL: data.frontSprite,
+                                id: id,
+                                name: this.capitalize(data.name)
+                            }
 
                         return {
                             pokemon: pokeArray,
@@ -130,6 +132,24 @@ class Pokemon extends React.Component {
     }
 
     render() {
+        let pokemon = this.state.pokemon[this.state.currentPage].map(item => {
+            return <PokemonBox
+                imgURL={item.imgURL}
+                id={item.id}
+                name={item.name}
+            />
+        })
+        let buttons = this.state.buttons.map((item, index) => {
+            let className = (this.state.currentPage == index) ? "btn btn-success":"btn btn-light"
+
+            return <button
+                type="button"
+                id={item.id}
+                className={className}
+                onClick={this.handlePageClick}> {item.id+1}
+            </button>
+        })
+
         return (
             <div className="App">
                 <div className="container" style={tableabilities}>
@@ -138,10 +158,10 @@ class Pokemon extends React.Component {
                     <br/>
                     <SearchFilter/>
                     <div className="row mt-5">
-                        {this.state.pokemon[this.state.currentPage]}
+                        {pokemon}
                     </div>
                     <div className="navbar" style={{marginBottom: "30px"}}>
-                        {this.state.buttons}
+                        {buttons}
                     </div>
 
                 </div>
