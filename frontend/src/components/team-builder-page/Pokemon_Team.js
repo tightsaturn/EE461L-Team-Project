@@ -1,5 +1,5 @@
 import React from "react";
-import {BrowserRouter, Link} from "react-router-dom";
+import {Link} from "react-router-dom";
 import './css/Pokemon_Team.css';
 import BlankPokemon from './css/BlankPokemon.png'
 import axios from 'axios'
@@ -20,9 +20,7 @@ function Pokemon_Card(props) {
                 <h4 className = "card-title"> Pokemon #{props.number}</h4>
                 <p className = "card-text">{props.name}</p>
                 <p className = "card-text">Type: {props.type}</p>
-                <BrowserRouter>
-                    <Link to = {"/teambuilder/addpokemon/" + props.number}>Change</Link>
-                </BrowserRouter>
+                <Link to = {"/teambuilder/addpokemon/" + props.number}>Change</Link>
             </div>
         </div>
     )

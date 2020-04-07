@@ -37,18 +37,24 @@ class AddPokemon extends React.Component {
         // initialize 2D array that will map all of the pokemon to a page, the outside
         // array will be all of the page numbers and the inner arrays will hold all of
         // the pokemon corresponding to the respective page
-        let pokeArray = [];
-        for (let i = 0; i < 50; i++) {          // NOTE: only supports up to 50 pages for now
-            pokeArray.push([]);
+        // initialize 2d array for pagination
+        let pokeArray = []
+        let buttonsArray = []
+        for(let i = 0; i < 50; i++){
+            pokeArray.push([])
+        }
+        for(let i = 0; i < 23; i++){
+            buttonsArray.push({})
         }
 
         this.state = {
-            pokemonPerPage: 30,
+            pokemonPerPage: 36,
             currentPage: 0,
             pokemonDisplayed: pokeArray,
-            pageButtons: []
+            buttons: buttonsArray
         };
 
+        this.capitalize = this.capitalize.bind(this)
         this.fetchPokemon = this.fetchPokemon.bind(this)
         this.handlePageClick = this.handlePageClick.bind(this)
     }
@@ -62,26 +68,22 @@ class AddPokemon extends React.Component {
             //let url = 'https://pokebackend-461l.appspot.com/pokemon/' + id;
             fetch(url)
                 .then((response) => {
-                    if(response.ok){
-                        return response.json();
-                    } else {
-                        throw new Error("failed to get response");
-                    }
+                    return response.json();
                 })
                 .then(data => {
                     let pageNum = Math.floor((id-1)/this.state.pokemonPerPage);
                     let index = (id-1) % this.state.pokemonPerPage;
 
                     // add a button for every new page
-                    if(index == 0) this.setState(prevState => {
-                        let buttonArray = [...prevState.pageButtons]
-                        buttonArray[pageNum] =
-                            <button type="button" id={pageNum} className="btn btn-light" onClick={this.handlePageClick}>
-                                {pageNum+1}
-                            </button>
+                    if(index === 0) this.setState(prevState => {
+                        let buttonArray = [...prevState.buttons]
+                        buttonArray[pageNum] = {
+                            type: "button",
+                            id: pageNum,
+                        }
 
                         return {
-                            pageButtons: buttonArray
+                            buttons: buttonArray
                         }
                     })
 
@@ -90,20 +92,19 @@ class AddPokemon extends React.Component {
 
                         var type = "";
                         for (let i = 0; i < data.types.length; i++) {
-                            type += data.types[i].type.name + "\n";
+                            type += this.capitalize(data.types[i].type.name) + "\n";
                         }
 
-                        pokeArray[pageNum][index] =
-                            <PokemonRow
-                                id = {id}
-                                name = {data.name}
-                                type = {type}
-                                image = {data.sprites.front_default}
-                                memberNum = {this.props.match.params.memberNum}
-                            />;
+                        pokeArray[pageNum][index] = {
+                            id: id,
+                            name: data.name,
+                            type: type,
+                            image: data.sprites.front_default,
+                            memberNum: this.props.match.params.memberNum
+                        }
 
                         return {
-                            pokemon: pokeArray,
+                            pokemonDisplayed: pokeArray,
                         }
                     })
                 })
@@ -114,33 +115,14 @@ class AddPokemon extends React.Component {
     }
     
     componentDidMount() {
-        // axios.get('http://localhost:5000/pokemon/' + this.state.currStartPokemon + '/' + this.state.currEndPokemon)
-        //     .then(response => {
-        //         console.log(response.data)
-        //         this.setState({ pokemonDisplayed: response.data })
-        //     })
-        //     .catch((error) => {
-        //         console.log(error);
-        //     })
-
-        // axios.get('http://localhost:5000/pokemon/1')
-        //     .then(response => {
-        //         console.log(response.data)
-        //         this.setState({ pokemonDisplayed: response.data })
-        //     })
-        //     .catch((error) => {
-        //         console.log(error);
-        //     })
-
         console.log("Team member being changed: " + this.props.match.params.memberNum)
         this.fetchPokemon();
     }
 
-    // pokemonDisplayedList() {
-    //     return this.state.pokemonDisplayed.map(currentpokemon => {
-    //         return <Pokemon pokemon={currentpokemon} key={currentpokemon._id}/>;
-    //     })
-    // }
+    capitalize(name) {
+        let firstLetter = name.charAt(0).toUpperCase()
+        return (firstLetter + name.substring(1))
+    }
 
     // redirects user to page when button clicked
     handlePageClick(event) {
@@ -151,6 +133,25 @@ class AddPokemon extends React.Component {
     }
     
     render() {
+        let pokemon = this.state.pokemonDisplayed[this.state.currentPage].map((item) => {
+            return <PokemonRow
+                id={item.id}
+                name={item.name}
+                type={item.type}
+                image={item.image}
+                memberNum={item.memberNum} />
+        })
+        let buttons = this.state.buttons.map((item, index) => {
+            let className = (this.state.currentPage == index) ? "btn btn-success":"btn btn-light"
+
+            return <button
+                type="button"
+                id={item.id}
+                className={className}
+                onClick={this.handlePageClick}> {item.id+1}
+            </button>
+        })
+
         return (
             <div className = "App">
                 <div style={tablepokemon}>
@@ -170,7 +171,7 @@ class AddPokemon extends React.Component {
                         </thead>
 
                         <tbody>
-                            {this.state.pokemonDisplayed[this.state.currentPage]}
+                            {pokemon}
                         </tbody>
                     </table>
 
@@ -178,8 +179,8 @@ class AddPokemon extends React.Component {
                     <br></br>
 
                     <p>Go to Page:</p>
-                    <div className = "row mt-2">
-                        {this.state.pageButtons} 
+                    <div className="navbar" style={{marginBottom: "30px"}}>
+                        {buttons}
                     </div>
                 </div>
             </div>
