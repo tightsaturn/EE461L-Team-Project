@@ -30,6 +30,38 @@ class Abilities extends React.Component {
         this.fetchAbility = this.fetchAbility.bind(this)
         this.capitalize = this.capitalize.bind(this)
         this.handlePageClick = this.handlePageClick.bind(this)
+        this.fetchOneAbility = this.fetchOneAbility.bind(this)
+    }
+
+    async fetchOneAbility(id){
+        let url = 'https://pokebackend-461l.appspot.com/abilitycards/' + id;
+        await fetch(url)
+            .then((response) => {
+                return response.json();
+            })
+            .then(data => {
+                // get page number and update state
+                let pageNum = Math.floor((id-1)/this.state.pageSize);
+                let index = (id-1)%this.state.pageSize;
+
+                this.setState(prevState => {
+                    let abilityArray = [...prevState.ability]
+                    abilityArray[pageNum][index] =
+                        <AbilitiesBox
+                            generation={this.capitalizeG(data.generation[0].name)}
+                            description={data.effect[0].short_effect}
+                            name={this.capitalize(data.name)}
+                            id={data.id}
+                        />;
+
+                    return {
+                        ability: abilityArray
+                    }
+                })
+            })
+            .catch((err) =>{
+                console.log(err)
+            });
     }
 
     fetchAbility(){

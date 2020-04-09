@@ -145,7 +145,7 @@ class AboutUs_App extends React.Component {
                                 image={jaime}
                                 name="Jaime Tan Leon"
                                 track="Software and Academic Enrichment"
-                                res="Created the format of our models and worked to format all the elements in our website"
+                                res="Responsibilities: Abilities and Items Pages"
                             />
                         </div>
 
@@ -154,7 +154,7 @@ class AboutUs_App extends React.Component {
                                 image={tristan}
                                 name="Tristan McDaniel"
                                 track="Embedded Systems/Computer Architecture and Software"
-                                res="Focused on Team Builder and About Us Page - Worked on Github API"
+                                res="Responsibilities: Team Builder and About Us Pages"
                             />
                         </div>
 
@@ -163,7 +163,7 @@ class AboutUs_App extends React.Component {
                                 image={jimmy}
                                 name="Jimmy Phan"
                                 track="Data Science and Academic Enrichment"
-                                res="Styled and fixed formatting issues and wrote React code for dynamic components"
+                                res="Responsibilities: Pokedex and Moves Pages"
                             />
                         </div>
 
@@ -172,7 +172,7 @@ class AboutUs_App extends React.Component {
                                 image={mihir}
                                 name="Mihir Shah"
                                 track="Embedded Systems/Computer Architecture and Integrated Circuits"
-                                res="Moves Page, Location Page - Formatting on Report and UML"
+                                res="Responsibilities: Feedback Page and Login Functionality"
                             />
                         </div>
                     </div>
@@ -202,22 +202,44 @@ class AboutUs_App extends React.Component {
                     <br/>
                     <br/>
                     <h4>Tools</h4>
-                    <p>Implementation of the front-end this phase of the project was completed through JavaScript and React.
-                        React provided enhanced abilities than those offered by vanilla JavaScript and HTML that often took
-                        the form of grids and formatting. Bootstrap was also utilized in order to provide nicer elements
-                        such as buttons. Compilation of the JavaScript files was conducted through NodeJS.
+                    <p> Implementation of the front-end was completed through JavaScript and React. React provided 
+                        enhanced abilities than those offered by vanilla JavaScript and HTML in which we often took
+                        advantage of the grid functionalities and formatting that it offers. Bootstrap was also utilized
+                        in order to provide nicer elements such as buttons. Compilation of the JavaScript files was
+                        conducted through NodeJS.</p>
+                    <br/>
 
-                        During development, our team attempted to implement styling functionality from MaterialUI when
+                    <p> During the development of phase 1, our team attempted to implement styling functionality from MaterialUI when
                         trying to create grids and AG Grid when trying to implement tables. Ultimately, our team decided
                         against the use of these resources in order to have coherency with web pages created by other team
-                        members using the tools provided by React.
+                        members using the tools provided by React. </p>
+                    <br/>
 
-                        In order to implement API calls to GitHub, we utilized AJAX such that data concerning the repository
+                    <p> For the developement of phase 2, we did not make any changes to the tools used for the front-end due to the
+                        fact that react provided all of the necessary resources to create our webpages.</p>
+                    <br/>
+
+                    <p> Implementation of the back-end was completed through JavaScript, Mongoose, Express, and cors. Mongoose provided
+                        the necessary resources for accessing our MongoDB database while Express provided a meaningful functions for
+                        routing requests to the backend and was used in conjunction with the Express middleware cors. Overall, Express 
+                        allowed us to route URL calls to the backend for certain functionality in which most calls fetched data from the 
+                        database. For fetching information from our database, Mongoose proved to be very capable in which
+                        it handled the links to each collection and provided functions for getting and updating information in our database.
+                        Through Mongoose, we created a model for each of our collections, which was based on a schema for the types of data in
+                        the collection. With the model, we could then call Mongoose-provided functions for interfacing with the database.</p>
+                    <br/>    
+
+                    <p> In order to implement API calls to GitHub, we utilized AJAX such that data concerning the repository
                         use could be dynamically displayed on the about page. To collect and store data from the various
-                        APIs that we will utilize for the project, we utilize Python scripts and MongoDB respectively. React
-                        Router was later implemented to link web pages and provide a flow among each site.
+                        APIs that we will utilize for the project, we utilized Python scripts and MongoDB respectively. React
+                        Router was later implemented to link web pages and provide a flow among each site.</p>
+                    <br/>    
 
-                        Development by each member of the team was conducted in WebStorm by JetBrains. The app was
+                    <p> Testing was implemented through Selenium to test the UI, Postman to test the back-end, and Enzyme to test our
+                        React code.</p>
+                    <br/>    
+
+                    <p> Development by each member of the team was conducted in WebStorm by JetBrains and Visual Studio Code. The app was
                         ultimately deployed in Google Cloud Platform.
                     </p>
                     <br/>

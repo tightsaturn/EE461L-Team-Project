@@ -45,7 +45,7 @@ class App extends Component {
                         <Route exact path="/feedback" component={Feedback}/>
                         <Route exact path="/feedback/thankyou" component={Thankyou}/>
                         <Route exact path = "/teambuilder" component = {TeamBuilder}/>
-                        <Route exact path = "/teambuilder/addpokemon/:memberNum" component = {AddPokemon_TeamBuilder}/>
+                        <Route exact path = "/teambuilder/addpokemon/:memberNum" component = {AddPokemon}/>
                         <Route exact path = "/teambuilder/change/:memberNum/:pokemonId" component = {TeamBuilder}/>
                         <Route exact path = "/teambuilder/resetTeam" component = {TeamBuilder}/>
                         <Route exact path = "/aboutus" component = {AboutUs}/>

@@ -1,0 +1,664 @@
+{
+	"info": {
+		"_postman_id": "3968bcfd-309c-4c4f-9e06-988a8a4a3177",
+		"name": "EE 461L Team Project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Backend Testing: Abilities Fetch All",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f17b64f3-6694-4468-96c8-878628076801",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Correct size is 377.93KB\", function () {",
+							"    pm.expect(pm.response.responseSize).to.eql(386499)",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://pokebackend-461l.appspot.com/abilities",
+					"protocol": "https",
+					"host": [
+						"pokebackend-461l",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"abilities"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Backend Testing: Abilities Fetch One",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "388dab12-33a0-486a-9e61-6588869dde0b",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Abilities_Contents\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.effect_changes).to.eql([]);",
+							"    pm.expect(jsonData.effect_entries).to.eql([]);",
+							"    pm.expect(jsonData.id).to.eql(11);",
+							"    pm.expect(jsonData._id).to.eql(\"5e81864d6b6bd4aaed3154d0\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://pokebackend-461l.appspot.com/abilities/11",
+					"protocol": "https",
+					"host": [
+						"pokebackend-461l",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"abilities",
+						"11"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Backend Testing: AbilityCard Fetch All",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fd9f0171-6d01-49d1-bedb-9f40c0c76845",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Correct size is 133.74KB\", function () {",
+							"    pm.expect(pm.response.responseSize).to.eql(136446)",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://pokebackend-461l.appspot.com/abilitycards",
+					"protocol": "https",
+					"host": [
+						"pokebackend-461l",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"abilitycards"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Backend Testing: AbilityCards Fetch One",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c1ff3e80-bb6c-4779-b1e0-95821d0134a2",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"AbilityCards_Contents\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData._id).to.eql(\"5e8186736b6bd4aaed315539\");",
+							"    pm.expect(jsonData.id).to.eql(64);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://pokebackend-461l.appspot.com/abilitycards/64",
+					"protocol": "https",
+					"host": [
+						"pokebackend-461l",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"abilitycards",
+						"64"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Backend Test: Pokemon Fetch One",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ed978ad6-0330-41f9-a850-9669eceeccb2",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"AbilityCards_Contents\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData._id).to.eql(\"5e81773a0419b5475096e049\");",
+							"    pm.expect(jsonData.id).to.eql(592);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://pokebackend-461l.appspot.com/pokemon/592",
+					"protocol": "https",
+					"host": [
+						"pokebackend-461l",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"pokemon",
+						"592"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Backend Test: Pokemon Fetch Range",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "59a6b390-d6ea-4fbf-a9de-c393ccf23562",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Correct size is 1.7MB\", function () {",
+							"    pm.expect(pm.response.responseSize).to.eql(1777712)",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://pokebackend-461l.appspot.com/pokemon/1/11",
+					"protocol": "https",
+					"host": [
+						"pokebackend-461l",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"pokemon",
+						"1",
+						"11"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Backend Testing: PokemonCards Fetch All",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1df66bcf-72f5-413b-8809-7e52471e9240",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Correct size is 124.94KB\", function () {",
+							"    pm.expect(pm.response.responseSize).to.eql(127440)",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://pokebackend-461l.appspot.com/pokemoncards",
+					"protocol": "https",
+					"host": [
+						"pokebackend-461l",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"pokemoncards"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Backend Testing: PokemonCards Fetch One",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5fed26e5-6383-4314-a58a-1ebfb00b956b",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"PokemonCard_Contents\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData._id).to.eql(\"5e817915f24b6790585ddf88\");",
+							"    pm.expect(jsonData.id).to.eql(807);",
+							"    pm.expect(jsonData.name).to.eql(\"zeraora\");",
+							"    pm.expect(jsonData.frontSprite).to.eql(null);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://pokebackend-461l.appspot.com/pokemoncards/807",
+					"protocol": "https",
+					"host": [
+						"pokebackend-461l",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"pokemoncards",
+						"807"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Backend Test: Items Fetch All",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c5691181-b0cd-4e7d-a324-0308bc11cb39",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Correct size is 551.59KB\", function () {",
+							"    pm.expect(pm.response.responseSize).to.eql(564325)",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://pokebackend-461l.appspot.com/items",
+					"protocol": "https",
+					"host": [
+						"pokebackend-461l",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"items"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Backend Test: Items Fetch One",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "141f3d99-5f63-4512-9e07-3018b3f99429",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Abilities_Contents\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.id).to.eql(87);",
+							"    pm.expect(jsonData._id).to.eql(\"5e816ea3fba6f088561d839c\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://pokebackend-461l.appspot.com/items/87",
+					"protocol": "https",
+					"host": [
+						"pokebackend-461l",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"items",
+						"87"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Backend Testing: ItemCards Fetch All",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "36c0e24c-910a-421f-badb-7d2bc6ea561e",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Correct size is 400.78KB\", function () {",
+							"    pm.expect(pm.response.responseSize).to.eql(409895)",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://pokebackend-461l.appspot.com/itemcards/",
+					"protocol": "https",
+					"host": [
+						"pokebackend-461l",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"itemcards",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Backend Testing: ItemCards Fetch One",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "39d49ebc-58e7-4d9a-8942-483a72b20c46",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"ItemCard_Contents\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.effect[0].effect).to.eql(\"Used in battle\\n:   Catches a wild Pokémon without fail.\\n\\n    If used in a trainer battle, nothing happens and the ball is lost.\");",
+							"    pm.expect(jsonData.effect[0].language.name).to.eql(\"en\");",
+							"    pm.expect(jsonData.effect[0].language.url).to.eql(\"https://pokeapi.co/api/v2/language/9/\");",
+							"    pm.expect(jsonData._id).to.eql(\"5e81797c3987dd644ab18e7d\");",
+							"    pm.expect(jsonData.name).to.eql(\"master-ball\");",
+							"    pm.expect(jsonData.sprite).to.eql(\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/master-ball.png\");",
+							"    pm.expect(jsonData.id).to.eql(1);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://pokebackend-461l.appspot.com/itemcards/1",
+					"protocol": "https",
+					"host": [
+						"pokebackend-461l",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"itemcards",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Backend Test: Moves Fetch All",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "898d4552-40f0-4bcc-8723-9901facad99d",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Correct size is 823.74KB\", function () {",
+							"    pm.expect(pm.response.responseSize).to.eql(843012)",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://pokebackend-461l.appspot.com/moves",
+					"protocol": "https",
+					"host": [
+						"pokebackend-461l",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"moves"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Backend Test: Moves Fetch One",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "35142517-86a9-40d7-9f3d-bc9c8e80792e",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Abilities_Contents\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.id).to.eql(13);",
+							"    pm.expect(jsonData._id).to.eql(\"5e818262b054ca1fa136d122\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://pokebackend-461l.appspot.com/moves/13",
+					"protocol": "https",
+					"host": [
+						"pokebackend-461l",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"moves",
+						"13"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Backend Testing: MoveCards Fetch All",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7bba278d-9e58-4f92-a88d-a624e56a80f2",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Correct size is 406.68KB\", function () {",
+							"    pm.expect(pm.response.responseSize).to.eql(415942)",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://pokebackend-461l.appspot.com/movecards",
+					"protocol": "https",
+					"host": [
+						"pokebackend-461l",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"movecards"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Backend Testing: MoveCards Fetch One",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "31f1ec2c-1b3a-465e-aab3-149ccdbd1468",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"MoveCard_Contents\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.effect_entries).to.eql([]);",
+							"    pm.expect(jsonData._id).to.eql(\"5e818269b054ca1fa136d15f\");",
+							"    pm.expect(jsonData.name).to.eql(\"bite\");",
+							"    pm.expect(jsonData.effect[0].effect).to.eql(\"Inflicts regular damage.  Has a $effect_chance% chance to make the target flinch.\")",
+							"    pm.expect(jsonData.effect[0].language.name).to.eql(\"en\");",
+							"    pm.expect(jsonData.effect[0].language.url).to.eql(\"https://pokeapi.co/api/v2/language/9/\");",
+							"    pm.expect(jsonData.effect[0].short_effect).to.eql(\"Has a $effect_chance% chance to make the target flinch.\")",
+							"    pm.expect(jsonData.generation[0].name).to.eql(\"generation-i\");",
+							"    pm.expect(jsonData.generation[0].url).to.eql(\"https://pokeapi.co/api/v2/generation/1/\")",
+							"    pm.expect(jsonData.type[0].name).to.eql(\"dark\"),",
+							"    pm.expect(jsonData.type[0].url).to.eql(\"https://pokeapi.co/api/v2/type/17/\")",
+							"    pm.expect(jsonData.id).to.eql(44);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://pokebackend-461l.appspot.com/movecards/44",
+					"protocol": "https",
+					"host": [
+						"pokebackend-461l",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"movecards",
+						"44"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

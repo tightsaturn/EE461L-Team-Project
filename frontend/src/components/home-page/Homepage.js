@@ -12,9 +12,8 @@ import imgb4 from "../../images/bulbasaur_background.jpg"
 import ImagComp from "./ImagComp";
 
 const Homepage = () => {
-
     let sliderArr = [<ImagComp src={imgb1} pokemon={img1} text="Welcome to Togepedia"/>,
-        <ImagComp src={imgb2} pokemon={img2} text="Explore Pokemon"/>,
+        <ImagComp className="img2" src={imgb2} pokemon={img2} text="Explore Pokemon"/>,
         <ImagComp src={imgb3} pokemon={img3} text="Learn more Info"/>,
         <ImagComp src={imgb4} pokemon={img4} text="Build Teams"/>]
     const [x, setX] = useState(0)
@@ -38,6 +37,7 @@ const Homepage = () => {
 
     return (
         <div className="slider">
+
             {slidesArray}
             <button className="goLeft" onClick={goL}>
                 <i className="fas fa-chevron-left buttonImg"></i>

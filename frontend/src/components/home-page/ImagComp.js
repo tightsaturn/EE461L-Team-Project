@@ -30,8 +30,7 @@ const text = {
 function ImagComp(props){
     return (
         <div>
-            {/*<img src={props.pokemon} style={pokemon}/>*/}
-            <div style={text}>
+            <div className="greeting" style={text}>
                 {props.text}
             </div>
             <img src={props.src} style={background_img} alt="slide-img"></img>

@@ -7,7 +7,6 @@ const tableabilities = {
     marginTop: "70px",
     paddingLeft: "200px",
     paddingRight: "120px",
-    border: "blue solid 2px"
 };
 
 class PokemonInfo extends React.Component {
@@ -43,7 +42,7 @@ class PokemonInfo extends React.Component {
                 this.setState({
                     name: data.name,
                     imgURL: data.frontSprite,
-                    moves: movesArray,
+                    moves: data.moves,
                     types: typesArray
                 })
             })
@@ -75,9 +74,9 @@ class PokemonInfo extends React.Component {
                                     </p>
                                 </div>
                                 <ul className="list-group list-group-flush">
-                                    <li className="list-group-item">Types: {this.capitalize(this.state.types[0])} {this.capitalize(this.state.types[1])}</li>
-                                    <li className="list-group-item">Dapibus ac facilisis in</li>
-                                    <li className="list-group-item">Vestibulum at eros</li>
+                                    <li className="list-group-item">Types: {this.capitalize(this.state.types[0])} , {this.capitalize(this.state.types[1])}</li>
+                                    <li className="list-group-item"></li>
+                                    <li className="list-group-item"></li>
                                 </ul>
                                 <div className="card-body">
                                     <a href="#" className="card-link">Card link</a>
@@ -90,14 +89,15 @@ class PokemonInfo extends React.Component {
                         <table className="table">
                             <thead className="thead-light">
                             <tr>
-                                <th scope="col">#</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Level Learned</th>
                                 <th scope="col">Type</th>
                             </tr>
                             </thead>
                             <tbody>
-
+                            {this.state.moves.map(move => (
+                                <ul key={move}>{(move.move.name[0].toUpperCase() + move.move.name.slice(1)) + "----------------------------------------" +(move.version_group_details[0].level_learned_at)} </ul>
+                            ))}
                             </tbody>
                         </table>
                     </div>
