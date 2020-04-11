@@ -255,8 +255,6 @@ class Pokemon extends React.Component {
                 let index = (item)%this.state.pageSize;
                 let pokemon = this.state.pokemon[pageNum][index]
 
-                console.log(pokemon.name)
-
                 return <PokemonBox
                     imgURL={pokemon.imgURL}
                     id={pokemon.id}

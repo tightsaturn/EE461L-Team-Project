@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import {Link} from "react-router-dom";
-import SearchFitler from "../SearchFilter";
+import PokemonSearchFilter from "./PokemonSearchFilter";
 import {Button} from "react-bootstrap";
 import axios from 'axios'
+import PokemonBox from "../pokedex-page/PokemonBox";
 
 const tablepokemon = {
     marginLeft: "200px",
@@ -50,13 +51,19 @@ class AddPokemon extends React.Component {
         this.state = {
             pokemonPerPage: 36,
             currentPage: 0,
+            filteredPokemon: [],
             pokemonDisplayed: pokeArray,
-            buttons: buttonsArray
+            buttons: buttonsArray,
+            numLoaded: 0,   // counts how many pokemon loaded to see when fetching finishes
+            isFiltered: false,
+            numFiltered: 0  // shows number of results for filter
         };
 
         this.capitalize = this.capitalize.bind(this)
         this.fetchPokemon = this.fetchPokemon.bind(this)
         this.handlePageClick = this.handlePageClick.bind(this)
+        this.filter = this.filter.bind(this)
+        this.reset = this.reset.bind(this)
     }
 
     fetchPokemon() {
@@ -99,12 +106,14 @@ class AddPokemon extends React.Component {
                             id: id,
                             name: data.name,
                             type: type,
+                            types: data.types,
                             image: data.sprites.front_default,
                             memberNum: this.props.match.params.memberNum
                         }
 
                         return {
                             pokemonDisplayed: pokeArray,
+                            numLoaded: prevState.numLoaded + 1
                         }
                     })
                 })
@@ -131,17 +140,130 @@ class AddPokemon extends React.Component {
             currentPage: id
         })
     }
+
+    filter (name, include, type1, type2) {
+        // check if all pokemon are finished loading (alert if not)
+        if (this.state.numLoaded < 807) {
+            alert("Wait for all the pokemon to finish loading first!")
+            return
+        }
+
+        // check if all the fields are empty
+        if (name === "" && include === "" && type1 === "None" && type2 === "None") {
+            this.setState({
+                isFiltered: false
+            })
+            return
+        }
+
+        // keep a subarray for each filter option and combine at the end
+        // a true entry means pokemon i fits the filter criteria (e.g. name or type1)
+        let filterArray = [[], [], [], []]
+        for (let i = 0; i < this.state.pokemonDisplayed.length; i++) {
+            for (let j = 0; j < this.state.pokemonPerPage; j++) {
+                // get pokemon and find out if it matches filter criteria
+                let pokeJSON = {...this.state.pokemonDisplayed[i][j]}
+                if (pokeJSON.name === undefined) break
+
+                // console.log(pokeJSON.name)
+
+                if (name !== "") {
+                    if (name.toLowerCase() === pokeJSON.name.toLowerCase()) {
+                        filterArray[0].push(true)
+                    } else filterArray[0].push(false)
+                }   // pushes true if there is no entry
+                else filterArray[0].push(true)
+
+                // check if substring include is in pokemon name
+                if (include !== "") {
+                    if ((pokeJSON.name.toLowerCase()).indexOf(include.toLowerCase()) !== -1) {
+                        filterArray[1].push(true)
+                    } else filterArray[1].push(false)
+                } else filterArray[1].push(true)
+
+                if (pokeJSON.types.length === 2) {
+                    if (type1 !== "None") {
+                        if (pokeJSON.types[0].type.name === type1.toLowerCase() || pokeJSON.types[1].type.name === type1.toLowerCase()) {
+                            filterArray[2].push(true)
+                        } else filterArray[2].push(false)
+                    } else filterArray[2].push(true)
+
+                    if (type2 !== "None") {
+                        if (pokeJSON.types[0].type.name === type2.toLowerCase() || pokeJSON.types[1].type.name === type2.toLowerCase()) {
+                            filterArray[3].push(true)
+                        } else filterArray[3].push(false)
+                    } else filterArray[3].push(true)
+                } else {
+                    if (type1 !== "None" && type2 !== "None") {
+                        // if filter specifies 2 types but pokemon only has one (the pokemon does not get added)
+                        filterArray[2].push(false)
+                        filterArray[3].push(false)
+                    } else {
+                        if (type1 !== "None") {
+                            if (pokeJSON.types[0].type.name === type1.toLowerCase()) {
+                                filterArray[2].push(true)
+                            } else filterArray[2].push(false)
+                        } else filterArray[2].push(true)
+
+                        if (type2 !== "None") {
+                            if (pokeJSON.types[0].type.name === type2.toLowerCase()) {
+                                filterArray[3].push(true)
+                            } else filterArray[3].push(false)
+                        } else filterArray[3].push(true)
+                    }
+                }
+            }
+        }
+
+        // only add pokemon to filtered list if all of the filter criteria are met
+        let filteredPokemon = []
+        for(let i = 0; i < 807; i++) {
+            if(filterArray[0][i] &&
+                filterArray[1][i] &&
+                filterArray[2][i] &&
+                filterArray[3][i]) {
+                filteredPokemon.push(i)
+            }
+        }
+
+        this.setState({
+            filteredPokemon: filteredPokemon,
+            isFiltered: true,
+            numFiltered: filteredPokemon.length
+        })
+    }
+
+    reset() {
+        this.setState({
+            isFiltered: false
+        })
+    }
     
     render() {
-        let pokemon = this.state.pokemonDisplayed[this.state.currentPage].map((item) => {
+        let pokemon = this.state.isFiltered ?
+            // item holds id of pokemon to be rendered
+            this.state.filteredPokemon.map(item => {
+                let pageNum = Math.floor((item)/this.state.pokemonPerPage);
+                let index = (item)%this.state.pokemonPerPage;
+                let pokemon = this.state.pokemonDisplayed[pageNum][index]
+
+                return <PokemonRow
+                    id={pokemon.id}
+                    name={this.capitalize(pokemon.name)}
+                    type={pokemon.type}
+                    image={pokemon.image}
+                    memberNum={pokemon.memberNum}
+                />
+            }) :
+        this.state.pokemonDisplayed[this.state.currentPage].map((item) => {
             return <PokemonRow
                 id={item.id}
-                name={item.name}
+                name={this.capitalize(item.name)}
                 type={item.type}
                 image={item.image}
                 memberNum={item.memberNum} />
         })
-        let buttons = this.state.buttons.map((item, index) => {
+        let buttons = (this.state.isFiltered) ? null : this.state.buttons.map((item, index) => {
             let className = (this.state.currentPage == index) ? "btn btn-success":"btn btn-light"
 
             return <button
@@ -152,13 +274,20 @@ class AddPokemon extends React.Component {
             </button>
         })
 
+        let filterMessage = this.state.isFiltered ? (this.state.numFiltered + " results found") : null
+        let pageMessage = this.state.isFiltered ? null : "Go to Page:"
+
         return (
             <div className = "App">
                 <div style={tablepokemon}>
                     <h1>Pokemon</h1>
                     <br/>
-                    <SearchFitler/>
+                    <PokemonSearchFilter
+                        onFilter={this.filter}
+                        onReset={this.reset}
+                    />
                     <br/>
+                    <h3 style={{marginTop: "15px"}}>{filterMessage}</h3>
                     <table className="table">
                         <thead className="thead-dark">
                             <tr>
@@ -178,7 +307,7 @@ class AddPokemon extends React.Component {
                     <br></br>
                     <br></br>
 
-                    <p>Go to Page:</p>
+                    <p>{pageMessage}</p>
                     <div className="navbar" style={{marginBottom: "30px"}}>
                         {buttons}
                     </div>
