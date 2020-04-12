@@ -19,11 +19,9 @@ const PokemonBox = (props) => {
                         </p>
                     </div>
                     <div className="card-footer">
-                        <BrowserRouter>
-                            <Link to={"/pokemon/" + props.id}>
-                                <Button on variant="btn btn-danger">Learn more</Button>
-                            </Link>
-                        </BrowserRouter>
+                        <Link to={"/pokemon/" + props.id}>
+                            <Button on variant="btn btn-danger">Learn more</Button>
+                        </Link>
                     </div>
             </div>
         </div>

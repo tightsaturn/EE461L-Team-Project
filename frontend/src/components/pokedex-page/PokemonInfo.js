@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import "../../App.css"
 import MovesBox from "../moves-page/MovesBox";
 
-const tableabilities = {
+const container = {
     marginTop: "70px",
     paddingLeft: "200px",
     paddingRight: "120px",
@@ -60,9 +60,8 @@ class PokemonInfo extends React.Component {
     render() {
         let id = this.props.match.params.id
 
-
         return (
-            <div className="container-fluid" style={tableabilities} >
+            <div className="container-fluid" style={container} >
                 <div className="row">
                     <div className="col-4">
                         <div className="card" style={{width: "25rem", marginLeft: "30px"}}>
@@ -74,7 +73,7 @@ class PokemonInfo extends React.Component {
                                     </p>
                                 </div>
                                 <ul className="list-group list-group-flush">
-                                    <li className="list-group-item">Types: {this.capitalize(this.state.types[0])} , {this.capitalize(this.state.types[1])}</li>
+                                    <li className="list-group-item">Types: {this.capitalize(this.state.types[0])} {this.capitalize(this.state.types[1])}</li>
                                     <li className="list-group-item"></li>
                                     <li className="list-group-item"></li>
                                 </ul>
