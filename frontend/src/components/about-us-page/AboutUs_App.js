@@ -9,12 +9,7 @@ import mihir from "./css/mihir.jpg"
 
 import "./css/AboutUs_Background.css"
 import "./css/About_App.css"
-
-const tableaboutus = {
-    marginLeft: "200px",
-    marginTop: "70px",
-    marginRight: "100px",
-}
+import "../../css/page.css"
 
 class AboutUs_App extends React.Component {
     constructor() {
@@ -101,10 +96,8 @@ class AboutUs_App extends React.Component {
 
     render() {
         return (
-            <div>
-                <Background/>
-
-                <div style={tableaboutus}>
+            <div id="infoContent" style={{textAlign: "justify"}}>
+                <div>
                     <h1>About</h1>
                     <br></br>
                     <h4>Website Description</h4>

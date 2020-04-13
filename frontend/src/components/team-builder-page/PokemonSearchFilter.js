@@ -8,6 +8,11 @@ const whitespacable = {
     whiteSpace: "pre"
 }
 
+const row = {
+    marginTop: "10px",
+    marginBottom: "10px"
+}
+
 class PokemonSearchFilter extends React.Component {
     constructor() {
         super()

@@ -2,14 +2,7 @@ import React, { Component } from 'react';
 import {Link} from "react-router-dom";
 import PokemonSearchFilter from "./PokemonSearchFilter";
 import {Button} from "react-bootstrap";
-import axios from 'axios'
-import PokemonBox from "../pokedex-page/PokemonBox";
-
-const tablepokemon = {
-    marginLeft: "200px",
-    marginTop: "70px",
-    marginRight: "100px",
-}
+import "../../css/page.css"
 
 function printType(props) {
     console.log(props.type);
@@ -278,8 +271,8 @@ class AddPokemon extends React.Component {
         let pageMessage = this.state.isFiltered ? null : "Go to Page:"
 
         return (
-            <div className = "App">
-                <div style={tablepokemon}>
+            <div className="container-fluid" id="infoContent">
+                <div>
                     <h1>Pokemon</h1>
                     <br/>
                     <PokemonSearchFilter

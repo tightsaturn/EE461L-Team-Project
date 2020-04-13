@@ -1,13 +1,13 @@
 .slider {
-    width: 100%;
-    height: 88vh;
-    boxSizing: border-box;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: left;
-    z-index: -3;
-    overflow: hidden;
+  margin-top: 12vh;
+  width: 100%;
+  height: 88vh;
+  box-sizing: border-box;
+  padding: 0;
+  display: flex;
+  justify-content: left;
+  z-index: -3;
+  overflow: hidden;
 }
 
 .slide {

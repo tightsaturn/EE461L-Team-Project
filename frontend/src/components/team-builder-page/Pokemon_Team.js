@@ -4,13 +4,6 @@ import './css/Pokemon_Team.css';
 import BlankPokemon from './css/BlankPokemon.png'
 import axios from 'axios'
 
-const tableAbilities = {
-   // marginLeft: "350px",
-    marginTop: "40px",
-    marginRight: "50px",
-    width: "80%",
-    height: "100%",
-}
 
 function Pokemon_Card(props) {
     return (

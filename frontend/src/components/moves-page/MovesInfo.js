@@ -1,6 +1,6 @@
 import React from "react"
 import 'bootstrap/dist/css/bootstrap.min.css'
-import "../../App.css"
+import "../../css/page.css"
 
 const tableabilities = {
     marginTop: "70px",
@@ -63,10 +63,10 @@ class MovesInfo extends React.Component {
         let id = this.props.match.params.move
 
         return (
-            <div className="container-fluid" style={tableabilities} >
+            <div className="container-fluid" id="infoContent">
                 <div className="row">
                     <div className="col-4">
-                        <div className="card" style={{width: "25rem", marginLeft: "30px"}}>
+                        <div className="card">
                             <div className="card-body">
                                 <h1 className="card-text">{this.capitalize(this.state.name)} <br/>
                                 </h1>

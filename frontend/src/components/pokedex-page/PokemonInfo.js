@@ -1,13 +1,8 @@
 import React from "react"
 import 'bootstrap/dist/css/bootstrap.min.css'
 import "../../App.css"
-import MovesBox from "../moves-page/MovesBox";
+import "../../css/page.css"
 
-const container = {
-    marginTop: "70px",
-    paddingLeft: "200px",
-    paddingRight: "120px",
-};
 
 class PokemonInfo extends React.Component {
     constructor(){
@@ -16,7 +11,8 @@ class PokemonInfo extends React.Component {
             name: "",
             imgURL: "",
             moves: [],
-            types: []
+            types: [],
+            color: {}
         }
 
         this.capitalize = this.capitalize.bind(this)
@@ -24,12 +20,9 @@ class PokemonInfo extends React.Component {
 
     componentDidMount() {
         let id = this.props.match.params.id
-        let url = 'https://pokebackend-461l.appspot.com/pokemon/' + id;
 
-        fetch(url)
-            .then((response) => {
-                return response.json();
-            })
+        fetch('https://pokebackend-461l.appspot.com/pokemon/' + id)
+            .then(response => { return response.json() })
             .then(data => {
                 console.log(data)
                 let movesArray = []
@@ -43,12 +36,19 @@ class PokemonInfo extends React.Component {
                     name: data.name,
                     imgURL: data.frontSprite,
                     moves: data.moves,
-                    types: typesArray
+                    types: typesArray,
+                    getColor: true
                 })
             })
-            .catch((err) =>{
-                console.log(err)
-            });
+            .catch((err) =>{ console.log(err) });
+
+        fetch('https://pokeapi.co/api/v2/pokemon-species/' + id)
+            .then(response => { return response.json() })
+            .then(data => {
+                console.log(data);
+                this.setState({ color: {backgroundColor: data.color.name} })
+            })
+            .catch((err) =>{ console.log(err) });
     }
 
     capitalize(name) {
@@ -59,12 +59,13 @@ class PokemonInfo extends React.Component {
 
     render() {
         let id = this.props.match.params.id
+        console.log(this.state.color)
 
         return (
-            <div className="container-fluid" style={container} >
+            <div className="container-fluid" style={this.state.color} id="infoContent">
                 <div className="row">
                     <div className="col-4">
-                        <div className="card" style={{width: "25rem", marginLeft: "30px"}}>
+                        <div className="card">
                             <img className="card-img-top" src={this.state.imgURL} alt="Card image cap"/>
                                 <div className="card-body">
                                     <h5 className="card-title"># {id}</h5>
@@ -100,7 +101,6 @@ class PokemonInfo extends React.Component {
                             </tbody>
                         </table>
                     </div>
-
                 </div>
             </div>
         );

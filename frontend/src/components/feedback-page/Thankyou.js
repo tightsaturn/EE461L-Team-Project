@@ -2,8 +2,8 @@ import React from "react"
 
 
 const header = {
-    marginTop: "70px",
-    paddingLeft: "200px",
+    marginTop: "200px",
+    paddingLeft: "260px",
     paddingRight: "120px"
 }
 

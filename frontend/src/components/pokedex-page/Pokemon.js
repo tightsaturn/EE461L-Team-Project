@@ -1,10 +1,12 @@
 import React from "react"
 import 'bootstrap/dist/css/bootstrap.min.css'
 import "../../App.css"
+import "../../css/page.css"
 import PokemonSearchFilter from "./PokemonSearchFilter";
 import PokemonBox from "./PokemonBox";
+import Background from "../Background";
 
-const tableabilities = {
+const info = {
     marginLeft: "400px",
     marginTop: "15px",
     marginRight: "100px",
@@ -32,7 +34,8 @@ class Pokemon extends React.Component {
             pageSize: 36,
             numLoaded: 0,   // counts how many pokemon loaded to see when fetching finishes
             isFiltered: false,
-            numFiltered: 0  // shows number of results for filter
+            numFiltered: 0,  // shows number of results for filter
+            backgroundHeight: "750%"
         }
         this.fetchPokemon = this.fetchPokemon.bind(this)
         this.capitalize = this.capitalize.bind(this)
@@ -75,15 +78,10 @@ class Pokemon extends React.Component {
     fetchPokemon(){
         // fetch each pokemon and add to state
         for(let id = 1; id < 808; id++){
-            // fetch each pokemon and add to state
             let url = 'https://pokeapi.co/api/v2/pokemon/' + id;
             fetch(url)
                 .then((response) => {
-                    if(response.ok){
-                        return response.json();
-                    } else {
-                        throw new Error("failed to get response");
-                    }
+                    if(response.ok){ return response.json(); }
                 })
                 .then(data => {
                     // get page number and update state
@@ -134,7 +132,8 @@ class Pokemon extends React.Component {
         // check if all the fields are empty
         if(name === "" && include === "" && type1 === "None" && type2 === "None") {
             this.setState({
-                isFiltered: false
+                isFiltered: false,
+                backgroundHeight: "750%"
             })
             return
         }
@@ -214,16 +213,25 @@ class Pokemon extends React.Component {
             }
         }
 
+        // calculate height of the left background
+        let backgroundHeight = 40
+        let numRows = Math.ceil(filteredPokemon.length/3)
+        backgroundHeight += numRows*59
+        backgroundHeight = backgroundHeight.toString() + "%"
+        if(numRows == 1) backgroundHeight = "100%"
+
         this.setState({
             filteredPokemon: filteredPokemon,
             isFiltered: true,
-            numFiltered: filteredPokemon.length
+            numFiltered: filteredPokemon.length,
+            backgroundHeight: backgroundHeight
         })
     }
 
     reset() {
         this.setState({
-            isFiltered: false
+            isFiltered: false,
+            backgroundHeight: "750%"
         })
     }
 
@@ -282,22 +290,20 @@ class Pokemon extends React.Component {
         let filterMessage = this.state.isFiltered ? (this.state.numFiltered + " results found") : null
 
         return (
-            <div className="App">
-                <div className="container" style={tableabilities}>
-                    <h1>Pokemon</h1>
-                    <br/>
-                    <br/>
-                    <PokemonSearchFilter
-                        onFilter={this.filter}
-                        onReset={this.reset}
-                    />
-                    <h3 style={{marginTop: "15px"}}>{filterMessage}</h3>
-                    <div className="row mt-5">
-                        {pokemon}
-                    </div>
-                    <div className="navbar" style={{marginBottom: "30px"}}>
-                        {buttons}
-                    </div>
+            <div className="container-fluid" id="mainContent">
+                <h1>Pokemon</h1>
+                <br/>
+                <br/>
+                <PokemonSearchFilter
+                    onFilter={this.filter}
+                    onReset={this.reset}
+                />
+                <h4 style={{marginTop: "10px"}}>{filterMessage}</h4>
+                <div className="row mt-5">
+                    {pokemon}
+                </div>
+                <div className="navbar" style={{ marginTop: "10px", marginBottom: "30px"}}>
+                    {buttons}
                 </div>
             </div>
         );

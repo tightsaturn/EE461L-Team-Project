@@ -1,15 +1,8 @@
-
 import React from 'react';
-import {Link} from "react-router-dom";
+import "../../css/page.css"
 import SearchFilter from "../SearchFilter";
 import AbilitiesBox from "./AbilitiesBox";
-import PokemonBox from "../pokedex-page/PokemonBox";
 
-const tableabilities = {
-    marginLeft: "200px",
-    marginTop: "70px",
-    marginRight: "100px",
-}
 
 class Abilities extends React.Component {
     constructor(){
@@ -141,7 +134,7 @@ class Abilities extends React.Component {
     render()
     {
         return (
-            <div style={tableabilities}>
+            <div className="container-fluid" id="mainContent">
                 <h1>Abilities</h1>
                 <br/>
                 <SearchFilter/>

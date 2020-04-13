@@ -8,7 +8,7 @@ const pokemonCard = {
 
 const PokemonBox = (props) => {
     return (
-        <div className="col-lg-4 mb-4 grid-margin">
+        <div className="col-sm-4 mb-4 grid-margin">
             <div className="card" style={pokemonCard}>
                 <img className="card-img-top" src={props.imgURL} alt="Card image cap"/>
                     <div className="card-body">
