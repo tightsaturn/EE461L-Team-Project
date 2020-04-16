@@ -1,13 +1,8 @@
 import React from 'react';
-import {Link} from "react-router-dom";
+import "../../css/page.css"
 import SearchFitler from "../SearchFilter";
 import MovesBox from "../moves-page/MovesBox";
 
-const tablemoves = {
-    marginLeft: "200px",
-    marginTop: "70px",
-    marginRight: "100px",
-}
 
 class Moves extends React.Component {
     constructor(){
@@ -103,8 +98,7 @@ class Moves extends React.Component {
     render()
     {
         return (
-
-            <div style={tablemoves}>
+            <div className="container-fluid" id="mainContent">
                 <h1>Moves</h1>
                 <br/>
                 <SearchFitler/>

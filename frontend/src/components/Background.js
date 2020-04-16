@@ -9,7 +9,6 @@ function Background() {
             <span className="Outside-pokeball-dot"></span>
             <span className="Inside-pokeball-dot"></span>
         </div>
-
     )
 }
 

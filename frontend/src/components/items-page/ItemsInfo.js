@@ -1,12 +1,7 @@
 import React from "react"
 import 'bootstrap/dist/css/bootstrap.min.css'
 import "../../App.css"
-
-const tableabilities = {
-    marginTop: "70px",
-    paddingLeft: "200px",
-    paddingRight: "120px",
-};
+import "../../css/page.css"
 
 class ItemsInfo extends React.Component {
     constructor(){
@@ -58,10 +53,10 @@ class ItemsInfo extends React.Component {
         let id = this.props.match.params.item
 
         return (
-            <div className="container-fluid" style={tableabilities} >
+            <div className="container-fluid" id="infoContent">
                 <div className="row">
                     <div className="col-4">
-                        <div className="card" style={{width: "25rem", marginLeft: "30px"}}>
+                        <div className="card">
                             <div className="card-body">
                                 <h1 className="card-text">{this.capitalize(this.state.name)} <br/>
                                 </h1>
