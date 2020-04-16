@@ -1,14 +1,8 @@
 import React from 'react';
-import {Link} from "react-router-dom";
+import "../../css/page.css"
 import SearchFitler from "../SearchFilter";
 import ItemsBox from "../items-page/ItemsBox";
-import AbilitiesBox from "../abilities-page/AbilitiesBox";
 
-const tableitems = {
-    marginLeft: "200px",
-    marginTop: "70px",
-    marginRight: "100px",
-}
 
 class Items extends React.Component{
     constructor(){
@@ -104,7 +98,7 @@ class Items extends React.Component{
     {
         return (
 
-            <div style={tableitems}>
+            <div className="container-fluid" id="mainContent">
                 <h1>Items</h1>
                 <br/>
                 <SearchFitler/>

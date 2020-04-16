@@ -1,0 +1,32 @@
+/* stylesheet for info page for all models */
+#infoCard {
+    padding: 2rem;
+    text-align: center;
+}
+
+#id {
+    font-size: 0.8rem;
+}
+
+#name {
+    font-size: 1.6rem;
+    font-weight: bold;
+}
+
+#types {
+    font-size: 1.2rem;
+}
+
+#abilities {
+    font-size: 1.2rem;
+}
+
+#typesTable {
+    padding: 1rem;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+a {
+    color: #282c34;
+}

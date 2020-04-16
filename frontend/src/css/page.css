@@ -4,3 +4,26 @@
     marginTop: 70px;
     marginRight: 100px;
 }
+
+/* used for positioning main content of element within fixed background */
+#mainContent {
+    margin-top: 12vh;
+    margin-left: 125px;
+    padding-top: 50px;
+    padding-left: 13%;
+    padding-right: 13%;
+    text-align: left;
+    width: auto;
+}
+
+#infoContent {
+    margin-top: 12vh;
+    margin-left: 125px;
+    padding-top: 4%;
+    padding-left: 9%;
+    padding-right: 9%;
+    font-family: dido;
+    text-align: left;
+    width: auto;
+    height: 100%;
+}

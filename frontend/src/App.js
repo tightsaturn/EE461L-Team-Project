@@ -28,31 +28,29 @@ class App extends Component {
         return (
             <BrowserRouter >
                 <Header/>
-                <div>
-                    <Switch>
-                        <Route exact path="/" component={Homepage}/>
-                        <Route exact path="/abilities" component={Abilities}/>
-                        <Route exact path='/abilities/:ability' component={AbilitiesInfo}/>
-                        <Route exact path="/moves" component={Moves}/>
-                        <Route exact path="/moves/:move" component={MovesInfo}/>
-                        <Route exact path="/items" component={Items}/>
-                        <Route exact path="/items/:item" component={ItemsInfo}/>
-                        <Route exact path="/pokemon" component={Pokemon}/>
-                        <Route exact path="/pokemon/:id" component={PokemonInfo}/>
-                        <Route exact path="/pokemon/:id/location" component={PokemonLocation}/>
-                        <Route exact path="/types" component={Types}/>
-                        <Route exact path="/types/:type" component={TypeDisplay}/>
-                        <Route exact path="/feedback" component={Feedback}/>
-                        <Route exact path="/feedback/thankyou" component={Thankyou}/>
-                        <Route exact path = "/teambuilder" component = {TeamBuilder}/>
-                        <Route exact path = "/teambuilder/addpokemon/:memberNum" component = {AddPokemon}/>
-                        <Route exact path = "/teambuilder/change/:memberNum/:pokemonId" component = {TeamBuilder}/>
-                        <Route exact path = "/teambuilder/resetTeam" component = {TeamBuilder}/>
-                        <Route exact path = "/aboutus" component = {AboutUs}/>
-                        <Route component={Error}/>
-                    </Switch>
-                    <Background/>
-                </div>
+                <Switch>
+                    <Route exact path="/" component={Homepage}/>
+                    <Route exact path="/abilities" component={Abilities}/>
+                    <Route exact path='/abilities/:ability' component={AbilitiesInfo}/>
+                    <Route exact path="/moves" component={Moves}/>
+                    <Route exact path="/moves/:move" component={MovesInfo}/>
+                    <Route exact path="/items" component={Items}/>
+                    <Route exact path="/items/:item" component={ItemsInfo}/>
+                    <Route exact path="/pokemon" component={Pokemon}/>
+                    <Route exact path="/pokemon/:id" component={PokemonInfo}/>
+                    <Route exact path="/pokemon/:id/location" component={PokemonLocation}/>
+                    <Route exact path="/types" component={Types}/>
+                    <Route exact path="/types/:type" component={TypeDisplay}/>
+                    <Route exact path="/feedback" component={Feedback}/>
+                    <Route exact path="/feedback/thankyou" component={Thankyou}/>
+                    <Route exact path = "/teambuilder" component = {TeamBuilder}/>
+                    <Route exact path = "/teambuilder/addpokemon/:memberNum" component = {AddPokemon}/>
+                    <Route exact path = "/teambuilder/change/:memberNum/:pokemonId" component = {TeamBuilder}/>
+                    <Route exact path = "/teambuilder/resetTeam" component = {TeamBuilder}/>
+                    <Route exact path = "/aboutus" component = {AboutUs}/>
+                    <Route component={Error}/>
+                </Switch>
+                <Background/>
             </BrowserRouter>
         );
     }

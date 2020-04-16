@@ -6,8 +6,16 @@ import { Link } from 'react-router-dom';
 import GoogleLogin from "react-google-login";
 
 const navBar = {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height:"12vh",
+    marginBottom: "12%",
     backgroundColor: "black",
-    height:"12vh"
+    overflowX: "hidden",
+    overflowY: "hidden",
+    zIndex: 1
 };
 
 const modelLink = {

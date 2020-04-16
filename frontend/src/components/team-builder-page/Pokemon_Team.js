@@ -4,13 +4,6 @@ import './css/Pokemon_Team.css';
 import BlankPokemon from './css/BlankPokemon.png'
 import axios from 'axios'
 
-const tableAbilities = {
-   // marginLeft: "350px",
-    marginTop: "40px",
-    marginRight: "50px",
-    width: "80%",
-    height: "100%",
-}
 
 function Pokemon_Card(props) {
     return (
@@ -29,42 +22,23 @@ function Pokemon_Card(props) {
 class Pokemon_Team extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            pokemonCards : [
-                {
-                    image: BlankPokemon,
-                    name: "Who's that Pokemon?",
-                    type: "Unknown" 
-                },
-                {
-                    image: BlankPokemon,
-                    name: "Who's that Pokemon?",
-                    type: "Unknown" 
-                },
-                {
-                    image: BlankPokemon,
-                    name: "Who's that Pokemon?",
-                    type: "Unknown" 
-                },
-                {
-                    image: BlankPokemon,
-                    name: "Who's that Pokemon?",
-                    type: "Unknown" 
-                },
-                {
-                    image: BlankPokemon,
-                    name: "Who's that Pokemon?",
-                    type: "Unknown" 
-                },
-                {
-                    image: BlankPokemon,
-                    name: "Who's that Pokemon?",
-                    type: "Unknown" 
-                },
-            ]
+
+        let pokemonCardArray = []
+        const pokemonCard = {
+            image: BlankPokemon,
+            name: "Who's that Pokemon?",
+            type: "Unknown"
         }
 
+        for(let i = 0; i < 6; i++) {
+            pokemonCardArray.push(pokemonCard)
+        }
+
+        this.state = {
+            pokemonCards : pokemonCardArray
+        }
         this.resetTeam = this.resetTeam.bind(this);
+        this.capitalize = this.capitalize.bind(this);
     }
 
     UNSAFE_componentWillMount() {
@@ -92,7 +66,7 @@ class Pokemon_Team extends React.Component {
                 let new_state = this.state.pokemonCards.slice();
                 var type = "";
                 new_state[memberNum - 1].image = response.data.sprites.front_default;
-                new_state[memberNum - 1].name = response.data.name;
+                new_state[memberNum - 1].name = this.capitalize(response.data.name);
 
                 for (let i = 0; i < response.data.types.length; i++) {
                     type += response.data.types[i].type.name + "\n";
@@ -133,7 +107,26 @@ class Pokemon_Team extends React.Component {
         this.setState({ pokemonCards: new_state }) 
     }
 
+    capitalize(name) {
+        let firstLetter = name.charAt(0).toUpperCase()
+        return (firstLetter + name.substring(1))
+    }
+
     render() {
+        let pokemonArray = []
+        for(let i = 0; i < 6; i++) {
+            pokemonArray.push(
+                <div className = "col-lg-2 grid-margin" id = "card-col">
+                    <Pokemon_Card
+                        number = {i+1}
+                        image = {this.state.pokemonCards[i].image}
+                        name = {this.state.pokemonCards[i].name}
+                        type = {this.state.pokemonCards[i].type}
+                    />
+                </div>
+            )
+        }
+
         return (
             <div style={{width: "100%"}}>
                 {/* <Link to = "/teambuilder/resetTeam"> */}
@@ -143,59 +136,7 @@ class Pokemon_Team extends React.Component {
                 <br/>
 
                 <div className = "row">
-                    <div className = "col-lg-2 grid-margin" id = "card-col">
-                        <Pokemon_Card
-                            number = '1'
-                            image = {this.state.pokemonCards[0].image}
-                            name = {this.state.pokemonCards[0].name}
-                            type = {this.state.pokemonCards[0].type}
-                        />
-                    </div>
-
-                    <div className= "col-lg-2 grid-margin" id = "card-col">
-                        <Pokemon_Card
-                            number = '2'
-                            image = {this.state.pokemonCards[1].image}
-                            name = {this.state.pokemonCards[1].name}
-                            type = {this.state.pokemonCards[1].type}
-                        />
-                    </div>
-
-                    <div className = "col-lg-2 grid-margin" id = "card-col">
-                        <Pokemon_Card
-                            number = '3'
-                            image = {this.state.pokemonCards[2].image}
-                            name = {this.state.pokemonCards[2].name}
-                            type = {this.state.pokemonCards[2].type}
-                        />
-                    </div>
-
-                    <div className = "col-lg-2 grid-margin" id = "card-col">
-                        <Pokemon_Card
-                            number = '4'
-                            image = {this.state.pokemonCards[3].image}
-                            name = {this.state.pokemonCards[3].name}
-                            type = {this.state.pokemonCards[3].type}
-                        />
-                    </div>
-
-                    <div className = "col-lg-2 grid-margin" id = "card-col">
-                        <Pokemon_Card
-                            number = '5'
-                            image = {this.state.pokemonCards[4].image}
-                            name = {this.state.pokemonCards[4].name}
-                            type = {this.state.pokemonCards[4].type}
-                        />
-                    </div>
-
-                    <div className = "col-lg-2 grid-margin" id = "card-col">
-                        <Pokemon_Card
-                            number = '6'
-                            image = {this.state.pokemonCards[5].image}
-                            name = {this.state.pokemonCards[5].name}
-                            type = {this.state.pokemonCards[5].type}
-                        />
-                    </div>
+                    {pokemonArray}
                 </div>
 
                 <div id = "pokemonStats" color = "black">

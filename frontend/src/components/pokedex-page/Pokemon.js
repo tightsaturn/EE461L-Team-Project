@@ -1,14 +1,10 @@
 import React from "react"
 import 'bootstrap/dist/css/bootstrap.min.css'
 import "../../App.css"
+import "../../css/page.css"
 import PokemonSearchFilter from "./PokemonSearchFilter";
 import PokemonBox from "./PokemonBox";
 
-const tableabilities = {
-    marginLeft: "400px",
-    marginTop: "15px",
-    marginRight: "100px",
-}
 
 class Pokemon extends React.Component {
     constructor(){
@@ -20,19 +16,16 @@ class Pokemon extends React.Component {
         for(let i = 0; i < 50; i++){
             pokeArray.push([])
         }
-        for(let i = 0; i < 23; i++){
-            buttonsArray.push({})
-        }
 
         this.state = {
             pokemon: pokeArray,
             filteredPokemon: [],
             buttons: buttonsArray,
             currentPage: 0,
-            pageSize: 36,
+            pageSize: 48,
             numLoaded: 0,   // counts how many pokemon loaded to see when fetching finishes
             isFiltered: false,
-            numFiltered: 0  // shows number of results for filter
+            numFiltered: 0,  // shows number of results for filter
         }
         this.fetchPokemon = this.fetchPokemon.bind(this)
         this.capitalize = this.capitalize.bind(this)
@@ -75,15 +68,10 @@ class Pokemon extends React.Component {
     fetchPokemon(){
         // fetch each pokemon and add to state
         for(let id = 1; id < 808; id++){
-            // fetch each pokemon and add to state
             let url = 'https://pokeapi.co/api/v2/pokemon/' + id;
             fetch(url)
                 .then((response) => {
-                    if(response.ok){
-                        return response.json();
-                    } else {
-                        throw new Error("failed to get response");
-                    }
+                    if(response.ok){ return response.json(); }
                 })
                 .then(data => {
                     // get page number and update state
@@ -110,7 +98,7 @@ class Pokemon extends React.Component {
                                 id: id,
                                 name: this.capitalize(data.name),
                                 types: data.types
-                            }
+                        }
 
                         return {
                             pokemon: pokeArray,
@@ -118,9 +106,7 @@ class Pokemon extends React.Component {
                         }
                     })
                 })
-                .catch((err) =>{
-                    console.log(err)
-                });
+                .catch((err) =>{ console.log(err) });
         }
     }
 
@@ -134,7 +120,7 @@ class Pokemon extends React.Component {
         // check if all the fields are empty
         if(name === "" && include === "" && type1 === "None" && type2 === "None") {
             this.setState({
-                isFiltered: false
+                isFiltered: false,
             })
             return
         }
@@ -217,13 +203,14 @@ class Pokemon extends React.Component {
         this.setState({
             filteredPokemon: filteredPokemon,
             isFiltered: true,
-            numFiltered: filteredPokemon.length
+            numFiltered: filteredPokemon.length,
         })
     }
 
     reset() {
         this.setState({
-            isFiltered: false
+            isFiltered: false,
+            backgroundHeight: "750%"
         })
     }
 
@@ -255,8 +242,6 @@ class Pokemon extends React.Component {
                 let index = (item)%this.state.pageSize;
                 let pokemon = this.state.pokemon[pageNum][index]
 
-                console.log(pokemon.name)
-
                 return <PokemonBox
                     imgURL={pokemon.imgURL}
                     id={pokemon.id}
@@ -272,7 +257,7 @@ class Pokemon extends React.Component {
             })
         let buttons = this.state.isFiltered ? null : this.state.buttons.map((item, index) => {
             let className = (this.state.currentPage == index) ? "btn btn-success":"btn btn-light"
-
+            if(item == undefined) return undefined
             return <button
                 type="button"
                 id={item.id}
@@ -284,22 +269,20 @@ class Pokemon extends React.Component {
         let filterMessage = this.state.isFiltered ? (this.state.numFiltered + " results found") : null
 
         return (
-            <div className="App">
-                <div className="container" style={tableabilities}>
-                    <h1>Pokemon</h1>
-                    <br/>
-                    <br/>
-                    <PokemonSearchFilter
-                        onFilter={this.filter}
-                        onReset={this.reset}
-                    />
-                    <h3 style={{marginTop: "15px"}}>{filterMessage}</h3>
-                    <div className="row mt-5">
-                        {pokemon}
-                    </div>
-                    <div className="navbar" style={{marginBottom: "30px"}}>
-                        {buttons}
-                    </div>
+            <div className="container-fluid" id="mainContent">
+                <h1 style={{fontWeight: "bold", fontSize: "2.8em"}}>Pokemon</h1>
+                <br/>
+                <br/>
+                <PokemonSearchFilter
+                    onFilter={this.filter}
+                    onReset={this.reset}
+                />
+                <h4 style={{marginTop: "10px"}}>{filterMessage}</h4>
+                <div className="row mt-5">
+                    {pokemon}
+                </div>
+                <div className="navbar" style={{ marginTop: "10px", marginBottom: "30px"}}>
+                    {buttons}
                 </div>
             </div>
         );

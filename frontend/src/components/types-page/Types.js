@@ -1,6 +1,7 @@
 import React from "react"
 import 'bootstrap/dist/css/bootstrap.min.css'
 import "../../App.css"
+import "../../css/page.css"
 import TypeBox from "./TypeBox"
 import bug from "../../images/Types/Bug.png";
 import dark from "../../images/Types/Dark.png";
@@ -22,17 +23,10 @@ import steel from "../../images/Types/Steel.png";
 import water from "../../images/Types/Water.png";
 import chart from "../../images/Types/Types Chart.jpg"
 
-const tableAbilities = {
-    marginLeft: "350px",
-    marginTop: "40px",
-    marginRight: "50px",
-    width: "80%",
-    height: "100%",
-}
 
 const Pokemon = () => {
     return (
-            <div className="container" style={tableAbilities}>
+            <div className="container-fluid" id="infoContent" style={{marginTop: "35px"}}>
                 <div className="row mt-5">
                     <TypeBox type="normal" src={normal}/>
                     <TypeBox type="fire" src={fire}/>
@@ -52,7 +46,7 @@ const Pokemon = () => {
                     <TypeBox type="steel" src={steel}/>
                     <TypeBox type="dragon" src={dragon}/>
                     <TypeBox type="fairy" src={fairy}/>
-                    <img src={chart} style={{marginLeft: "7%"}}/>
+                    <img src={chart} style={{marginLeft: "7%", marginBottom: "24px"}}/>
                 </div>
             </div>
     );
