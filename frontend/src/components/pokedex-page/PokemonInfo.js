@@ -1,7 +1,11 @@
 import React from "react"
+import { Link } from "react-router-dom"
 import 'bootstrap/dist/css/bootstrap.min.css'
 import "../../App.css"
 import "../../css/page.css"
+import "../../css/info.css"
+import { capitalize, colourNameToHex } from "../componentFunctions";
+import {lighten} from "@material-ui/core";
 
 
 class PokemonInfo extends React.Component {
@@ -12,10 +16,10 @@ class PokemonInfo extends React.Component {
             imgURL: "",
             moves: [],
             types: [],
-            color: {}
+            abilities: [],
+            stats: [],
+            color: ""
         }
-
-        this.capitalize = this.capitalize.bind(this)
     }
 
     componentDidMount() {
@@ -25,19 +29,19 @@ class PokemonInfo extends React.Component {
             .then(response => { return response.json() })
             .then(data => {
                 console.log(data)
-                let movesArray = []
                 let typesArray = []
 
                 let type2 = data.types.length == 2 ? data.types[1].type.name : ""
-                typesArray.push(type2)
                 typesArray.push(data.types[0].type.name)
+                typesArray.push(type2)
 
                 this.setState({
                     name: data.name,
                     imgURL: data.frontSprite,
                     moves: data.moves,
                     types: typesArray,
-                    getColor: true
+                    abilities: data.abilities,
+                    stats: data.stats
                 })
             })
             .catch((err) =>{ console.log(err) });
@@ -46,60 +50,83 @@ class PokemonInfo extends React.Component {
             .then(response => { return response.json() })
             .then(data => {
                 console.log(data);
-                this.setState({ color: {backgroundColor: data.color.name} })
+                this.setState({ color: data.color.name})
             })
             .catch((err) =>{ console.log(err) });
     }
 
-    capitalize(name) {
-        name = String(name)
-        let firstLetter = name.charAt(0).toUpperCase()
-        return (firstLetter + name.substring(1))
-    }
 
     render() {
         let id = this.props.match.params.id
-        console.log(this.state.color)
+        let colorHex = colourNameToHex(this.state.color)
+        if(colorHex == false) colorHex = "#000000"
+        let borderColor = this.state.color == "white" ? "black": this.state.color
+        let type2 = this.state.types[1] == "" ? "": "/ " + capitalize(this.state.types[1])
+
+        /* create tables by mapping each move to a row */
+        let moves = this.state.moves.map(move => {
+            // find id of move (pos 31 is where the id is located in string)
+            const id = move.move.url.substring(31)
+            return (
+                <tr>
+                    <td>
+                        <Link to={"/moves/" + id}>
+                            {capitalize(move.move.name)}
+                        </Link>
+                    </td>
+                    <td>{move.version_group_details[0].level_learned_at}</td>
+                </tr>
+            )
+        })
+
+        let abilities = this.state.abilities.map((ability, index) => {
+            const id = ability.ability[0].url.substring(34)
+            return (
+                <div>- <Link to={"/abilities/" + id}>{capitalize(ability.ability[0].name)}</Link></div>
+            )
+        })
 
         return (
-            <div className="container-fluid" style={this.state.color} id="infoContent">
+            <div className="container-fluid" id="infoContent" style={{backgroundColor: lighten(colorHex, 0.5)}}>
                 <div className="row">
-                    <div className="col-4">
-                        <div className="card">
+                    <div className="col-5">
+                        <div className="card" id="infoCard" style={{border: "solid 3px " + borderColor}}>
                             <img className="card-img-top" src={this.state.imgURL} alt="Card image cap"/>
-                                <div className="card-body">
-                                    <h5 className="card-title"># {id}</h5>
-                                    <p className="card-text">{this.capitalize(this.state.name)} <br/>
-                                        description here
-                                    </p>
-                                </div>
-                                <ul className="list-group list-group-flush">
-                                    <li className="list-group-item">Types: {this.capitalize(this.state.types[0])} {this.capitalize(this.state.types[1])}</li>
-                                    <li className="list-group-item"></li>
-                                    <li className="list-group-item"></li>
-                                </ul>
-                                <div className="card-body">
-                                    <a href="#" className="card-link">Card link</a>
-                                    <a href="#" className="card-link">Another link</a>
-                                </div>
+                            <div className="card-body">
+                                <h6 className="card-title" id="id"># {id}</h6>
+                                <p className="card-text" id="name">
+                                    {capitalize(this.state.name)}
+                                </p>
+                                <p className="card-text" id="types">
+                                    Type: <Link to={"/types/" + this.state.types[0]}>{capitalize(this.state.types[0])} </Link>
+                                    <Link to={"/types/" + type2.substring(2)}>{type2}</Link>
+                                </p>
+                                <p className="card-text" id="abilities">
+                                    Abilities: <br/>
+                                    {abilities}
+                                </p>
+                            </div>
+
                         </div>
                     </div>
 
-                    <div className="col-8">
-                        <table className="table">
-                            <thead className="thead-light">
-                            <tr>
-                                <th scope="col">Name</th>
-                                <th scope="col">Level Learned</th>
-                                <th scope="col">Type</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {this.state.moves.map(move => (
-                                <ul key={move}>{(move.move.name[0].toUpperCase() + move.move.name.slice(1)) + "----------------------------------------" +(move.version_group_details[0].level_learned_at)} </ul>
-                            ))}
-                            </tbody>
-                        </table>
+                    <div className="col-1"></div>
+
+                    <div className="col-6">
+                        <div id="typesTable">
+                            <h2 style={{paddingBottom: "20px"}}>Moves</h2>
+                            <table className="table table-hover" style={{border: "solid 3px " + borderColor}}>
+                                <thead className="thead-dark">
+                                <tr>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Level Learned</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    {moves}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

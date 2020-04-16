@@ -28,6 +28,7 @@ class MovesInfo extends React.Component {
 
     componentDidMount() {
         let id = this.props.match.params.move
+        console.log(id)
         let url = 'https://pokebackend-461l.appspot.com/moves/' + id;
 
         fetch(url)

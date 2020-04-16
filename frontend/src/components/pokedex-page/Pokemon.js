@@ -4,13 +4,7 @@ import "../../App.css"
 import "../../css/page.css"
 import PokemonSearchFilter from "./PokemonSearchFilter";
 import PokemonBox from "./PokemonBox";
-import Background from "../Background";
 
-const info = {
-    marginLeft: "400px",
-    marginTop: "15px",
-    marginRight: "100px",
-}
 
 class Pokemon extends React.Component {
     constructor(){
@@ -22,20 +16,16 @@ class Pokemon extends React.Component {
         for(let i = 0; i < 50; i++){
             pokeArray.push([])
         }
-        for(let i = 0; i < 23; i++){
-            buttonsArray.push({})
-        }
 
         this.state = {
             pokemon: pokeArray,
             filteredPokemon: [],
             buttons: buttonsArray,
             currentPage: 0,
-            pageSize: 36,
+            pageSize: 48,
             numLoaded: 0,   // counts how many pokemon loaded to see when fetching finishes
             isFiltered: false,
             numFiltered: 0,  // shows number of results for filter
-            backgroundHeight: "750%"
         }
         this.fetchPokemon = this.fetchPokemon.bind(this)
         this.capitalize = this.capitalize.bind(this)
@@ -108,7 +98,7 @@ class Pokemon extends React.Component {
                                 id: id,
                                 name: this.capitalize(data.name),
                                 types: data.types
-                            }
+                        }
 
                         return {
                             pokemon: pokeArray,
@@ -116,9 +106,7 @@ class Pokemon extends React.Component {
                         }
                     })
                 })
-                .catch((err) =>{
-                    console.log(err)
-                });
+                .catch((err) =>{ console.log(err) });
         }
     }
 
@@ -133,7 +121,6 @@ class Pokemon extends React.Component {
         if(name === "" && include === "" && type1 === "None" && type2 === "None") {
             this.setState({
                 isFiltered: false,
-                backgroundHeight: "750%"
             })
             return
         }
@@ -213,18 +200,10 @@ class Pokemon extends React.Component {
             }
         }
 
-        // calculate height of the left background
-        let backgroundHeight = 40
-        let numRows = Math.ceil(filteredPokemon.length/3)
-        backgroundHeight += numRows*59
-        backgroundHeight = backgroundHeight.toString() + "%"
-        if(numRows == 1) backgroundHeight = "100%"
-
         this.setState({
             filteredPokemon: filteredPokemon,
             isFiltered: true,
             numFiltered: filteredPokemon.length,
-            backgroundHeight: backgroundHeight
         })
     }
 
@@ -278,7 +257,7 @@ class Pokemon extends React.Component {
             })
         let buttons = this.state.isFiltered ? null : this.state.buttons.map((item, index) => {
             let className = (this.state.currentPage == index) ? "btn btn-success":"btn btn-light"
-
+            if(item == undefined) return undefined
             return <button
                 type="button"
                 id={item.id}
@@ -291,7 +270,7 @@ class Pokemon extends React.Component {
 
         return (
             <div className="container-fluid" id="mainContent">
-                <h1>Pokemon</h1>
+                <h1 style={{fontWeight: "bold", fontSize: "2.8em"}}>Pokemon</h1>
                 <br/>
                 <br/>
                 <PokemonSearchFilter
