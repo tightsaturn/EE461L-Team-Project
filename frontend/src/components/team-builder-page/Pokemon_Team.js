@@ -197,6 +197,10 @@ class Pokemon_Team extends React.Component {
                         />
                     </div>
                 </div>
+
+                <div id = "pokemonStats" color = "black">
+                    
+                </div> 
             </div>
         )
     }
