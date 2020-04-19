@@ -5,6 +5,14 @@
     marginRight: 100px;
 }
 
+#titleContent {
+    margin-top: 12vh;
+    margin-left: 20%;
+    padding-top: 50px;
+    text-align: left;
+    width: auto;
+}
+
 /* used for positioning main content of element within fixed background */
 #mainContent {
     margin-top: 12vh;
@@ -13,6 +21,18 @@
     padding-left: 13%;
     padding-right: 13%;
     text-align: left;
+    width: auto;
+}
+
+#mainContentv2 {
+    background-color: #999999;
+    color: #ffffff;
+    text-align: left;
+
+    margin-top: 5vh;
+    margin-left: 20%;
+    margin-right: 10%;
+
     width: auto;
 }
 

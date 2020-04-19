@@ -147,4 +147,17 @@ class Pokemon_Team extends React.Component {
     }
 }
 
-export default Pokemon_Team
+function TeamPageMain() {
+    return (
+        <div className="container-fluid" id="infoContent" style={{textAlign: "justify"}}>
+                <h1>Team Builder</h1>
+                <h3>Build the Ultimate Team</h3>
+            <br/>
+
+            <h5>Team Members:</h5>
+            <Pokemon_Team/>
+        </div>
+    )
+}
+
+export default TeamPageMain
