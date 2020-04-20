@@ -1,19 +1,27 @@
 import React from "react"
-import {Link} from "react-router-dom";
+import {Link, BrowserRouter} from "react-router-dom";
 import Button from "react-bootstrap/Button";
 
-const pokemonCard = {
-    width: "18 rem"
-}
 
 const MovesBox = (props) => {
     return (
-        <tr>
-            <th scope="row">{props.id}</th>
-            <td><Link to={"/moves/" + props.id}>{props.name}</Link></td>
-            <td>{props.effect}</td>
-            <td>{props.type}</td>
-        </tr>
+        <div className="col-sm-3 mb-4 grid-margin">
+            <div className="card">
+                <div className="card-header">
+                    {props.name}
+                </div>
+                <div className="card-body">
+                    <div className="card-text">
+                        {props.type}
+                    </div>
+                </div>
+                <div className="card-footer">
+                    <Link to={"/moves/" + props.id}>
+                        <Button on variant="btn btn-danger" style={{fontWeight: "bold"}}>Learn more</Button>
+                    </Link>
+                </div>
+            </div>
+        </div>
     )
 }
 
