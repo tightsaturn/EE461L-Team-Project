@@ -4,6 +4,7 @@ import "../../App.css"
 import "../../css/page.css"
 import MovesSearchFilter from "./MovesSearchFilter";
 import MovesBox from "./MovesBox";
+import PokemonBox from "../pokedex-page/PokemonBox";
 
 
 class Moves extends React.Component {
@@ -23,7 +24,7 @@ class Moves extends React.Component {
             buttons: buttonsArray,
             currentPage: 0,
             pageSize: 48,
-            numLoaded: 0,   // counts how many pokemon loaded to see when fetching finishes
+            numLoaded: 0,   // counts how many moves loaded to see when fetching finishes
             isFiltered: false,
             numFiltered: 0,  // shows number of results for filter
         }
@@ -112,25 +113,73 @@ class Moves extends React.Component {
         }
     }
 
-    filter (name, include, type1, type2) {
+    filter (name, include, type) {
         // check if all pokemon are finished loading (alert if not)
-        if(this.state.numLoaded < 726) {
-            alert("Wait for all the pokemon to finish loading first!")
+        if(this.state.numLoaded < 725) {
+            alert("Wait for all the moves to finish loading first!" + this.state.numLoaded)
             return
         }
 
         // check if all the fields are empty
-        if(name === "" && include === "" && type1 === "None" && type2 === "None") {
+        if(name === "" && include === "" && type === "None") {
             this.setState({
                 isFiltered: false,
             })
         }
+
+        // keep a subarray for each filter option and combine at the end
+        // a true entry means move i fits the filter criteria (e.g. name or type1)
+        let filterArray = [[], [], []]
+        for(let i = 0; i < this.state.move.length; i++) {
+            for(let j = 0; j < this.state.pageSize; j++) {
+                // get pokemon and find out if it matches filter criteria
+                let moveJSON = {...this.state.move[i][j]}
+                if(moveJSON.name === undefined) break
+
+                if(name !== ""){
+                    if(name.toLowerCase() === moveJSON.name.toLowerCase()) {
+                        filterArray[0].push(true)
+                    } else filterArray[0].push(false)
+                }   // pushes true if there is no entry
+                else filterArray[0].push(true)
+
+                // check if substring include is in pokemon name
+                if(include !== "") {
+                    if((moveJSON.name.toLowerCase()).indexOf(include.toLowerCase()) !== -1) {
+                        filterArray[1].push(true)
+                    } else filterArray[1].push(false)
+                }
+                else filterArray[1].push(true)
+
+                if(type !== "None") {
+                    if(moveJSON.type.toLowerCase() == type.toLowerCase()) {
+                        filterArray[2].push(true)
+                    } else filterArray[2].push(false)
+                }
+                else filterArray[2].push(true)
+            }
+        }
+
+        // only add pokemon to filtered list if all of the filter criteria are met
+        let filteredMoves = []
+        for(let i = 0; i < 725; i++) {
+            if(filterArray[0][i] &&
+                filterArray[1][i] &&
+                filterArray[2][i]) {
+                filteredMoves.push(i)
+            }
+        }
+
+        this.setState({
+            filteredMoves: filteredMoves,
+            isFiltered: true,
+            numFiltered: filteredMoves.length,
+        })
     }
 
     reset() {
         this.setState({
             isFiltered: false,
-            backgroundHeight: "750%"
         })
     }
 
@@ -155,7 +204,19 @@ class Moves extends React.Component {
 
     render() {
         // conditional rendering with filtering
-        let moves =
+        let moves = this.state.isFiltered ?
+            this.state.filteredMoves.map(item => {
+                let pageNum = Math.floor((item)/this.state.pageSize);
+                let index = (item)%this.state.pageSize;
+                let move = this.state.move[pageNum][index]
+
+                return <MovesBox
+                    type={move.type}
+                    id={move.id}
+                    name={move.name}
+                    effect={move.effect}
+                />
+            }) :
             this.state.move[this.state.currentPage].map(item => {
                 return <MovesBox
                     type={item.type}

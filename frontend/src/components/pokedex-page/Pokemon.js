@@ -22,7 +22,7 @@ class Pokemon extends React.Component {
             filteredPokemon: [],
             buttons: buttonsArray,
             currentPage: 0,
-            pageSize: 48,
+            pageSize: 40,
             numLoaded: 0,   // counts how many pokemon loaded to see when fetching finishes
             isFiltered: false,
             numFiltered: 0,  // shows number of results for filter
@@ -210,7 +210,6 @@ class Pokemon extends React.Component {
     reset() {
         this.setState({
             isFiltered: false,
-            backgroundHeight: "750%"
         })
     }
 

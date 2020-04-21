@@ -5,7 +5,7 @@ import Button from "react-bootstrap/Button";
 
 const PokemonBox = (props) => {
     return (
-        <div className="col-sm-2 mb-4 grid-margin">
+        <div className="col-sm-3 mb-4 grid-margin">
             <div className="card">
                 <img className="card-img-top" src={props.imgURL} alt="Card image cap"/>
                     <div className="card-body">

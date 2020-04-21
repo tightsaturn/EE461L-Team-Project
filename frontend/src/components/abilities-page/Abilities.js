@@ -2,6 +2,7 @@ import React from 'react';
 import "../../css/page.css"
 import AbilitiesSearchFilter from "./AbilitiesSearchFilter";
 import AbilitiesBox from "./AbilitiesBox";
+import PokemonBox from "../pokedex-page/PokemonBox";
 
 
 class Abilities extends React.Component {
@@ -16,7 +17,7 @@ class Abilities extends React.Component {
 
         this.state = {
             ability:  abilitiesArray,
-            filteredMoves: [],
+            filteredAbilities: [],
             buttons: buttonsArray,
             currentPage: 0,
             pageSize: 48,
@@ -112,24 +113,65 @@ class Abilities extends React.Component {
         }
     }
 
-    filter (name, include, type1, type2) {
+    filter (name, include) {
         // check if all pokemon are finished loading (alert if not)
-        if(this.state.numLoaded < 726) {
-            alert("Wait for all the pokemon to finish loading first!")
+        if(this.state.numLoaded < 232) {
+            alert("Wait for all the abilities to finish loading first!" + this.state.numLoaded)
             return
         }
 
         // check if all the fields are empty
-        if(name === "" && include === "" && type1 === "None" && type2 === "None") {
+        if(name === "" && include === "") {
             this.setState({
                 isFiltered: false,
             })
         }
+
+        // keep a subarray for each filter option and combine at the end
+        // a true entry means pokemon i fits the filter criteria (e.g. name or type1)
+        let filterArray = [[], []]
+        for(let i = 0; i < this.state.ability.length; i++) {
+            for(let j = 0; j < this.state.pageSize; j++) {
+                // get pokemon and find out if it matches filter criteria
+                let abilityJSON = {...this.state.ability[i][j]}
+                if (abilityJSON.name === undefined) break
+
+                // console.log(pokeJSON.name)
+
+                if (name !== "") {
+                    if (name.toLowerCase() === abilityJSON.name.toLowerCase()) {
+                        filterArray[0].push(true)
+                    } else filterArray[0].push(false)
+                }   // pushes true if there is no entry
+                else filterArray[0].push(true)
+
+                // check if substring include is in pokemon name
+                if (include !== "") {
+                    if ((abilityJSON.name.toLowerCase()).indexOf(include.toLowerCase()) !== -1) {
+                        filterArray[1].push(true)
+                    } else filterArray[1].push(false)
+                } else filterArray[1].push(true)
+            }
+        }
+
+        // only add pokemon to filtered list if all of the filter criteria are met
+        let filteredAbilities = []
+        for(let i = 0; i < 233; i++) {
+            if(filterArray[0][i] &&
+                filterArray[1][i]) {
+                filteredAbilities.push(i)
+            }
+        }
+
+        this.setState({
+            filteredAbilities: filteredAbilities,
+            isFiltered: true,
+            numFiltered: filteredAbilities.length,
+        })
     }
     reset() {
         this.setState({
             isFiltered: false,
-            backgroundHeight: "750%"
         })
     }
 
@@ -159,7 +201,19 @@ class Abilities extends React.Component {
 
     render()
     {
-        let abilities =
+        let abilities = this.state.isFiltered ?
+            this.state.filteredAbilities.map(item => {
+                let pageNum = Math.floor((item)/this.state.pageSize);
+                let index = (item)%this.state.pageSize;
+                let ability = this.state.ability[pageNum][index]
+
+                return <AbilitiesBox
+                    generation={ability.generation}
+                    id={ability.id}
+                    name={ability.name}
+                    description={ability.description}
+                />
+            }) :
             this.state.ability[this.state.currentPage].map(item => {
                 return <AbilitiesBox
                     generation={item.generation}
