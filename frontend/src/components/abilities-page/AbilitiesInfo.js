@@ -1,5 +1,7 @@
 import React from "react";
 import "../../css/page.css"
+import {Link} from "react-router-dom";
+import {capitalize} from "../componentFunctions";
 
 
 class AbilitiesInfo extends React.Component {
@@ -47,6 +49,21 @@ class AbilitiesInfo extends React.Component {
 
     render() {
         let id = this.props.match.params.ability
+        let borderColor = this.state.color == "white" ? "black": this.state.color
+        /* create tables by mapping each move to a row */
+        let pokemonWithThisAbility = this.state.pokemonArray.map(pokemon => {
+            // find id of move (pos 31 is where the id is located in string)
+            const id = pokemon.pokemon.url.substring(34)
+            return (
+                <tr>
+                    <td>
+                        <Link to={"/pokemon/" + id}>
+                            {capitalize(pokemon.pokemon.name)}
+                        </Link>
+                    </td>
+                </tr>
+            )
+        })
 
         return (
             <div className="container-fluid" id="mainContent">
@@ -71,23 +88,20 @@ class AbilitiesInfo extends React.Component {
                         </div>
                     </div>
 
-                    <div className="col-8">
-                        <table className="table">
-                            <thead className="thead-light">
-                            <tr>
-                                <th scope="col">Effect Changes</th>
-                            </tr>
-                            <tr>
-                                <th scope="col">Pokemons with this Ability</th>
-                            </tr>
-                            {this.state.pokemonArray.map(pokemon => (
-                                <li key={pokemon}>{(pokemon.pokemon.name[0].toUpperCase() + pokemon.pokemon.name.slice(1))}</li>
-                            ))}
-                            </thead>
-                            <tbody>
-
-                            </tbody>
-                        </table>
+                    <div className="col-6">
+                        <div id="typesTable">
+                            <h2 style={{paddingBottom: "20px"}}>Pokemon with this Ability</h2>
+                            <table className="table table-hover" style={{border: "solid 3px " + borderColor}}>
+                                <thead className="thead-dark">
+                                <tr>
+                                    <th scope="col">Name</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {pokemonWithThisAbility}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
 
                 </div>
