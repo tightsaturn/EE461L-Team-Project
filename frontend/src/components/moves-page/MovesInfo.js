@@ -1,6 +1,7 @@
 import React from "react"
 import 'bootstrap/dist/css/bootstrap.min.css'
 import "../../css/page.css"
+import {Link} from "react-router-dom";
 
 const tableabilities = {
     marginTop: "70px",
@@ -19,17 +20,18 @@ class MovesInfo extends React.Component {
             accuracy: "",
             power: "",
             pp: "",
-            type: ""
-
+            type: "",
+            pokemonArray:[],
+            pokemonIDArray:[]
         }
 
         this.capitalize = this.capitalize.bind(this)
     }
 
     componentDidMount() {
-        let id = this.props.match.params.move
-        console.log(id)
-        let url = 'https://pokebackend-461l.appspot.com/moves/' + id;
+        let moveName = this.props.match.params.move
+        console.log(moveName)
+        let url = 'https://pokebackend-461l.appspot.com/moves/name/' + moveName.toLowerCase();
 
         fetch(url)
             .then((response) => {
@@ -52,6 +54,24 @@ class MovesInfo extends React.Component {
             .catch((err) =>{
                 console.log(err)
             });
+
+        let url2 = 'https://pokebackend-461l.appspot.com/moves2/' + moveName.toLowerCase()
+        console.log(moveName)
+        fetch(url2)
+            .then((response) => {
+                return response.json();
+            })
+            .then(data => {
+                console.log(data)
+                this.setState({
+                    pokemonArray: data.pokemon,
+                    pokemonIDArray: data.pokeID
+                })
+
+            })
+            .catch((err) =>{
+                console.log(err)
+            });
     }
 
     capitalize(name) {
@@ -62,7 +82,19 @@ class MovesInfo extends React.Component {
 
     render() {
         let id = this.props.match.params.move
-
+        let borderColor = this.state.color == "white" ? "black": this.state.color
+        let pokemonWithThisMove = this.state.pokemonArray.map((pokemon, index) => {
+            let pokeID = this.state.pokemonIDArray[index];
+                return (
+                    <tr>
+                        <td>
+                            <Link to={"/pokemon/" + pokeID}>
+                                {(pokemon)}
+                            </Link>
+                        </td>
+                    </tr>
+                )
+        })
         return (
             <div className="container-fluid" id="infoContent">
                 <div className="row">
@@ -89,21 +121,19 @@ class MovesInfo extends React.Component {
                         </div>
                     </div>
 
-                    <div className="col-8">
-                        <table className="table">
-                            <thead className="thead-light">
-                            <tr>
-                                <th scope="col">Meta</th>
-                                <p></p>
-                            </tr>
-                            <tr>
-                                <th scope="col">Pokemons that can learn this Move</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-
-                            </tbody>
-                        </table>
+                    <div className="col-6">
+                        <div id="typesTable">
+                            <table className="table table-hover" style={{border: "solid 3px " + borderColor}}>
+                                <thead className="thead-dark">
+                                <tr>
+                                    <th scope="col">Pokemon with this Move</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {pokemonWithThisMove}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
 
                 </div>

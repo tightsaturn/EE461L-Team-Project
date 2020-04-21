@@ -66,11 +66,11 @@ class PokemonInfo extends React.Component {
         /* create tables by mapping each move to a row */
         let moves = this.state.moves.map(move => {
             // find id of move (pos 31 is where the id is located in string)
-            const id = move.move.url.substring(31)
+            const moveName = move.move.name
             return (
                 <tr>
                     <td>
-                        <Link to={"/moves/" + id}>
+                        <Link to={"/moves/" + moveName}>
                             {capitalize(move.move.name)}
                         </Link>
                     </td>

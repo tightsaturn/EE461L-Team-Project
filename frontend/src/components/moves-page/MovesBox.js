@@ -16,7 +16,7 @@ const MovesBox = (props) => {
                     </div>
                 </div>
                 <div className="card-footer">
-                    <Link to={"/moves/" + props.id}>
+                    <Link to={"/moves/" + props.name.toLowerCase()}>
                         <Button on variant="btn btn-danger" style={{fontWeight: "bold"}}>Learn more</Button>
                     </Link>
                 </div>
