@@ -58,8 +58,8 @@ class AbilitiesInfo extends React.Component {
                 <tr>
                     <td>
                         <Link to={"/pokemon/" + id}>
-                            {capitalize(pokemon.pokemon.name)}
-                        </Link>
+                        {capitalize(pokemon.pokemon.name)}
+                    </Link>
                     </td>
                 </tr>
             )

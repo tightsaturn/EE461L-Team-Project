@@ -29,6 +29,7 @@ const itemCardsRouter = require('./routes/itemCards');
 const moveCardsRouter = require('./routes/moveCards');
 const abilitiesCardsRouter = require('./routes/abilitiesCards');
 const moves2CardsRouter = require('./routes/moves2');
+const typesRouter = require('./routes/types');
 
 // Setup paths for routers
 app.use('/pokemon', pokemonRouter);
@@ -40,6 +41,7 @@ app.use('/pokemoncards', pokemonCardsRouter);
 app.use('/itemcards', itemCardsRouter);
 app.use('/movecards', moveCardsRouter);
 app.use('/abilitycards', abilitiesCardsRouter);
+app.use('/types', typesRouter);
 
 
 // Start the server
