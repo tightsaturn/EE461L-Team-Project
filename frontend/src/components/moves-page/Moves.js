@@ -123,8 +123,9 @@ class Moves extends React.Component {
         // check if all the fields are empty
         if(name === "" && include === "" && type === "None") {
             this.setState({
-                isFiltered: false,
+                isFiltered: false
             })
+            return
         }
 
         // keep a subarray for each filter option and combine at the end

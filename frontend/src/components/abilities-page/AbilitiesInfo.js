@@ -36,9 +36,7 @@ class AbilitiesInfo extends React.Component {
                 })
 
             })
-            .catch((err) =>{
-                console.log(err)
-            });
+            .catch((err) =>{ console.log(err) });
     }
 
     capitalize(name) {
@@ -49,7 +47,6 @@ class AbilitiesInfo extends React.Component {
 
     render() {
         let id = this.props.match.params.ability
-        let borderColor = this.state.color == "white" ? "black": this.state.color
         /* create tables by mapping each move to a row */
         let pokemonWithThisAbility = this.state.pokemonArray.map(pokemon => {
             // find id of move (pos 31 is where the id is located in string)
@@ -66,7 +63,7 @@ class AbilitiesInfo extends React.Component {
         })
 
         return (
-            <div className="container-fluid" id="mainContent">
+            <div className="container-fluid" id="infoContent">
                 <div className="row">
                     <div className="col-4">
                         <div className="card">
@@ -88,10 +85,10 @@ class AbilitiesInfo extends React.Component {
                         </div>
                     </div>
 
-                    <div className="col-6">
+                    <div className="col-4">
                         <div id="typesTable">
                             <h2 style={{paddingBottom: "20px"}}>Pokemon with this Ability</h2>
-                            <table className="table table-hover" style={{border: "solid 3px " + borderColor}}>
+                            <table className="table table-hover">
                                 <thead className="thead-dark">
                                 <tr>
                                     <th scope="col">Name</th>

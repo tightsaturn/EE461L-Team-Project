@@ -24,6 +24,8 @@ class PokemonInfo extends React.Component {
 
     componentDidMount() {
         let id = this.props.match.params.id
+        let context = this.context
+        console.log(context)
 
         fetch('https://pokebackend-461l.appspot.com/pokemon/' + id)
             .then(response => { return response.json() })
@@ -61,7 +63,11 @@ class PokemonInfo extends React.Component {
         let colorHex = colourNameToHex(this.state.color)
         if(colorHex == false) colorHex = "#000000"
         let borderColor = this.state.color == "white" ? "black": this.state.color
-        let type2 = this.state.types[1] == "" ? "": "/ " + capitalize(this.state.types[1])
+
+        let typeStr = this.state.types[0]
+        let typeStr2 = this.state.types[1]
+        let type2 = typeStr2 == "" ? null :
+            {/*<img src={typeJSON.bug} style={{display: "inline"}} className="typeImg"/>*/}
 
         /* create tables by mapping each move to a row */
         let moves = this.state.moves.map(move => {
@@ -98,8 +104,11 @@ class PokemonInfo extends React.Component {
                                     {capitalize(this.state.name)}
                                 </p>
                                 <p className="card-text" id="types">
-                                    Type: <Link to={"/types/" + this.state.types[0]}>{capitalize(this.state.types[0])} </Link>
-                                    <Link to={"/types/" + type2.substring(2)}>{type2}</Link>
+                                    Type:
+                                    <Link to={"/types/" + this.state.types[0]}>
+                                        {/*<img src={typeJSON.typeStr} style={{display: "inline"}} class="typeImg"/>*/}
+                                    </Link>
+                                    <Link to={"/types/" + typeStr2.substring(2)}>{type2}</Link>
                                 </p>
                                 <p className="card-text" id="abilities">
                                     Abilities: <br/>

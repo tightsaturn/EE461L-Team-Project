@@ -1,0 +1,359 @@
+[1mdiff --git a/frontend/src/components/abilities-page/Abilities.js b/frontend/src/components/abilities-page/Abilities.js[m
+[1mindex 6b12e2f4..3f251222 100644[m
+[1m--- a/frontend/src/components/abilities-page/Abilities.js[m
+[1m+++ b/frontend/src/components/abilities-page/Abilities.js[m
+[36m@@ -2,7 +2,6 @@[m [mimport React from 'react';[m
+ import "../../css/page.css"[m
+ import AbilitiesSearchFilter from "./AbilitiesSearchFilter";[m
+ import AbilitiesBox from "./AbilitiesBox";[m
+[31m-import PokemonBox from "../pokedex-page/PokemonBox";[m
+ [m
+ [m
+ class Abilities extends React.Component {[m
+[36m@@ -122,9 +121,11 @@[m [mclass Abilities extends React.Component {[m
+ [m
+         // check if all the fields are empty[m
+         if(name === "" && include === "") {[m
+[32m+[m[32m            console.log(1)[m
+             this.setState({[m
+[31m-                isFiltered: false,[m
+[32m+[m[32m                isFiltered: false[m
+             })[m
+[32m+[m[32m            return[m
+         }[m
+ [m
+         // keep a subarray for each filter option and combine at the end[m
+[1mdiff --git a/frontend/src/components/abilities-page/AbilitiesInfo.js b/frontend/src/components/abilities-page/AbilitiesInfo.js[m
+[1mindex b51214da..dbe9bc47 100644[m
+[1m--- a/frontend/src/components/abilities-page/AbilitiesInfo.js[m
+[1m+++ b/frontend/src/components/abilities-page/AbilitiesInfo.js[m
+[36m@@ -36,9 +36,7 @@[m [mclass AbilitiesInfo extends React.Component {[m
+                 })[m
+ [m
+             })[m
+[31m-            .catch((err) =>{[m
+[31m-                console.log(err)[m
+[31m-            });[m
+[32m+[m[32m            .catch((err) =>{ console.log(err) });[m
+     }[m
+ [m
+     capitalize(name) {[m
+[36m@@ -49,7 +47,6 @@[m [mclass AbilitiesInfo extends React.Component {[m
+ [m
+     render() {[m
+         let id = this.props.match.params.ability[m
+[31m-        let borderColor = this.state.color == "white" ? "black": this.state.color[m
+         /* create tables by mapping each move to a row */[m
+         let pokemonWithThisAbility = this.state.pokemonArray.map(pokemon => {[m
+             // find id of move (pos 31 is where the id is located in string)[m
+[36m@@ -66,7 +63,7 @@[m [mclass AbilitiesInfo extends React.Component {[m
+         })[m
+ [m
+         return ([m
+[31m-            <div className="container-fluid" id="mainContent">[m
+[32m+[m[32m            <div className="container-fluid" id="infoContent">[m
+                 <div className="row">[m
+                     <div className="col-4">[m
+                         <div className="card">[m
+[36m@@ -88,10 +85,10 @@[m [mclass AbilitiesInfo extends React.Component {[m
+                         </div>[m
+                     </div>[m
+ [m
+[31m-                    <div className="col-6">[m
+[32m+[m[32m                    <div className="col-4">[m
+                         <div id="typesTable">[m
+                             <h2 style={{paddingBottom: "20px"}}>Pokemon with this Ability</h2>[m
+[31m-                            <table className="table table-hover" style={{border: "solid 3px " + borderColor}}>[m
+[32m+[m[32m                            <table className="table table-hover">[m
+                                 <thead className="thead-dark">[m
+                                 <tr>[m
+                                     <th scope="col">Name</th>[m
+[1mdiff --git a/frontend/src/components/abilities-page/AbilitiesSearchFilter.js b/frontend/src/components/abilities-page/AbilitiesSearchFilter.js[m
+[1mindex c4576a2d..c3f60d4c 100644[m
+[1m--- a/frontend/src/components/abilities-page/AbilitiesSearchFilter.js[m
+[1m+++ b/frontend/src/components/abilities-page/AbilitiesSearchFilter.js[m
+[36m@@ -14,8 +14,6 @@[m [mclass AbilitiesSearchFilter extends React.Component {[m
+         this.state = ({[m
+             name: "",[m
+             include: "",[m
+[31m-            type1: "None",[m
+[31m-            type2: "None"[m
+         })[m
+ [m
+         this.filter = this.filter.bind(this)[m
+[1mdiff --git a/frontend/src/components/items-page/Items.js b/frontend/src/components/items-page/Items.js[m
+[1mindex 5db3adef..4bae6df2 100644[m
+[1m--- a/frontend/src/components/items-page/Items.js[m
+[1m+++ b/frontend/src/components/items-page/Items.js[m
+[36m@@ -1,7 +1,7 @@[m
+ import React from 'react';[m
+ import "../../css/page.css"[m
+[31m-import SearchFitler from "../SearchFilter";[m
+ import ItemsBox from "../items-page/ItemsBox";[m
+[32m+[m[32mimport ItemsSearchFilter from "./ItemsSearchFilter";[m
+ [m
+ [m
+ class Items extends React.Component{[m
+[36m@@ -15,12 +15,17 @@[m [mclass Items extends React.Component{[m
+ [m
+         this.state = {[m
+             item:  itemsArray,[m
+[32m+[m[32m            itemsArray: [],[m
+             buttons: [],[m
+             currentPage: 0,[m
+[31m-            pageSize: 30[m
+[32m+[m[32m            pageSize: 30,[m
+[32m+[m[32m            isFiltered: false,[m
+[32m+[m[32m            numFiltered: 0[m
+         }[m
+ [m
+         this.fetchItem = this.fetchItem.bind(this)[m
+[32m+[m[32m        this.filter = this.filter.bind(this)[m
+[32m+[m[32m        this.reset = this.reset.bind(this)[m
+         this.capitalize = this.capitalize.bind(this)[m
+         this.handlePageClick = this.handlePageClick.bind(this)[m
+     }[m
+[36m@@ -68,7 +73,8 @@[m [mclass Items extends React.Component{[m
+                                 />;[m
+ [m
+                             return {[m
+[31m-                                item: itemArray[m
+[32m+[m[32m                                item: itemArray,[m
+[32m+[m[32m                                numLoaded: prevState.numLoaded + 1[m
+                             }[m
+                         })[m
+                     }[m
+[36m@@ -79,6 +85,73 @@[m [mclass Items extends React.Component{[m
+         }[m
+     }[m
+ [m
+[32m+[m[32m    filter (name, include) {[m
+[32m+[m[32m        // check if all pokemon are finished loading (alert if not)[m
+[32m+[m[32m        if(this.state.numLoaded < 953) {[m
+[32m+[m[32m            alert("Wait for all the items to finish loading first!" + this.state.numLoaded)[m
+[32m+[m[32m            return[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        // check if all the fields are empty[m
+[32m+[m[32m        if(name === "" && include === "") {[m
+[32m+[m[32m            this.setState({[m
+[32m+[m[32m                isFiltered: false[m
+[32m+[m[32m            })[m
+[32m+[m[32m            return[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        // keep a subarray for each filter option and combine at the end[m
+[32m+[m[32m        // a true entry means pokemon i fits the filter criteria (e.g. name or type1)[m
+[32m+[m[32m        let filterArray = [[], []][m
+[32m+[m[32m        for(let i = 0; i < this.state.item.length; i++) {[m
+[32m+[m[32m            for(let j = 0; j < this.state.pageSize; j++) {[m
+[32m+[m[32m                // get pokemon and find out if it matches filter criteria[m
+[32m+[m[32m                let item = this.state.item[i][j][m
+[32m+[m[32m                if (item === undefined) break[m
+[32m+[m[32m                console.log(item.props)[m
+[32m+[m[32m                console.log(item.props.name)[m
+[32m+[m[32m                item = item.props[m
+[32m+[m
+[32m+[m
+[32m+[m[32m                if (name !== "") {[m
+[32m+[m[32m                    if (name.toLowerCase() === item.name.toLowerCase()) {[m
+[32m+[m[32m                        filterArray[0].push(true)[m
+[32m+[m[32m                    } else filterArray[0].push(false)[m
+[32m+[m[32m                }   // pushes true if there is no entry[m
+[32m+[m[32m                else filterArray[0].push(true)[m
+[32m+[m
+[32m+[m[32m                // check if substring include is in pokemon name[m
+[32m+[m[32m                if (include !== "") {[m
+[32m+[m[32m                    if ((item.name.toLowerCase()).indexOf(include.toLowerCase()) !== -1) {[m
+[32m+[m[32m                        filterArray[1].push(true)[m
+[32m+[m[32m                    } else filterArray[1].push(false)[m
+[32m+[m[32m                } else filterArray[1].push(true)[m
+[32m+[m[32m            }[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        // only add pokemon to filtered list if all of the filter criteria are met[m
+[32m+[m[32m        let filteredItems = [][m
+[32m+[m[32m        for(let i = 0; i < 953; i++) {[m
+[32m+[m[32m            if(filterArray[0][i] &&[m
+[32m+[m[32m                filterArray[1][i]) {[m
+[32m+[m[32m             //   console.log(i)[m
+[32m+[m[32m                filteredItems.push(i)[m
+[32m+[m[32m            }[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        this.setState({[m
+[32m+[m[32m            filteredItems: filteredItems,[m
+[32m+[m[32m            isFiltered: true,[m
+[32m+[m[32m            numFiltered: filteredItems.length,[m
+[32m+[m[32m        })[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    reset() {[m
+[32m+[m[32m        this.setState({[m
+[32m+[m[32m            isFiltered: false,[m
+[32m+[m[32m        })[m
+[32m+[m[32m    }[m
+[32m+[m
+     capitalize(name) {[m
+         let firstLetter = name.charAt(0).toUpperCase()[m
+         return (firstLetter + name.substring(1))[m
+[36m@@ -94,14 +167,27 @@[m [mclass Items extends React.Component{[m
+     componentDidMount() {[m
+         this.fetchItem();[m
+     }[m
+[31m-    render()[m
+[31m-    {[m
+[31m-        return ([m
+[32m+[m[32m    render() {[m
+[32m+[m[32m        let items = this.state.isFiltered ?[m
+[32m+[m[32m            this.state.filteredItems.map((item) => {[m
+[32m+[m[32m                let pageNum = Math.floor(item / this.state.pageSize);[m
+[32m+[m[32m                let i = item % this.state.pageSize;[m
+[32m+[m[32m                // console.log(pageNum, i)[m
+[32m+[m[32m                return this.state.item[pageNum][i][m
+[32m+[m[32m            }) : this.state.item[this.state.currentPage][m
+ [m
+[32m+[m[32m        let buttons = this.state.isFiltered ? null : this.state.buttons[m
+[32m+[m[32m        let filterMessage = this.state.isFiltered ? (this.state.numFiltered + " results found") : null[m
+[32m+[m
+[32m+[m[32m        return ([m
+             <div className="container-fluid" id="mainContent">[m
+                 <h1>Items</h1>[m
+                 <br/>[m
+[31m-                <SearchFitler/>[m
+[32m+[m[32m                <ItemsSearchFilter[m
+[32m+[m[32m                    onFilter={this.filter}[m
+[32m+[m[32m                    onReset={this.reset}[m
+[32m+[m[32m                />[m
+[32m+[m[32m                <h4 style={{marginTop: "10px"}}>{filterMessage}</h4>[m
+                 <br/>[m
+                 <table className="table">[m
+                     <thead className="thead-dark">[m
+[36m@@ -113,11 +199,11 @@[m [mclass Items extends React.Component{[m
+                     </tr>[m
+                     </thead>[m
+                     <tbody>[m
+[31m-                    {this.state.item[this.state.currentPage]}[m
+[32m+[m[32m                    {items}[m
+                     </tbody>[m
+                 </table>[m
+                 <div className="navbar" style={{marginBottom: "30px"}}>[m
+[31m-                    {this.state.buttons}[m
+[32m+[m[32m                    {buttons}[m
+                 </div>[m
+             </div>[m
+         );[m
+[1mdiff --git a/frontend/src/components/moves-page/Moves.js b/frontend/src/components/moves-page/Moves.js[m
+[1mindex a6852ce3..a012c039 100644[m
+[1m--- a/frontend/src/components/moves-page/Moves.js[m
+[1m+++ b/frontend/src/components/moves-page/Moves.js[m
+[36m@@ -123,8 +123,9 @@[m [mclass Moves extends React.Component {[m
+         // check if all the fields are empty[m
+         if(name === "" && include === "" && type === "None") {[m
+             this.setState({[m
+[31m-                isFiltered: false,[m
+[32m+[m[32m                isFiltered: false[m
+             })[m
+[32m+[m[32m            return[m
+         }[m
+ [m
+         // keep a subarray for each filter option and combine at the end[m
+[1mdiff --git a/frontend/src/components/pokedex-page/PokemonInfo.js b/frontend/src/components/pokedex-page/PokemonInfo.js[m
+[1mindex 5fe54fe3..4f2915e4 100644[m
+[1m--- a/frontend/src/components/pokedex-page/PokemonInfo.js[m
+[1m+++ b/frontend/src/components/pokedex-page/PokemonInfo.js[m
+[36m@@ -1,11 +1,13 @@[m
+ import React from "react"[m
+ import { Link } from "react-router-dom"[m
+[32m+[m[32mimport typeJSON from "../../index";[m
+ import 'bootstrap/dist/css/bootstrap.min.css'[m
+ import "../../App.css"[m
+ import "../../css/page.css"[m
+ import "../../css/info.css"[m
+ import { capitalize, colourNameToHex } from "../componentFunctions";[m
+ import {lighten} from "@material-ui/core";[m
+[32m+[m[32mimport bug from "../../images/Types/Bug.png"[m
+ [m
+ [m
+ class PokemonInfo extends React.Component {[m
+[36m@@ -24,6 +26,8 @@[m [mclass PokemonInfo extends React.Component {[m
+ [m
+     componentDidMount() {[m
+         let id = this.props.match.params.id[m
+[32m+[m[32m        let context = this.context[m
+[32m+[m[32m        console.log(context)[m
+ [m
+         fetch('https://pokebackend-461l.appspot.com/pokemon/' + id)[m
+             .then(response => { return response.json() })[m
+[36m@@ -61,7 +65,12 @@[m [mclass PokemonInfo extends React.Component {[m
+         let colorHex = colourNameToHex(this.state.color)[m
+         if(colorHex == false) colorHex = "#000000"[m
+         let borderColor = this.state.color == "white" ? "black": this.state.color[m
+[31m-        let type2 = this.state.types[1] == "" ? "": "/ " + capitalize(this.state.types[1])[m
+[32m+[m
+[32m+[m[32m        console.log(typeJSON)[m
+[32m+[m[32m        let typeStr = this.state.types[0][m
+[32m+[m[32m        let typeStr2 = this.state.types[1][m
+[32m+[m[32m        let type2 = typeStr2 == "" ? null :[m
+[32m+[m[32m            {/*<img src={typeJSON.bug} style={{display: "inline"}} className="typeImg"/>*/}[m
+ [m
+         /* create tables by mapping each move to a row */[m
+         let moves = this.state.moves.map(move => {[m
+[36m@@ -98,8 +107,11 @@[m [mclass PokemonInfo extends React.Component {[m
+                                     {capitalize(this.state.name)}[m
+                                 </p>[m
+                                 <p className="card-text" id="types">[m
+[31m-                                    Type: <Link to={"/types/" + this.state.types[0]}>{capitalize(this.state.types[0])} </Link>[m
+[31m-                                    <Link to={"/types/" + type2.substring(2)}>{type2}</Link>[m
+[32m+[m[32m                                    Type:[m
+[32m+[m[32m                                    <Link to={"/types/" + this.state.types[0]}>[m
+[32m+[m[32m                                        {/*<img src={typeJSON.typeStr} style={{display: "inline"}} class="typeImg"/>*/}[m
+[32m+[m[32m                                    </Link>[m
+[32m+[m[32m                                    <Link to={"/types/" + typeStr2.substring(2)}>{type2}</Link>[m
+                                 </p>[m
+                                 <p className="card-text" id="abilities">[m
+                                     Abilities: <br/>[m
+[1mdiff --git a/frontend/src/index.js b/frontend/src/index.js[m
+[1mindex c0362d14..15a5d96d 100644[m
+[1m--- a/frontend/src/index.js[m
+[1m+++ b/frontend/src/index.js[m
+[36m@@ -5,9 +5,38 @@[m [mimport './index.css';[m
+ import App from './App';[m
+ import * as serviceWorker from './extra/serviceWorker';[m
+ [m
+[32m+[m[32mimport bug from "./images/Types/Bug.png";[m
+[32m+[m[32mimport dark from "./images/Types/Dark.png";[m
+[32m+[m[32mimport dragon from "./images/Types/Dragon.png";[m
+[32m+[m[32mimport electric from "./images/Types/Electric.png";[m
+[32m+[m[32mimport fairy from "./images/Types/Fairy.png";[m
+[32m+[m[32mimport fighting from "./images/Types/Fighting.png";[m
+[32m+[m[32mimport fire from "./images/Types/Fire.png";[m
+[32m+[m[32mimport flying from "./images/Types/Flying.png";[m
+[32m+[m[32mimport ghost from "./images/Types/Ghost.png";[m
+[32m+[m[32mimport grass from "./images/Types/Grass.png";[m
+[32m+[m[32mimport ground from "./images/Types/Ground.png";[m
+[32m+[m[32mimport ice from "./images/Types/Ice.png";[m
+[32m+[m[32mimport normal from "./images/Types/Normal.png";[m
+[32m+[m[32mimport poison from "./images/Types/Poison.png";[m
+[32m+[m[32mimport psychic from "./images/Types/Psychic.png";[m
+[32m+[m[32mimport rock from "./images/Types/Rock.png";[m
+[32m+[m[32mimport steel from "./images/Types/Steel.png";[m
+[32m+[m[32mimport water from "./images/Types/Water.png";[m
+[32m+[m
+ ReactDOM.render(<App />, document.getElementById('root'));[m
+ [m
+ // If you want your app to work offline and load faster, you can change[m
+ // unregister() to register() below. Note this comes with some pitfalls.[m
+ // Learn more about service workers: https://bit.ly/CRA-PWA[m
+ serviceWorker.unregister();[m
+[32m+[m
+[32m+[m[32mconst type = 25[m
+[32m+[m
+[32m+[m[32mconst typeJSON = {bug : bug, dark: dark, dragon: dragon, electric: electric,[m
+[32m+[m[32m    fairy: fairy, fighting: fighting, fire: fire, flying: flying, ghost: ghost,[m
+[32m+[m[32m    grass: grass, ground: ground, ice: ice, normal: normal, poison: poison,[m
+[32m+[m[32m    psychic: psychic, rock: rock, steel: steel, water: water, none: null,[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32mexport default type[m
+\ No newline at end of file[m

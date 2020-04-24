@@ -2,7 +2,6 @@ import React from 'react';
 import "../../css/page.css"
 import AbilitiesSearchFilter from "./AbilitiesSearchFilter";
 import AbilitiesBox from "./AbilitiesBox";
-import PokemonBox from "../pokedex-page/PokemonBox";
 
 
 class Abilities extends React.Component {
@@ -122,9 +121,11 @@ class Abilities extends React.Component {
 
         // check if all the fields are empty
         if(name === "" && include === "") {
+            console.log(1)
             this.setState({
-                isFiltered: false,
+                isFiltered: false
             })
+            return
         }
 
         // keep a subarray for each filter option and combine at the end
