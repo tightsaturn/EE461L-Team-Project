@@ -1,12 +1,8 @@
 import React from "react"
 import 'bootstrap/dist/css/bootstrap.min.css'
 import "../../css/page.css"
+import {Link} from "react-router-dom";
 
-const tableabilities = {
-    marginTop: "70px",
-    paddingLeft: "200px",
-    paddingRight: "120px",
-};
 
 class MovesInfo extends React.Component {
     constructor(){
@@ -19,24 +15,25 @@ class MovesInfo extends React.Component {
             accuracy: "",
             power: "",
             pp: "",
-            type: ""
-
+            type: "",
+            pokemonArray:[],
+            pokemonIDArray:[],
+            abilities: [],
+            numAbilitiesLoaded: 0
         }
 
         this.capitalize = this.capitalize.bind(this)
     }
 
     componentDidMount() {
-        let id = this.props.match.params.move
-        console.log(id)
-        let url = 'https://pokebackend-461l.appspot.com/moves/' + id;
+        let moveName = this.props.match.params.move
+        let url = 'https://pokebackend-461l.appspot.com/moves/name/' + moveName.toLowerCase();
 
         fetch(url)
             .then((response) => {
                 return response.json();
             })
             .then(data => {
-                console.log(data)
                 this.setState({
                     name: data.name,
                     damage_class: data.damage_class[0].name,
@@ -52,6 +49,44 @@ class MovesInfo extends React.Component {
             .catch((err) =>{
                 console.log(err)
             });
+
+        let url2 = 'https://pokebackend-461l.appspot.com/moves2/' + moveName.toLowerCase()
+        fetch(url2)
+            .then((response) => {
+                return response.json();
+            })
+            .then(data => {
+                let abilArray = []
+                for(let i = 0; i < data.pokemon.length; i++) {
+                    abilArray.push(0)
+                }
+
+                this.setState({
+                    pokemonArray: data.pokemon,
+                    pokemonIDArray: data.pokeID
+                })
+
+                // get abilities for all pokemon
+                for(let i = 0; i < data.pokemon.length; i++) {
+                    let url3 = 'https://pokebackend-461l.appspot.com/pokemon/' + data.pokeID[i]
+                    fetch(url3)
+                        .then(response => { return response.json() })
+                        .then(data => {
+                            this.setState(prevState => {
+                                let abilitiesArray = [...prevState.abilities]
+                                abilitiesArray[i] = data.abilities
+
+                                return {
+                                    abilities: abilitiesArray,
+                                    numAbilitiesLoaded: prevState.numAbilitiesLoaded + 1
+                                }
+                            })
+                        })
+                        .catch(err => { console.log(err) })
+                }
+
+            })
+            .catch((err) =>{ console.log(err) });
     }
 
     capitalize(name) {
@@ -62,6 +97,39 @@ class MovesInfo extends React.Component {
 
     render() {
         let id = this.props.match.params.move
+        let borderColor = this.state.color == "white" ? "black": this.state.color
+        let pokemonRows = (this.state.numAbilitiesLoaded == this.state.pokemonArray.length) ?
+            this.state.pokemonArray.map((pokemon, index) => {
+                let pokeID = this.state.pokemonIDArray[index];
+                let abilities = []
+
+                let abils = this.state.abilities[index]
+                for(let i = 0; i < abils.length; i++) {
+                    abilities.push(
+                        <Link to={'/abilities/' + abils[i].ability[0].url.substring(34)}>
+                            {this.capitalize(abils[i].ability[0].name)}
+                        </Link>
+                    )
+                }
+
+                return (
+                    <tr>
+                        <td>
+                            <Link to={"/pokemon/" + pokeID}>
+                                {(pokemon)}
+                            </Link>
+                        </td>
+                        <td>
+                            <div className="dropdown">
+                                <button className="dropbtn"></button>
+                                <div className="dropdown-content">
+                                    {abilities}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                )
+            }) : null
 
         return (
             <div className="container-fluid" id="infoContent">
@@ -89,21 +157,22 @@ class MovesInfo extends React.Component {
                         </div>
                     </div>
 
-                    <div className="col-8">
-                        <table className="table">
-                            <thead className="thead-light">
-                            <tr>
-                                <th scope="col">Meta</th>
-                                <p></p>
-                            </tr>
-                            <tr>
-                                <th scope="col">Pokemons that can learn this Move</th>
-                            </tr>
-                            </thead>
-                            <tbody>
+                    <div className="col-1"></div>
 
-                            </tbody>
-                        </table>
+                    <div className="col-6">
+                        <div id="typesTable">
+                            <table className="table table-hover" style={{border: "solid 3px " + borderColor}}>
+                                <thead className="thead-dark">
+                                <tr>
+                                    <th scope="col">Pokemon with this Move</th>
+                                    <th scope="col">Abilities</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {pokemonRows}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
 
                 </div>

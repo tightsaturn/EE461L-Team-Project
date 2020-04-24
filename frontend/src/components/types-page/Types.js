@@ -26,7 +26,7 @@ import chart from "../../images/Types/Types Chart.jpg"
 
 const Pokemon = () => {
     return (
-            <div className="container-fluid" id="infoContent" style={{marginTop: "35px"}}>
+            <div className="container-fluid" id="infoContent" style={{marginTop: "150px"}}>
                 <div className="row mt-5">
                     <TypeBox type="normal" src={normal}/>
                     <TypeBox type="fire" src={fire}/>
@@ -46,7 +46,9 @@ const Pokemon = () => {
                     <TypeBox type="steel" src={steel}/>
                     <TypeBox type="dragon" src={dragon}/>
                     <TypeBox type="fairy" src={fairy}/>
+                     <div>
                     <img src={chart} style={{marginLeft: "7%", marginBottom: "24px"}}/>
+                     </div>
                 </div>
             </div>
     );

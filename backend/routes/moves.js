@@ -20,4 +20,12 @@ router.route(`/:id`).get((req, res) => {
         .catch(err => res.status(400).json('Error:a' + err));
 });
 
+// Get a Pokemon by the id specified by PokeAPI (id field in pokemon database)
+router.route(`/name/:name`).get((req, res) => {
+    console.log("URL /moves/" + req.params.name + " has been called");
+    Moves.findOne({name: req.params.name})
+        .then(moves => res.json(moves))
+        .catch(err => res.status(400).json('Error:a' + err));
+});
+
 module.exports = router;

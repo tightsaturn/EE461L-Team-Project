@@ -1,6 +1,6 @@
 import React from 'react';
 import "../../css/page.css"
-import SearchFilter from "../SearchFilter";
+import AbilitiesSearchFilter from "./AbilitiesSearchFilter";
 import AbilitiesBox from "./AbilitiesBox";
 
 
@@ -9,24 +9,31 @@ class Abilities extends React.Component {
         super();
         // initialize 2d array for pagination
         let abilitiesArray = []
+        let buttonsArray = []
         for(let i = 0; i < 30; i++){
             abilitiesArray.push([])
         }
 
         this.state = {
-            ability: abilitiesArray,
-            buttons: [],
+            ability:  abilitiesArray,
+            filteredAbilities: [],
+            buttons: buttonsArray,
             currentPage: 0,
-            pageSize: 30
+            pageSize: 48,
+            numLoaded: 0,   // counts how many pokemon loaded to see when fetching finishes
+            isFiltered: false,
+            numFiltered: 0,  // shows number of results for filter
         }
 
         this.fetchAbility = this.fetchAbility.bind(this)
         this.capitalize = this.capitalize.bind(this)
         this.handlePageClick = this.handlePageClick.bind(this)
+        this.filter = this.filter.bind(this)
+        this.reset = this.reset.bind(this)
         this.fetchOneAbility = this.fetchOneAbility.bind(this)
     }
 
-    async fetchOneAbility(id){
+    fetchOneAbility = async (id) => {
         let url = 'https://pokebackend-461l.appspot.com/abilitycards/' + id;
         await fetch(url)
             .then((response) => {
@@ -63,11 +70,7 @@ class Abilities extends React.Component {
             let url = 'https://pokebackend-461l.appspot.com/abilitycards/' + id;
             fetch(url)
                 .then((response) => {
-                    if(response.ok){
-                        return response.json();
-                    } else {
-                        throw new Error("failed to get response");
-                    }
+                    if(response.ok){ return response.json(); }
                 })
                 .then(data => {
                     // get page number and update state
@@ -75,12 +78,12 @@ class Abilities extends React.Component {
                     let index = (id-1)%this.state.pageSize;
 
                     // add a button for every new page
-                    if(index == 0) this.setState(prevState => {
+                    if(index === 0) this.setState(prevState => {
                         let buttonArray = [...prevState.buttons]
-                        buttonArray[pageNum] =
-                            <button type="button" id={pageNum} className="btn btn-light" onClick={this.handlePageClick}>
-                                {pageNum+1}
-                            </button>
+                        buttonArray[pageNum] = {
+                            type: "button",
+                            id: pageNum,
+                        }
 
                         return {
                             buttons: buttonArray
@@ -90,16 +93,16 @@ class Abilities extends React.Component {
 
                     this.setState(prevState => {
                         let abilityArray = [...prevState.ability]
-                        abilityArray[pageNum][index] =
-                            <AbilitiesBox
-                                generation={this.capitalizeG(data.generation[0].name)}
-                                description={data.effect[0].short_effect}
-                                name={this.capitalize(data.name)}
-                                id={data.id}
-                            />;
+                        abilityArray[pageNum][index] = {
+                            generation: this.capitalizeG(data.generation[0].name),
+                            description: data.effect[0].short_effect,
+                            name: this.capitalize(data.name),
+                            id: data.id,
+                        }
 
                         return {
-                            ability: abilityArray
+                            ability: abilityArray,
+                            numLoaded: prevState.numLoaded + 1
                         }
                     })
                 })
@@ -107,6 +110,76 @@ class Abilities extends React.Component {
                     console.log(err)
                 });
         }
+    }
+
+    filter (name, include) {
+        // check if all pokemon are finished loading (alert if not)
+        if(this.state.numLoaded < 232) {
+            alert("Wait for all the abilities to finish loading first!" + this.state.numLoaded)
+            return
+        }
+
+        // check if all the fields are empty
+        if(name === "" && include === "") {
+            console.log(1)
+            this.setState({
+                isFiltered: false
+            })
+            return
+        }
+
+        // keep a subarray for each filter option and combine at the end
+        // a true entry means pokemon i fits the filter criteria (e.g. name or type1)
+        let filterArray = [[], []]
+        for(let i = 0; i < this.state.ability.length; i++) {
+            for(let j = 0; j < this.state.pageSize; j++) {
+                // get pokemon and find out if it matches filter criteria
+                let abilityJSON = {...this.state.ability[i][j]}
+                if (abilityJSON.name === undefined) break
+
+                // console.log(pokeJSON.name)
+
+                if (name !== "") {
+                    if (name.toLowerCase() === abilityJSON.name.toLowerCase()) {
+                        filterArray[0].push(true)
+                    } else filterArray[0].push(false)
+                }   // pushes true if there is no entry
+                else filterArray[0].push(true)
+
+                // check if substring include is in pokemon name
+                if (include !== "") {
+                    if ((abilityJSON.name.toLowerCase()).indexOf(include.toLowerCase()) !== -1) {
+                        filterArray[1].push(true)
+                    } else filterArray[1].push(false)
+                } else filterArray[1].push(true)
+            }
+        }
+
+        // only add pokemon to filtered list if all of the filter criteria are met
+        let filteredAbilities = []
+        for(let i = 0; i < 233; i++) {
+            if(filterArray[0][i] &&
+                filterArray[1][i]) {
+                filteredAbilities.push(i)
+            }
+        }
+
+        this.setState({
+            filteredAbilities: filteredAbilities,
+            isFiltered: true,
+            numFiltered: filteredAbilities.length,
+        })
+    }
+    reset() {
+        this.setState({
+            isFiltered: false,
+        })
+    }
+
+    // redirects user to page when button clicked
+    handlePageClick(event) {
+        const {id} = event.target
+        this.setState({currentPage: id})
     }
 
     capitalize(name) {
@@ -120,40 +193,64 @@ class Abilities extends React.Component {
         return (firstLetter + generation.substring(1,11) + romanGeneration)
     }
 
-    handlePageClick(event) {
-        const {id} = event.target
-        this.setState({
-            currentPage: id
-        })
-    }
-
     componentDidMount() {
+        this.setState({
+            isFiltered: false
+        })
         this.fetchAbility();
     }
 
     render()
     {
+        let abilities = this.state.isFiltered ?
+            this.state.filteredAbilities.map(item => {
+                let pageNum = Math.floor((item)/this.state.pageSize);
+                let index = (item)%this.state.pageSize;
+                let ability = this.state.ability[pageNum][index]
+
+                return <AbilitiesBox
+                    generation={ability.generation}
+                    id={ability.id}
+                    name={ability.name}
+                    description={ability.description}
+                />
+            }) :
+            this.state.ability[this.state.currentPage].map(item => {
+                return <AbilitiesBox
+                    generation={item.generation}
+                    id={item.id}
+                    name={item.name}
+                    description={item.description}
+                />
+            })
+        let buttons = this.state.isFiltered ? null : this.state.buttons.map((item, index) => {
+            let className = (this.state.currentPage == index) ? "btn btn-success":"btn btn-light"
+            if(item == undefined) return undefined
+            return <button
+                type="button"
+                id={item.id}
+                className={className}
+                onClick={this.handlePageClick}> {item.id+1}
+            </button>
+        })
+
+        let filterMessage = this.state.isFiltered ? (this.state.numFiltered + " results found") : null
+
         return (
             <div className="container-fluid" id="mainContent">
-                <h1>Abilities</h1>
+                <h1 style={{fontWeight: "bold", fontSize: "2.8em"}}>Abilities</h1>
                 <br/>
-                <SearchFilter/>
                 <br/>
-                <table className="table">
-                    <thead className="thead-dark">
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Effect</th>
-                        <th scope="col">Generation</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {this.state.ability[this.state.currentPage]}
-                    </tbody>
-                </table>
-                <div className="navbar" style={{marginBottom: "30px"}}>
-                    {this.state.buttons}
+                <AbilitiesSearchFilter
+                    onFilter={this.filter}
+                    onReset={this.reset}
+                />
+                <h4 style={{marginTop: "10px"}}>{filterMessage}</h4>
+                <div className="row mt-5">
+                    {abilities}
+                </div>
+                <div className="navbar" style={{ marginTop: "10px", marginBottom: "30px"}}>
+                    {buttons}
                 </div>
             </div>
         );
