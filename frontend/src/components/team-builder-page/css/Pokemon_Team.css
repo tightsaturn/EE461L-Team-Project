@@ -21,3 +21,52 @@
     /*margin-left: 20%;*/
     /*margin-right: 10%;*/
 }
+
+#pokemon_stats {
+    padding-top: 5%;
+}
+
+#pokemon_stats_nickname {
+    color: grey;
+}
+
+#pokemon_stats_title {
+    display: inline;
+}
+
+#pokemon_stats_edit_button {
+   padding-left: 20;
+}
+
+.gender_form_group {
+    display: block;
+}
+
+.level_form_group {
+    display: block;
+}
+
+.happiness_form_group {
+    display: inline-block;
+}
+
+.row {
+    padding-left: 5%;
+    display: flex;
+}
+
+.column {
+    padding-left: 5%;
+    flex: 50%;
+}
+
+.stats_table table, th, td {
+    /* border: 1px solid black; */
+    width: 50%;
+}
+
+.stats_table th{
+    background-color: black;
+    color: white;
+    padding: 7%;
+}

@@ -1,11 +1,22 @@
 import React from 'react';
 import "../../css/page.css"
+import { Button } from 'react-bootstrap';
 import { Card } from 'react-bootstrap';
+import {Link} from "react-router-dom";
 
 class TeamList extends React.Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            teams: []
+        }
     }
+
+    newTeam() {
+        
+    }
+    
     
     componentDidMount() {
 
@@ -20,6 +31,10 @@ class TeamList extends React.Component {
                 </div>
 
                 <div className = "container-fluid" id = "mainContentv2">
+                    <Link to = "/teambuilder/createTeam">
+                        <Button variant = "success">Create New Team</Button>
+                    </Link>
+                    
                     <Card>
                         <Card.Title>Name of Team</Card.Title>
 
