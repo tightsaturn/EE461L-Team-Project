@@ -34,7 +34,6 @@ class MovesInfo extends React.Component {
                 return response.json();
             })
             .then(data => {
-                console.log(data)
                 this.setState({
                     name: data.name,
                     damage_class: data.damage_class[0].name,
@@ -57,7 +56,11 @@ class MovesInfo extends React.Component {
                 return response.json();
             })
             .then(data => {
-                console.log(data)
+                let abilArray = []
+                for(let i = 0; i < data.pokemon.length; i++) {
+                    abilArray.push(0)
+                }
+
                 this.setState({
                     pokemonArray: data.pokemon,
                     pokemonIDArray: data.pokeID
@@ -71,7 +74,7 @@ class MovesInfo extends React.Component {
                         .then(data => {
                             this.setState(prevState => {
                                 let abilitiesArray = [...prevState.abilities]
-                                abilitiesArray.push(data.abilities)
+                                abilitiesArray[i] = data.abilities
 
                                 return {
                                     abilities: abilitiesArray,

@@ -28,13 +28,18 @@ class AbilitiesInfo extends React.Component {
                 return response.json();
             })
             .then(data => {
-                console.log(data)
+                let movArray = []
+                for(let i = 0; i < data.pokemon.length; i++) {
+                    movArray.push(0)
+                }
+
                 this.setState({
                     id: data.id,
                     name: data.name,
                     pokemonArray: data.pokemon,
                     generation: data.generation[0].name,
                     effect: data.effect[0].effect,
+                    moves: movArray
                 })
 
                 // get moves for each pokemon with ability
@@ -48,8 +53,8 @@ class AbilitiesInfo extends React.Component {
                             this.setState(prevState => {
                                 let movesArray = [...prevState.moves]
                                 if(data == undefined) {
-                                    movesArray.push({})
-                                } else { movesArray.push(data.moves) }
+                                    movesArray[i] = {}
+                                } else { movesArray[i] = data.moves }
 
                                 return {
                                     moves: movesArray,
@@ -85,13 +90,13 @@ class AbilitiesInfo extends React.Component {
                 for(let i = 2; i < moves.length; i+=3) {
                     Moves.push(
                         <div>
-                            <Link to={'/moves/' + moves[i].move.url.substring(31)}>
+                            <Link to={'/moves/' + moves[i].move.name}>
                                 {this.capitalize(moves[i].move.name)}
                             </Link>
-                            <Link to={'/moves/' + moves[i-1].move.url.substring(31)}>
+                            <Link to={'/moves/' + moves[i-1].move.name}>
                                 {this.capitalize(moves[i-1].move.name)}
                             </Link>
-                            <Link to={'/moves/' + moves[i-2].move.url.substring(31)}>
+                            <Link to={'/moves/' + moves[i-2].move.name}>
                                 {this.capitalize(moves[i-2].move.name)}
                             </Link>
                         </div>
@@ -104,10 +109,10 @@ class AbilitiesInfo extends React.Component {
                     // two more to display
                     Moves.push(
                         <div>
-                            <Link to={'/moves/' + moves[n-1].move.url.substring(31)}>
+                            <Link to={'/moves/' + moves[n-1].move.name}>
                                 {this.capitalize(moves[n-1].move.name)}
                             </Link>
-                            <Link to={'/moves/' + moves[n-2].move.url.substring(31)}>
+                            <Link to={'/moves/' + moves[n-2].move.name}>
                                 {this.capitalize(moves[n-2].move.name)}
                             </Link>
                         </div>
@@ -117,7 +122,7 @@ class AbilitiesInfo extends React.Component {
                 if(moves.length % 3 == 1) {
                     // one more to display
                     Moves.push(
-                        <Link to={'/moves/' + moves[n-1].move.url.substring(31)}>
+                        <Link to={'/moves/' + moves[n-1].move.name}>
                             {this.capitalize(moves[n-1].move.name)}
                         </Link>
                     )
@@ -165,7 +170,7 @@ class AbilitiesInfo extends React.Component {
                         </div>
                     </div>
 
-                    <div className="col-4">
+                    <div className="col-5">
                         <div id="typesTable">
                             <h2 style={{paddingBottom: "20px"}}>Pokemon with this Ability</h2>
                             <table className="table table-hover">
