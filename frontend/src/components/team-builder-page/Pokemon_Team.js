@@ -166,10 +166,9 @@ class Pokemon_Team extends React.Component {
         return (firstLetter + name.substring(1));
     }
 
-    changeNickname(event) {
-        let i = 1;
+    changeNickname(i, nickname) {
         var new_state = this.state.pokemonCards.slice();
-        new_state[i].nickname_buffer = event.target.value;
+        new_state[i].nickname_buffer = nickname;
         this.setState({
             pokemonCards: new_state
         });
@@ -177,8 +176,8 @@ class Pokemon_Team extends React.Component {
         //this.refs.nickname_overlay.hide();
     }
 
-    submitNickname(event) {
-        let i = 1;
+    submitNickname(i,event) {
+        //let i = 1;
         var new_state = this.state.pokemonCards.slice();
         new_state[i].nickname = new_state[i].nickname_buffer;
         this.setState({
@@ -197,8 +196,8 @@ class Pokemon_Team extends React.Component {
                 <Popover id = "nickname_popover">
                     <Popover.Title as = "h3">Change Nickname</Popover.Title>
                     <Popover.Content>
-                        <form onSubmit = {this.submitNickname}>
-                            <input type = "text" name = "nickname" onChange = {this.changeNickname}/>
+                        <form onSubmit = {(e) => {this.submitNickname(i, e)}}>
+                            <input type = "text" name = "nickname" onChange = {(e) => this.changeNickname(i, e.target.value)}/>
                             <input type = "submit" value = "Submit"/>
                         </form>
                     </Popover.Content>
