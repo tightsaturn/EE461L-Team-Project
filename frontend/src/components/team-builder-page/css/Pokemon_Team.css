@@ -60,13 +60,13 @@
     flex: 50%;
 }
 
-.stats_table table, th, td {
+/* .stats_table table, th, td {
     /* border: 1px solid black; */
-    width: 50%;
+/*    width: 50%;
 }
 
 .stats_table th{
     background-color: black;
     color: white;
     padding: 7%;
-}
+} */

@@ -2,13 +2,17 @@ import React from "react";
 import {Link} from "react-router-dom";
 import { Button } from 'react-bootstrap';
 import EditIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete'
+import CheckIcon from '@material-ui/icons/Check'
+import ClearIcon from '@material-ui/icons/Clear'
 import './css/Pokemon_Team.css';
 import BlankPokemon from './css/BlankPokemon.png';
 import axios from 'axios';
 import { Card } from 'react-bootstrap';
 import { Chip, Icon, Select } from '@material-ui/core' ;
 import { Avatar } from "@material-ui/core";
+import Table from 'react-bootstrap/Table'
+import Popover from 'react-bootstrap/Popover'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 
 
 function Pokemon_Card(props) {
@@ -45,9 +49,10 @@ class Pokemon_Team extends React.Component {
             image: BlankPokemon,
             name: "Who's that Pokemon?",
             nickname: "",
-            level: 0,
+            nickname_buffer: "",
+            level: 100,
             gender: "male",
-            happiness: 0,
+            happiness: 255,
             shiny: "no",
             item: "none",
             itemInEditMode: false,
@@ -68,16 +73,11 @@ class Pokemon_Team extends React.Component {
 
         this.state = {
             pokemonCards : pokemonTeam,                 // Stores the data of each team member
-            inEditMode: false                           // Provides the ability to edit pokemon team member stats
         }
+        this.resetTeam = this.resetTeam.bind(this);
         this.capitalize = this.capitalize.bind(this);
-    }
-
-    // When a user requests
-    changeEditMode = () => {
-        this.setState({
-            inEditMode: !this.state.inEditMode
-        })
+        this.changeNickname = this.changeNickname.bind(this);
+        this.submitNickname = this.submitNickname.bind(this);
     }
 
     UNSAFE_componentWillMount() {
@@ -150,19 +150,61 @@ class Pokemon_Team extends React.Component {
         localStorage.setItem('teamBuilderState', JSON.stringify(this.state));
     }
 
-    capitalize(name) {
-        let firstLetter = name.charAt(0).toUpperCase()
-        return (firstLetter + name.substring(1))
+    resetTeam() {
+        console.log("Resetting pokemon team");
+        let new_state = this.state.pokemonCards.slice();
+        for (let i = 0; i < 6; i++) {
+            new_state[i].image = BlankPokemon;
+            new_state[i].name = "Who's that Pokemon?";
+            new_state[i].type = "Unknown";
+        }
+        this.setState({ pokemonCards: new_state }) 
     }
 
-    handleInputChange(event) {
+    capitalize(name) {
+        let firstLetter = name.charAt(0).toUpperCase();
+        return (firstLetter + name.substring(1));
+    }
 
+    changeNickname(event) {
+        let i = 1;
+        var new_state = this.state.pokemonCards.slice();
+        new_state[i].nickname_buffer = event.target.value;
+        this.setState({
+            pokemonCards: new_state
+        });
+        console.log(this.state.pokemonCards[i]);
+        //this.refs.nickname_overlay.hide();
+    }
+
+    submitNickname(event) {
+        let i = 1;
+        var new_state = this.state.pokemonCards.slice();
+        new_state[i].nickname = new_state[i].nickname_buffer;
+        this.setState({
+            pokemonCards: new_state
+        });
+        console.log(this.state.pokemonCards[i]);
+        event.preventDefault();
     }
 
     render() {
         let pokemonCardArray = []
         let pokemonStatsArray = []
+
         for(let i = 0; i < 6; i++) {
+            const nickname_popover = (
+                <Popover id = "nickname_popover">
+                    <Popover.Title as = "h3">Change Nickname</Popover.Title>
+                    <Popover.Content>
+                        <form onSubmit = {this.submitNickname}>
+                            <input type = "text" name = "nickname" onChange = {this.changeNickname}/>
+                            <input type = "submit" value = "Submit"/>
+                        </form>
+                    </Popover.Content>
+                </Popover>
+            );
+
             pokemonCardArray.push(
                 <div className = "col-lg-2 grid-margin" id = "card-col">
                     <Pokemon_Card
@@ -190,28 +232,63 @@ class Pokemon_Team extends React.Component {
 
                             {/* Stats on the right side of screen */}
                             <div class = "column">
-                                <table className="stats_table">
-                                    <tr id = "stats_table_header">
-                                        <th>Stat</th>
-                                        <th>Data</th>
-                                    </tr>
-                                    <tr>
-                                        <td>Pokemon:</td>
-                                        <td>{this.state.pokemonCards[i].name}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Gender:</td>
-                                        <td>{this.state.pokemonCards[i].gender}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Level:</td>
-                                        <td>{this.state.pokemonCards[i].level}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Item:</td>
-                                        <td>{this.state.pokemonCards[i].item}</td>
-                                    </tr>
-                                </table>
+                                <Table striped bordered hover className="stats_table">
+                                    <thead>
+                                        <tr>
+                                            <th>Stat</th>
+                                            <th>Data</th>
+                                            <th>Edit</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Nickname:</td>
+                                            <td>{this.state.pokemonCards[i].nickname}</td>
+                                            <OverlayTrigger trigger = "click" placement = "left" overlay = {nickname_popover} ref = "nickname_overlay">
+                                                <EditIcon/>
+                                            </OverlayTrigger>
+                                        </tr>
+                                        <tr>
+                                            <td>Gender:</td>
+                                            <td>{this.state.pokemonCards[i].gender}</td>
+                                            <br/>
+                                            {/* <EditIcon/> */}
+                                        </tr>
+                                        <tr>
+                                            <td>Level:</td>
+                                            <td>{this.state.pokemonCards[i].level}</td>
+                                            <br/>
+                                            {/* <EditIcon/> */}
+                                        </tr>
+                                        <tr>
+                                            <td>Item:</td>
+                                            <td>{this.state.pokemonCards[i].item}</td>
+                                            <EditIcon/>
+                                        </tr>
+                                        <tr>
+                                            <td>Ability:</td>
+                                            <td>{this.state.pokemonCards[i].ability}</td>
+                                            <EditIcon/>
+                                        </tr>
+                                        <tr>
+                                            <td rowSpan = "4">Moves:</td>
+                                            <td>{this.state.pokemonCards[i].moves[0]}</td>
+                                            <EditIcon/>
+                                        </tr>
+                                        <tr>
+                                            <td>{this.state.pokemonCards[i].moves[1]}</td>
+                                            <EditIcon/>
+                                        </tr>
+                                        <tr>
+                                            <td>{this.state.pokemonCards[i].moves[2]}</td>
+                                            <EditIcon/>
+                                        </tr>
+                                        <tr>
+                                            <td>{this.state.pokemonCards[i].moves[3]}</td>
+                                            <EditIcon/>
+                                        </tr>
+                                    </tbody>
+                                </Table>
                             </div>
                         </div>
 
