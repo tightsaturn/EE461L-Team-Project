@@ -20,4 +20,12 @@ router.route(`/:id`).get((req, res) => {
         .catch(err => res.status(400).json('Error:a' + err));
 })
 
+// Get the pokemon associated with a given ability
+router.route(`/:id/pokemon_list`).get((req, res) => {
+    console.log("URL /abilities/" + req.params.id + "/pokemon_list has been called");
+    Abilities.findOne({id: req.params.id}, 'pokemon')
+        .then(abilities => res.json(abilities))
+        .catch(err => res.status(400).json('Error:a' + err));
+})
+
 module.exports = router;

@@ -11,7 +11,8 @@ class AbilitiesInfo extends React.Component {
             name: "",
             effect: "",
             generation:"",
-            pokemonArray:[]
+            pokemonArray:[],
+            doneRendering: false
         }
 
         this.capitalize = this.capitalize.bind(this)
@@ -48,22 +49,59 @@ class AbilitiesInfo extends React.Component {
     }
 
     render() {
-        let id = this.props.match.params.ability
-        let borderColor = this.state.color == "white" ? "black": this.state.color
-        /* create tables by mapping each move to a row */
-        let pokemonWithThisAbility = this.state.pokemonArray.map(pokemon => {
-            // find id of move (pos 31 is where the id is located in string)
-            const id = pokemon.pokemon.url.substring(34)
-            return (
-                <tr>
-                    <td>
-                        <Link to={"/pokemon/" + id}>
-                            {capitalize(pokemon.pokemon.name)}
-                        </Link>
-                    </td>
-                </tr>
-            )
-        })
+        var borderColor, pokemonWithThisAbility;
+        if (!this.state.doneRendering) {
+            // let id = this.props.match.params.ability
+            borderColor = this.state.color == "white" ? "black": this.state.color
+            /* create tables by mapping each move to a row */
+            pokemonWithThisAbility = this.state.pokemonArray.map(pokemon => {
+
+                const id = pokemon.pokemon.url.substring(34)
+                let pokemon_moves = [];
+
+                //let url = 'https://pokebackend-461l.appspot.com/pokemon/' + id + '/moves_list';
+                let url = 'http://localhost:5000/pokemon/' + id + 'moves_list';
+                fetch(url)
+                    .then((response) => {
+                        return response.json();
+                    })
+                    .then(data => {
+                        // get a list of all of the moves of the current pokemon
+                        for (var i in data[0].moves) {
+                            console.log(data[0].moves[i].move.name);
+                            pokemon_moves.push(
+                                <div class = "dropdown">
+                                    <Link to={"/pokemon/" + id}>
+                                        {capitalize(pokemon.pokemon.name)}
+                                    </Link>
+                                    <div class = "dropdown-content">
+                                        <a href = "/">{data[0].moves[i].move.name}</a>
+                                    </div>
+                                </div>    
+
+                            );
+                        }
+
+                        console.log(pokemon_moves);
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                    });
+
+                // find id of move (pos 31 is where the id is located in string)
+                return (
+                    <tr>
+                        <td>
+                            {pokemon_moves}
+                        </td>
+                    </tr>
+                )
+            });
+
+            this.setState({
+                doneRendering: true
+            });
+        }
 
         return (
             <div className="container-fluid" id="mainContent">

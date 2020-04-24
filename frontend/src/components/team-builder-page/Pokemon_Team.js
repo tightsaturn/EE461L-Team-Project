@@ -127,6 +127,8 @@ class Pokemon_Team extends React.Component {
             )
         }
 
+        console.log(pokemonArray);
+
         return (
             <div style={{width: "100%"}}>
                 {/* <Link to = "/teambuilder/resetTeam"> */}

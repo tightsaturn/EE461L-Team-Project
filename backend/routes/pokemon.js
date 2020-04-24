@@ -74,4 +74,12 @@ router.route('/:start_id/:end_id').get(async (req, res) => {
         .catch(err => res.status(400).json('Error:a' + err));
 });
 
+// Get the moves associated with a given pokemon
+router.route(`/:id/moves_list`).get((req, res) => {
+    console.log("URL /pokemon/" + req.params.id + "/moves_list has been called");
+    Abilities.findOne({id: req.params.id}, 'moves')
+        .then(abilities => res.json(abilities))
+        .catch(err => res.status(400).json('Error:a' + err));
+})
+
 module.exports = router;
