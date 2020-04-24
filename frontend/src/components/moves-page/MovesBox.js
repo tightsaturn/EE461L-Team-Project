@@ -1,6 +1,7 @@
 import React from "react"
-import {Link, BrowserRouter} from "react-router-dom";
-import Button from "react-bootstrap/Button";
+import { Link } from "react-router-dom";
+import {capitalize} from "../componentFunctions";
+import Button from "react-bootstrap/Button"
 
 
 const MovesBox = (props) => {
@@ -12,7 +13,10 @@ const MovesBox = (props) => {
                 </div>
                 <div className="card-body">
                     <div className="card-text">
-                        {props.type}
+                        <Link to={"/types/" + props.type}>
+                            <img src={require(`../../images/Types/${capitalize(props.type)}.png`)}
+                                style={{width: "90%", maxWidth: "100px"}}/>
+                        </Link>
                     </div>
                 </div>
                 <div className="card-footer">

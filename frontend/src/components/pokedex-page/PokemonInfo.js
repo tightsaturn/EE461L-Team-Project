@@ -25,12 +25,10 @@ class PokemonInfo extends React.Component {
     componentDidMount() {
         let id = this.props.match.params.id
         let context = this.context
-        console.log(context)
 
         fetch('https://pokebackend-461l.appspot.com/pokemon/' + id)
             .then(response => { return response.json() })
             .then(data => {
-                console.log(data)
                 let typesArray = []
 
                 let type2 = data.types.length == 2 ? data.types[1].type.name : ""
@@ -64,10 +62,9 @@ class PokemonInfo extends React.Component {
         if(colorHex == false) colorHex = "#000000"
         let borderColor = this.state.color == "white" ? "black": this.state.color
 
-        let typeStr = this.state.types[0]
-        let typeStr2 = this.state.types[1]
-        let type2 = typeStr2 == "" ? null :
-            {/*<img src={typeJSON.bug} style={{display: "inline"}} className="typeImg"/>*/}
+        let type1 = this.state.types[0] ? require(`../../images/Types/${capitalize(this.state.types[0])}.png`) : ""
+        let type2 = this.state.types[1] ? require(`../../images/Types/${capitalize(this.state.types[1])}.png`) : ""
+        let typeImg2 = type2 ? <img src={type2} alt="type 2" className="typeImg"/> : null
 
         /* create tables by mapping each move to a row */
         let moves = this.state.moves.map(move => {
@@ -104,11 +101,12 @@ class PokemonInfo extends React.Component {
                                     {capitalize(this.state.name)}
                                 </p>
                                 <p className="card-text" id="types">
-                                    Type:
                                     <Link to={"/types/" + this.state.types[0]}>
-                                        {/*<img src={typeJSON.typeStr} style={{display: "inline"}} class="typeImg"/>*/}
+                                        <img src={type1} alt="type 1" className="typeImg"/>
                                     </Link>
-                                    <Link to={"/types/" + typeStr2.substring(2)}>{type2}</Link>
+                                    <Link to={"/types/" + this.state.types[1]}>
+                                        {typeImg2}
+                                    </Link>
                                 </p>
                                 <p className="card-text" id="abilities">
                                     Abilities: <br/>

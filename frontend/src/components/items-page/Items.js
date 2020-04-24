@@ -181,7 +181,7 @@ class Items extends React.Component{
 
         return (
             <div className="container-fluid" id="mainContent">
-                <h1>Items</h1>
+                <h1 style={{fontWeight: "bold", fontSize: "2.8em"}}>Items</h1>
                 <br/>
                 <ItemsSearchFilter
                     onFilter={this.filter}
