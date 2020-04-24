@@ -164,8 +164,7 @@ class AbilitiesInfo extends React.Component {
                                 <li className="list-group-item">Effect:  {this.capitalize(this.state.effect)}</li>
                             </ul>
                             <div className="card-body">
-                                <a href="#" className="card-link">Card link</a>
-                                <a href="#" className="card-link">Another link</a>
+                                <div>Pokemon Count: {this.state.pokemonArray.length}</div>
                             </div>
                         </div>
                     </div>

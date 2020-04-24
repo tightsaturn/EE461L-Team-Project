@@ -61,19 +61,48 @@ class TypesDisplay extends React.Component {
                 );
             }
         })
+
+        let moveWithThisType = this.state.movesArray.map(move => {
+            let name = move.name;
+                return (
+                    <tr>
+                        <td>
+                            <Link to={"/moves/" + name}>
+                                {(this.capitalize(move.name))}
+                            </Link>
+                        </td>
+                    </tr>
+                );
+        })
         return (
             <div className="container-fluid" id="mainContent">
-                <h1>{this.capitalize(id)} Pokemon</h1>
-                <table className="table">
-                    <thead className="thead-dark">
-                    <tr>
-                        <th scope="col">Name</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {pokemonWithThisType}
-                    </tbody>
-                </table>
+                <div className="row">
+                    <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <h1>{this.capitalize(id)} Pokemon</h1>
+                        <table className="table">
+                            <thead class="thead-dark">
+
+                            <tr>
+                                <th scope="col">Name</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {pokemonWithThisType}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <h1>{this.capitalize(id)} Moves</h1>
+                        <table className="table">
+                            <thead className="thead-dark">
+                            <tr>
+                                <th scope="col">Name</th>
+                            </tr>
+                            </thead>
+                            <tbody>  {moveWithThisType} </tbody>
+                        </table>
+                    </div>
+                </div>
                 <div className="navbar" style={{marginBottom: "30px"}}>
                     {this.state.buttons}
                 </div>
