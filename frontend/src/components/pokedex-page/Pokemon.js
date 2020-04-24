@@ -19,16 +19,20 @@ class Pokemon extends React.Component {
 
         this.state = {
             pokemon: pokeArray,
+            numPokemon: 807,
             filteredPokemon: [],
+            sortedPokemon: [],
             buttons: buttonsArray,
             currentPage: 0,
             pageSize: 40,
             numLoaded: 0,   // counts how many pokemon loaded to see when fetching finishes
             isFiltered: false,
             numFiltered: 0,  // shows number of results for filter
+            isSorted: false,
         }
         this.fetchPokemon = this.fetchPokemon.bind(this)
         this.capitalize = this.capitalize.bind(this)
+        this.search = this.search.bind(this)
         this.filter = this.filter.bind(this)
         this.reset = this.reset.bind(this)
         this.handlePageClick = this.handlePageClick.bind(this)
@@ -67,7 +71,7 @@ class Pokemon extends React.Component {
 
     fetchPokemon(){
         // fetch each pokemon and add to state
-        for(let id = 1; id < 808; id++){
+        for(let id = 1; id <= this.state.numPokemon; id++){
             let url = 'https://pokeapi.co/api/v2/pokemon/' + id;
             fetch(url)
                 .then((response) => {
@@ -110,15 +114,49 @@ class Pokemon extends React.Component {
         }
     }
 
-    filter (name, include, type1, type2) {
+    search(name) {
+        if(this.state.numLoaded < this.state.numPokemon) {
+            alert("Wait for all the pokemon to finish loading first!")
+            return
+        }
+
+        if(name === "") {
+            this.setState({
+                isFiltered: false,
+            })
+            return
+        }
+
+        let id = null
+        for(let i = 0; i < this.state.pokemon.length; i++) {
+            for (let j = 0; j < this.state.pageSize; j++) {
+                let pokeJSON = {...this.state.pokemon[i][j]}
+                if (pokeJSON.name === undefined) break
+                if(pokeJSON.name.toLowerCase() == name.toLowerCase()){
+                    id = pokeJSON.id - 1
+                    break
+                }
+            }
+        }
+
+        if(id == null) return
+
+        this.setState({
+            filteredPokemon: [id],
+            isFiltered: true,
+            numFiltered: 1
+        })
+    }
+
+    filter (include, type1, type2) {
         // check if all pokemon are finished loading (alert if not)
-        if(this.state.numLoaded < 807) {
+        if(this.state.numLoaded < this.state.numPokemon) {
             alert("Wait for all the pokemon to finish loading first!")
             return
         }
 
         // check if all the fields are empty
-        if(name === "" && include === "" && type1 === "None" && type2 === "None") {
+        if(include === "" && type1 === "None" && type2 === "None") {
             this.setState({
                 isFiltered: false,
             })
@@ -127,63 +165,54 @@ class Pokemon extends React.Component {
 
         // keep a subarray for each filter option and combine at the end
         // a true entry means pokemon i fits the filter criteria (e.g. name or type1)
-        let filterArray = [[], [], [], []]
+        let filterArray = [[], [], []]
         for(let i = 0; i < this.state.pokemon.length; i++) {
             for(let j = 0; j < this.state.pageSize; j++) {
                 // get pokemon and find out if it matches filter criteria
                 let pokeJSON = {...this.state.pokemon[i][j]}
                 if(pokeJSON.name === undefined) break
 
-                // console.log(pokeJSON.name)
-
-                if(name !== ""){
-                    if(name.toLowerCase() === pokeJSON.name.toLowerCase()) {
-                        filterArray[0].push(true)
-                    } else filterArray[0].push(false)
-                }   // pushes true if there is no entry
-                else filterArray[0].push(true)
-
                 // check if substring include is in pokemon name
                 if(include !== "") {
                     if((pokeJSON.name.toLowerCase()).indexOf(include.toLowerCase()) !== -1) {
-                        filterArray[1].push(true)
-                    } else filterArray[1].push(false)
+                        filterArray[0].push(true)
+                    } else filterArray[0].push(false)
                 }
-                else filterArray[1].push(true)
+                else filterArray[0].push(true)
 
                 if(pokeJSON.types.length === 2) {
                     if(type1 !== "None") {
                         if(pokeJSON.types[0].type.name === type1.toLowerCase() || pokeJSON.types[1].type.name === type1.toLowerCase()) {
+                            filterArray[1].push(true)
+                        } else filterArray[1].push(false)
+                    }
+                    else filterArray[1].push(true)
+
+                    if(type2 !== "None") {
+                        if(pokeJSON.types[0].type.name === type2.toLowerCase() || pokeJSON.types[1].type.name === type2.toLowerCase()) {
                             filterArray[2].push(true)
                         } else filterArray[2].push(false)
                     }
                     else filterArray[2].push(true)
-
-                    if(type2 !== "None") {
-                        if(pokeJSON.types[0].type.name === type2.toLowerCase() || pokeJSON.types[1].type.name === type2.toLowerCase()) {
-                            filterArray[3].push(true)
-                        } else filterArray[3].push(false)
-                    }
-                    else filterArray[3].push(true)
                 } else {
                     if(type1 !== "None" && type2 !== "None") {
                         // if filter specifies 2 types but pokemon only has one (the pokemon does not get added)
+                        filterArray[1].push(false)
                         filterArray[2].push(false)
-                        filterArray[3].push(false)
                     } else {
                         if(type1 !== "None") {
                             if(pokeJSON.types[0].type.name === type1.toLowerCase()) {
+                                filterArray[1].push(true)
+                            } else filterArray[1].push(false)
+                        }
+                        else filterArray[1].push(true)
+
+                        if(type2 !== "None") {
+                            if(pokeJSON.types[0].type.name === type2.toLowerCase()) {
                                 filterArray[2].push(true)
                             } else filterArray[2].push(false)
                         }
                         else filterArray[2].push(true)
-
-                        if(type2 !== "None") {
-                            if(pokeJSON.types[0].type.name === type2.toLowerCase()) {
-                                filterArray[3].push(true)
-                            } else filterArray[3].push(false)
-                        }
-                        else filterArray[3].push(true)
                     }
                 }
             }
@@ -191,11 +220,10 @@ class Pokemon extends React.Component {
 
         // only add pokemon to filtered list if all of the filter criteria are met
         let filteredPokemon = []
-        for(let i = 0; i < 807; i++) {
+        for(let i = 0; i < this.state.numPokemon; i++) {
             if(filterArray[0][i] &&
                 filterArray[1][i] &&
-                filterArray[2][i] &&
-                filterArray[3][i]) {
+                filterArray[2][i]) {
                 filteredPokemon.push(i)
             }
         }
@@ -207,9 +235,49 @@ class Pokemon extends React.Component {
         })
     }
 
+    sort(sortBy) {
+        console.log(sortBy)
+        if(this.state.numLoaded < this.state.numPokemon) {
+            alert("Wait for all the pokemon to finish loading first!")
+            return
+        }
+
+        switch(sortBy) {
+            case("ascID"):
+                this.setState({
+                    isFiltered: false,
+                    isSorted: false
+                })
+                break
+            case("descID"):
+                // reverse pokemon array (gets last pokemon and places it to front of sorted array)
+                let descI = Math.floor((this.state.numPokemon-1)/this.state.pageSize);
+                let descJ = (this.state.numPokemon-1)%this.state.pageSize;
+
+                let sortedArray = []
+                for(let i = 0; i < 50; i++) {
+                    sortedArray.push([])
+                }
+
+                let i, j = 0
+                for(let k = 0; k < this.state.numPokemon; k++) {
+                    sortedArray[i][j] = this.state.pokemon[descI][descJ]
+                    console.log(i, j, descI, descJ)
+
+                    let i = Math.floor((i+1)/this.state.pageSize);
+                    let j = (i+1)%this.state.pageSize;
+                    let descI = Math.floor((descI-1)/this.state.pageSize);
+                    let descJ = (descJ-1)%this.state.pageSize;
+                }
+        }
+    }
+
+
+
     reset() {
         this.setState({
             isFiltered: false,
+            isSorted: false
         })
     }
 
@@ -273,6 +341,8 @@ class Pokemon extends React.Component {
                 <br/>
                 <br/>
                 <PokemonSearchFilter
+                    onSearch={this.search}
+                    onSort={this.sort}
                     onFilter={this.filter}
                     onReset={this.reset}
                 />
