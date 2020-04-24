@@ -130,8 +130,9 @@ class MovesInfo extends React.Component {
                     </tr>
                 )
             }) : null
-
+        let type = this.state.type.charAt(0).toLowerCase() + this.state.type.substring(1)
         return (
+
             <div className="container-fluid" id="infoContent">
                 <div className="row">
                     <div className="col-4">
@@ -144,16 +145,12 @@ class MovesInfo extends React.Component {
                                     this.state.generation.substring(11).toUpperCase())}</h3>
                             </div>
                             <ul className="list-group list-group-flush">
-                                <li className="list-group-item">Type: {this.state.type.charAt(0).toUpperCase() + this.state.type.substring(1)} </li>
+                                <li className="list-group-item"> Type:  <Link to={"/types/" + type}>{this.state.type.charAt(0).toUpperCase() + this.state.type.substring(1)} </Link> </li>
                                 <li className="list-group-item">Category: {this.state.damage_class.charAt(0).toUpperCase() + this.state.damage_class.substring(1)}</li>
                                 <li className="list-group-item">PP: {this.state.pp}</li>
                                 <li className="list-group-item">Accuracy {this.state.accuracy}</li>
                                 <li className="list-group-item">Effect: {this.state.effect}</li>
                             </ul>
-                            <div className="card-body">
-                                <a href="#" className="card-link">Card link</a>
-                                <a href="#" className="card-link">Another link</a>
-                            </div>
                         </div>
                     </div>
 
