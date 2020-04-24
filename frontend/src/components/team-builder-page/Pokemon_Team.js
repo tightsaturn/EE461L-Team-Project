@@ -57,6 +57,8 @@ class Pokemon_Team extends React.Component {
             item: "none",
             itemInEditMode: false,
             ability: "none",
+            ability_buffer: "",
+            available_abilities: [],
             moves: [],
             HP: 0,
             attack: 0,
@@ -78,6 +80,8 @@ class Pokemon_Team extends React.Component {
         this.capitalize = this.capitalize.bind(this);
         this.changeNickname = this.changeNickname.bind(this);
         this.submitNickname = this.submitNickname.bind(this);
+        this.changeAbility = this.changeAbility.bind(this);
+        this.submitAbility = this.submitAbility.bind(this);
     }
 
     UNSAFE_componentWillMount() {
@@ -106,6 +110,15 @@ class Pokemon_Team extends React.Component {
                 var type = "";
                 new_state[memberNum - 1].image = response.data.sprites.front_default;
                 new_state[memberNum - 1].name = this.capitalize(response.data.name);
+                new_state[memberNum - 1].available_abilities = [];
+
+                for (let i = 0; i < response.data.abilities.length; i++) {
+                    console.log(new_state[memberNum - 1]);
+                    new_state[memberNum - 1].available_abilities.push(response.data.abilities[i].ability.name);
+                }
+
+                console.log(new_state[memberNum - 1].available_abilities);
+
                 new_state[memberNum - 1].gender = "Male";
 
                 for (let i = 0; i < response.data.types.length; i++) {
@@ -127,12 +140,13 @@ class Pokemon_Team extends React.Component {
                 new_state[i].image = BlankPokemon;
                 new_state[i].name = "Who's that Pokemon?";
                 new_state[i].nickname = "";
-                new_state[i].level = 0;
+                new_state[i].level = 100;
                 new_state[i].gender = "male";
                 new_state[i].happiness = 0;
                 new_state[i].shiny = "no";
                 new_state[i].item = "none";
                 new_state[i].ability = "none";
+                new_state[i].available_abilities = [];
                 new_state[i].moves = [];
                 new_state[i].HP = 0;
                 new_state[i].attack = 0;
@@ -187,6 +201,27 @@ class Pokemon_Team extends React.Component {
         event.preventDefault();
     }
 
+    changeAbility(i, ability) {
+        var new_state = this.state.pokemonCards.slice();
+        new_state[i].ability_buffer = ability;
+        this.setState({
+            pokemonCards: new_state
+        });
+        console.log(this.state.pokemonCards[i]);
+        //this.refs.nickname_overlay.hide();
+    }
+
+    submitAbility(i,event) {
+        //let i = 1;
+        var new_state = this.state.pokemonCards.slice();
+        new_state[i].ability = new_state[i].ability_buffer;
+        this.setState({
+            pokemonCards: new_state
+        });
+        console.log(this.state.pokemonCards[i]);
+        event.preventDefault();
+    }
+
     render() {
         let pokemonCardArray = []
         let pokemonStatsArray = []
@@ -198,6 +233,23 @@ class Pokemon_Team extends React.Component {
                     <Popover.Content>
                         <form onSubmit = {(e) => {this.submitNickname(i, e)}}>
                             <input type = "text" name = "nickname" onChange = {(e) => this.changeNickname(i, e.target.value)}/>
+                            <input type = "submit" value = "Submit"/>
+                        </form>
+                    </Popover.Content>
+                </Popover>
+            );
+
+            console.log(this.state.pokemonCards[i].available_abilities);
+            console.log(this.state.pokemonCards[i]);
+
+            const ability_popover = (
+                <Popover id = "ability_popover">
+                    <Popover.Title as = "h3">Change Nickname</Popover.Title>
+                    <Popover.Content>
+                        <form onSubmit = {(e) => {this.submitAbility(i, e)}}>
+                            <select onChange = {(e) => this.changeAbility(i, e.target.value)}>
+                                {this.state.pokemonCards[i].available_abilities.map(ability => <option key = {ability.key}>{ability.value}</option>)}
+                            </select>
                             <input type = "submit" value = "Submit"/>
                         </form>
                     </Popover.Content>
@@ -267,7 +319,9 @@ class Pokemon_Team extends React.Component {
                                         <tr>
                                             <td>Ability:</td>
                                             <td>{this.state.pokemonCards[i].ability}</td>
-                                            <EditIcon/>
+                                            <OverlayTrigger trigger = "click" placement = "left" overlay = {ability_popover} ref = "ability_overlay">
+                                                <EditIcon/>
+                                            </OverlayTrigger>
                                         </tr>
                                         <tr>
                                             <td rowSpan = "4">Moves:</td>
@@ -301,7 +355,7 @@ class Pokemon_Team extends React.Component {
             <div>
                 <div style={{width: "100%"}}>
                     <Link to = "/teambuilder/resetTeam">
-                        <button variant="outline-danger" onClick = {this.resetTeam}>Reset Team</button>
+                        <Button variant="outline-danger" onClick = {this.resetTeam}>Reset Team</Button>
                     </Link>
                     <br/>
                     <br/>
