@@ -17,16 +17,6 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 
 function Pokemon_Card(props) {
     return (
-        // <div className="card" id={"partycards"}>
-        //     <img className = "card-img-top" id = "card-img" src = {props.image} alt = {props.name}/>
-        //     <div className="card-body">
-        //         <h4 className = "card-title"> Pokemon #{props.number}</h4>
-        //         <p className = "card-text">{props.name}</p>
-        //         <p className = "card-text">Type: {props.type}</p>
-        //         <Link to = {"/teambuilder/addpokemon/" + props.number}>Change</Link>
-        //     </div>
-        // </div>
-
         <Card>
             <Card.Img variant = "top" src = {props.image} />
 
@@ -60,6 +50,8 @@ class Pokemon_Team extends React.Component {
             ability_buffer: "",
             available_abilities: [],
             moves: [],
+            moves_buffer: "",
+            available_moves: [],
             HP: 0,
             attack: 0,
             defense: 0,
@@ -82,6 +74,8 @@ class Pokemon_Team extends React.Component {
         this.submitNickname = this.submitNickname.bind(this);
         this.changeAbility = this.changeAbility.bind(this);
         this.submitAbility = this.submitAbility.bind(this);
+        this.changeMove = this.changeMove.bind(this);
+        this.submitMove = this.submitMove.bind(this);
     }
 
     UNSAFE_componentWillMount() {
@@ -113,11 +107,14 @@ class Pokemon_Team extends React.Component {
                 new_state[memberNum - 1].available_abilities = [];
 
                 for (let i = 0; i < response.data.abilities.length; i++) {
-                    console.log(new_state[memberNum - 1]);
                     new_state[memberNum - 1].available_abilities.push(response.data.abilities[i].ability.name);
                 }
 
-                console.log(new_state[memberNum - 1].available_abilities);
+                new_state[memberNum - 1].available_moves = [];
+
+                for (let i = 0; i < response.data.moves.length; i++) {
+                    new_state[memberNum - 1].available_moves.push(response.data.moves[i].move.name);
+                }
 
                 new_state[memberNum - 1].gender = "Male";
 
@@ -165,12 +162,15 @@ class Pokemon_Team extends React.Component {
     }
 
     resetTeam() {
+        localStorage.clear();
         console.log("Resetting pokemon team");
         let new_state = this.state.pokemonCards.slice();
         for (let i = 0; i < 6; i++) {
             new_state[i].image = BlankPokemon;
             new_state[i].name = "Who's that Pokemon?";
             new_state[i].type = "Unknown";
+            new_state[i].available_abilities = [];
+            new_state[i].available_moves = [];
         }
         this.setState({ pokemonCards: new_state }) 
     }
@@ -222,11 +222,34 @@ class Pokemon_Team extends React.Component {
         event.preventDefault();
     }
 
+    changeMove(i, move) {
+        var new_state = this.state.pokemonCards.slice();
+        new_state[i].moves_buffer = move;
+        this.setState({
+            pokemonCards: new_state
+        });
+        console.log(this.state.pokemonCards[i]);
+        //this.refs.nickname_overlay.hide();
+    }
+
+    submitMove(i,move_index, event) {
+        //let i = 1;
+        var new_state = this.state.pokemonCards.slice();
+        new_state[i].moves[move_index] = new_state[i].moves_buffer;
+        this.setState({
+            pokemonCards: new_state
+        });
+        console.log(this.state.pokemonCards[i]);
+        event.preventDefault();
+    }
+
     render() {
         let pokemonCardArray = []
         let pokemonStatsArray = []
 
         for(let i = 0; i < 6; i++) {
+            let move_index = 0;
+
             const nickname_popover = (
                 <Popover id = "nickname_popover">
                     <Popover.Title as = "h3">Change Nickname</Popover.Title>
@@ -239,16 +262,69 @@ class Pokemon_Team extends React.Component {
                 </Popover>
             );
 
-            console.log(this.state.pokemonCards[i].available_abilities);
-            console.log(this.state.pokemonCards[i]);
-
             const ability_popover = (
                 <Popover id = "ability_popover">
-                    <Popover.Title as = "h3">Change Nickname</Popover.Title>
+                    <Popover.Title as = "h3">Change Ability</Popover.Title>
                     <Popover.Content>
                         <form onSubmit = {(e) => {this.submitAbility(i, e)}}>
                             <select onChange = {(e) => this.changeAbility(i, e.target.value)}>
-                                {this.state.pokemonCards[i].available_abilities.map(ability => <option key = {ability.key}>{ability.value}</option>)}
+                                {this.state.pokemonCards[i].available_abilities.map((x, y) => <option key = {y}>{x}</option>)}
+                            </select>
+                            <input type = "submit" value = "Submit"/>
+                        </form>
+                    </Popover.Content>
+                </Popover>
+            );
+
+            const moves0_popover = (
+                <Popover id = "moves_popover">
+                    <Popover.Title as = "h3">Change Move</Popover.Title>
+                    <Popover.Content>
+                        <form onSubmit = {(e) => {this.submitMove(i, 0, e)}}>
+                            <select onChange = {(e) => this.changeMove(i, e.target.value)}>
+                                {this.state.pokemonCards[i].available_moves.map((x, y) => <option key = {y}>{x}</option>)}
+                            </select>
+                            <input type = "submit" value = "Submit"/>
+                        </form>
+                    </Popover.Content>
+                </Popover>
+            );
+
+            const moves1_popover = (
+                <Popover id = "moves_popover">
+                    <Popover.Title as = "h3">Change Move</Popover.Title>
+                    <Popover.Content>
+                        <form onSubmit = {(e) => {this.submitMove(i, 1, e)}}>
+                            <select onChange = {(e) => this.changeMove(i, e.target.value)}>
+                                {this.state.pokemonCards[i].available_moves.map((x, y) => <option key = {y}>{x}</option>)}
+                            </select>
+                            <input type = "submit" value = "Submit"/>
+                        </form>
+                    </Popover.Content>
+                </Popover>
+            );
+
+            const moves2_popover = (
+                <Popover id = "moves_popover">
+                    <Popover.Title as = "h3">Change Move</Popover.Title>
+                    <Popover.Content>
+                        <form onSubmit = {(e) => {this.submitMove(i, 2, e)}}>
+                            <select onChange = {(e) => this.changeMove(i, e.target.value)}>
+                                {this.state.pokemonCards[i].available_moves.map((x, y) => <option key = {y}>{x}</option>)}
+                            </select>
+                            <input type = "submit" value = "Submit"/>
+                        </form>
+                    </Popover.Content>
+                </Popover>
+            );
+
+            const moves3_popover = (
+                <Popover id = "moves_popover">
+                    <Popover.Title as = "h3">Change Move</Popover.Title>
+                    <Popover.Content>
+                        <form onSubmit = {(e) => {this.submitMove(i, 3, e)}}>
+                            <select onChange = {(e) => this.changeMove(i, e.target.value)}>
+                                {this.state.pokemonCards[i].available_moves.map((x, y) => <option key = {y}>{x}</option>)}
                             </select>
                             <input type = "submit" value = "Submit"/>
                         </form>
@@ -326,19 +402,27 @@ class Pokemon_Team extends React.Component {
                                         <tr>
                                             <td rowSpan = "4">Moves:</td>
                                             <td>{this.state.pokemonCards[i].moves[0]}</td>
-                                            <EditIcon/>
+                                            <OverlayTrigger trigger = "click" placement = "left" overlay = {moves0_popover}>
+                                                <EditIcon/>
+                                            </OverlayTrigger>
                                         </tr>
                                         <tr>
                                             <td>{this.state.pokemonCards[i].moves[1]}</td>
-                                            <EditIcon/>
+                                            <OverlayTrigger trigger = "click" placement = "left" overlay = {moves1_popover}>
+                                                <EditIcon/>
+                                            </OverlayTrigger>
                                         </tr>
                                         <tr>
                                             <td>{this.state.pokemonCards[i].moves[2]}</td>
-                                            <EditIcon/>
+                                            <OverlayTrigger trigger = "click" placement = "left" overlay = {moves2_popover}>
+                                                <EditIcon/>
+                                            </OverlayTrigger>
                                         </tr>
                                         <tr>
                                             <td>{this.state.pokemonCards[i].moves[3]}</td>
-                                            <EditIcon/>
+                                            <OverlayTrigger trigger = "click" placement = "left" overlay = {moves3_popover}>
+                                                <EditIcon/>
+                                            </OverlayTrigger>
                                         </tr>
                                     </tbody>
                                 </Table>
