@@ -11,7 +11,9 @@ class AbilitiesInfo extends React.Component {
             name: "",
             effect: "",
             generation:"",
-            pokemonArray:[]
+            pokemonArray:[],
+            moves: [],
+            numMovesLoaded: 0
         }
 
         this.capitalize = this.capitalize.bind(this)
@@ -35,6 +37,30 @@ class AbilitiesInfo extends React.Component {
                     effect: data.effect[0].effect,
                 })
 
+                // get moves for each pokemon with ability
+                for(let i = 0; i < data.pokemon.length; i++) {
+                    let id = data.pokemon[i].pokemon.url.substring(34)
+
+                    let url2 = 'https://pokebackend-461l.appspot.com/pokemon/' + id
+                    fetch(url2)
+                        .then(response => { return response.json() })
+                        .then(data => {
+                            this.setState(prevState => {
+                                let movesArray = [...prevState.moves]
+                                if(data == undefined) {
+                                    movesArray.push({})
+                                } else { movesArray.push(data.moves) }
+
+                                return {
+                                    moves: movesArray,
+                                    numMovesLoaded: prevState.numMovesLoaded + 1
+                                }
+                            })
+                        })
+                        .catch(err => { console.log(err) })
+
+                }
+
             })
             .catch((err) =>{ console.log(err) });
     }
@@ -48,19 +74,73 @@ class AbilitiesInfo extends React.Component {
     render() {
         let id = this.props.match.params.ability
         /* create tables by mapping each move to a row */
-        let pokemonWithThisAbility = this.state.pokemonArray.map(pokemon => {
-            // find id of move (pos 31 is where the id is located in string)
-            const id = pokemon.pokemon.url.substring(34)
-            return (
-                <tr>
-                    <td>
-                        <Link to={"/pokemon/" + id}>
-                        {capitalize(pokemon.pokemon.name)}
-                    </Link>
-                    </td>
-                </tr>
-            )
-        })
+        let pokemonRow = (this.state.numMovesLoaded == this.state.pokemonArray.length) ?
+            this.state.pokemonArray.map((pokemon, index) => {
+                // find id of move (pos 31 is where the id is located in string)
+                const id = pokemon.pokemon.url.substring(34)
+                let moves = this.state.moves[index];
+                let Moves = []
+
+                // display moves in three columns of dropdown menu
+                for(let i = 2; i < moves.length; i+=3) {
+                    Moves.push(
+                        <div>
+                            <Link to={'/moves/' + moves[i].move.url.substring(31)}>
+                                {this.capitalize(moves[i].move.name)}
+                            </Link>
+                            <Link to={'/moves/' + moves[i-1].move.url.substring(31)}>
+                                {this.capitalize(moves[i-1].move.name)}
+                            </Link>
+                            <Link to={'/moves/' + moves[i-2].move.url.substring(31)}>
+                                {this.capitalize(moves[i-2].move.name)}
+                            </Link>
+                        </div>
+                    )
+                }
+
+                // find how many are left over if not none
+                let n = moves.length
+                if(moves.length % 3 == 2) {
+                    // two more to display
+                    Moves.push(
+                        <div>
+                            <Link to={'/moves/' + moves[n-1].move.url.substring(31)}>
+                                {this.capitalize(moves[n-1].move.name)}
+                            </Link>
+                            <Link to={'/moves/' + moves[n-2].move.url.substring(31)}>
+                                {this.capitalize(moves[n-2].move.name)}
+                            </Link>
+                        </div>
+                    )
+                }
+
+                if(moves.length % 3 == 1) {
+                    // one more to display
+                    Moves.push(
+                        <Link to={'/moves/' + moves[n-1].move.url.substring(31)}>
+                            {this.capitalize(moves[n-1].move.name)}
+                        </Link>
+                    )
+                }
+
+                return (
+                    <tr>
+                        <td>
+                            <Link to={"/pokemon/" + id}>
+                                {capitalize(pokemon.pokemon.name)}
+                            </Link>
+                        </td>
+                        <td>
+                            <div className="dropdown2">
+                                <button className="dropbtn2"></button>
+                                <div className="dropdown-content2">
+                                    {Moves}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                )
+            }) : null
 
         return (
             <div className="container-fluid" id="infoContent">
@@ -92,10 +172,11 @@ class AbilitiesInfo extends React.Component {
                                 <thead className="thead-dark">
                                 <tr>
                                     <th scope="col">Name</th>
+                                    <th scope="col">Moves</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {pokemonWithThisAbility}
+                                    {pokemonRow}
                                 </tbody>
                             </table>
                         </div>

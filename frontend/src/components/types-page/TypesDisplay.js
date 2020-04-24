@@ -2,13 +2,7 @@ import React from "react"
 import 'bootstrap/dist/css/bootstrap.min.css'
 import "../../css/page.css"
 import {Link} from "react-router-dom";
-import SearchFitler from "../SearchFilter";
 
-const tableabilities = {
-    marginTop: "70px",
-    paddingLeft: "200px",
-    paddingRight: "120px",
-};
 
 class TypesDisplay extends React.Component {
     constructor(){
