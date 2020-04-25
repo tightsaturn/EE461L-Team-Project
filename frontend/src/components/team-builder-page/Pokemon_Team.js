@@ -82,7 +82,14 @@ class Pokemon_Team extends React.Component {
 
     UNSAFE_componentWillMount() {
         const savedState = JSON.parse(localStorage.getItem('teamBuilderState'));
-        this.setState(savedState);
+        this.setState(savedState)
+
+        // fix bug with local state not having attributes
+        this.setState({
+            pokemonCards: this.state.pokemonCards.map((item, index) =>
+                index < 6 ? { ...item, available_abilities: [] } : item,
+            )
+        })
     }
 
     componentDidMount() {
@@ -198,7 +205,7 @@ class Pokemon_Team extends React.Component {
         //this.refs.nickname_overlay.hide();
     }
 
-    submitNickname(i,event) {
+    submitNickname(i, event) {
         //let i = 1;
         var new_state = this.state.pokemonCards.slice();
         new_state[i].nickname = new_state[i].nickname_buffer;
