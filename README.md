@@ -83,3 +83,28 @@ Mihir: 11
 Tristan: 30
 
 Jaime: 24
+
+
+Phase 3
+-------------------------------------------------------------------------------------
+Estimated completion time  (hours):
+-------------------------------------------------------------------------------------
+Jimmy: 20
+
+Mihir: 15
+
+Tristan: 15
+
+Jaime: 15
+
+
+Actual completion time (hours) - Many of these hours were concurrent:
+-------------------------------------------------------------------------------------
+Jimmy: 27
+
+Mihir: 14
+
+Tristan: 23
+
+Jaime: 18
+
