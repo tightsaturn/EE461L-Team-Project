@@ -193,6 +193,8 @@ class AboutUs_App extends React.Component {
                     <br/>
                     <a href={"https://api.github.com/"}>https://api.github.com/ </a> - Fetching from URL using
                     <br/>
+                    <a href = {"https://pokemondb.net/"}>https://pokemondb.net</a> - Scraping additional data
+                    <br/>
                     <br/>
                     <h4>Tools</h4>
                     <p> Implementation of the front-end was completed through JavaScript and React. React provided 
@@ -212,6 +214,9 @@ class AboutUs_App extends React.Component {
                         fact that react provided all of the necessary resources to create our webpages.</p>
                     <br/>
 
+                    <p>The development of phase 3 added the addition of some components from both MaterialUI and Bootstrap.</p>
+                    <br/>
+
                     <p> Implementation of the back-end was completed through JavaScript, Mongoose, Express, and cors. Mongoose provided
                         the necessary resources for accessing our MongoDB database while Express provided a meaningful functions for
                         routing requests to the backend and was used in conjunction with the Express middleware cors. Overall, Express 
@@ -220,7 +225,7 @@ class AboutUs_App extends React.Component {
                         it handled the links to each collection and provided functions for getting and updating information in our database.
                         Through Mongoose, we created a model for each of our collections, which was based on a schema for the types of data in
                         the collection. With the model, we could then call Mongoose-provided functions for interfacing with the database.</p>
-                    <br/>    
+                    <br/>   
 
                     <p> In order to implement API calls to GitHub, we utilized AJAX such that data concerning the repository
                         use could be dynamically displayed on the about page. To collect and store data from the various
@@ -228,8 +233,12 @@ class AboutUs_App extends React.Component {
                         Router was later implemented to link web pages and provide a flow among each site.</p>
                     <br/>    
 
+                    <p>Phase 2 and 3 did not see any additional tools added for use in the back-end.</p> 
+                    <br/>
+
                     <p> Testing was implemented through Selenium to test the UI, Postman to test the back-end, and Enzyme to test our
-                        React code.</p>
+                        React code. Phase 3 saw the implementation of additional tests on top of the foundation laid in phase 2 for new
+                        features added to our website.</p>
                     <br/>    
 
                     <p> Development by each member of the team was conducted in WebStorm by JetBrains and Visual Studio Code. The app was
