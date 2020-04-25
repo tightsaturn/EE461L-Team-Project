@@ -4,6 +4,7 @@ import AbilitiesSearchFilter from "./AbilitiesSearchFilter";
 import AbilitiesBox from "./AbilitiesBox";
 
 
+
 class Abilities extends React.Component {
     constructor(){
         super();
@@ -16,7 +17,9 @@ class Abilities extends React.Component {
 
         this.state = {
             ability:  abilitiesArray,
+            numAbilities: 232,
             filteredAbilities: [],
+            sortedPokemon: [],
             buttons: buttonsArray,
             currentPage: 0,
             pageSize: 48,
@@ -27,9 +30,11 @@ class Abilities extends React.Component {
 
         this.fetchAbility = this.fetchAbility.bind(this)
         this.capitalize = this.capitalize.bind(this)
-        this.handlePageClick = this.handlePageClick.bind(this)
+        this.search = this.search.bind(this)
         this.filter = this.filter.bind(this)
+        this.sort = this.sort.bind(this)
         this.reset = this.reset.bind(this)
+        this.handlePageClick = this.handlePageClick.bind(this)
         this.fetchOneAbility = this.fetchOneAbility.bind(this)
     }
 
@@ -65,7 +70,7 @@ class Abilities extends React.Component {
     }
 
     fetchAbility(){
-        for(let id = 1; id < 233; id++){
+        for(let id = 1; id <= this.state.numAbilities; id++){
             // fetch each ability and add to state
             let url = 'https://pokebackend-461l.appspot.com/abilitycards/' + id;
             fetch(url)
@@ -112,15 +117,49 @@ class Abilities extends React.Component {
         }
     }
 
-    filter (name, include) {
+    search(name) {
+        if(this.state.numLoaded < this.state.numAbilities) {
+            alert("Wait for all the abilities to finish loading first!")
+            return
+        }
+
+        if(name === "") {
+            this.setState({
+                isFiltered: false,
+            })
+            return
+        }
+
+        let id = null
+        for(let i = 0; i < this.state.ability.length; i++) {
+            for (let j = 0; j < this.state.pageSize; j++) {
+                let abilityJSON = {...this.state.ability[i][j]}
+                if (abilityJSON.name === undefined) break
+                if(abilityJSON.name.toLowerCase() == name.toLowerCase()){
+                    id = abilityJSON.id - 1
+                    break
+                }
+            }
+        }
+
+        if(id == null) return
+
+        this.setState({
+            filteredAbilities: [id],
+            isFiltered: true,
+            numFiltered: 1
+        })
+    }
+
+    filter (include) {
         // check if all pokemon are finished loading (alert if not)
-        if(this.state.numLoaded < 232) {
+        if(this.state.numLoaded < this.state.numAbilities) {
             alert("Wait for all the abilities to finish loading first!" + this.state.numLoaded)
             return
         }
 
         // check if all the fields are empty
-        if(name === "" && include === "") {
+        if(include === "") {
             console.log(1)
             this.setState({
                 isFiltered: false
@@ -130,7 +169,7 @@ class Abilities extends React.Component {
 
         // keep a subarray for each filter option and combine at the end
         // a true entry means pokemon i fits the filter criteria (e.g. name or type1)
-        let filterArray = [[], []]
+        let filterArray = [[]]
         for(let i = 0; i < this.state.ability.length; i++) {
             for(let j = 0; j < this.state.pageSize; j++) {
                 // get pokemon and find out if it matches filter criteria
@@ -138,28 +177,19 @@ class Abilities extends React.Component {
                 if (abilityJSON.name === undefined) break
 
                 // console.log(pokeJSON.name)
-
-                if (name !== "") {
-                    if (name.toLowerCase() === abilityJSON.name.toLowerCase()) {
-                        filterArray[0].push(true)
-                    } else filterArray[0].push(false)
-                }   // pushes true if there is no entry
-                else filterArray[0].push(true)
-
                 // check if substring include is in pokemon name
                 if (include !== "") {
                     if ((abilityJSON.name.toLowerCase()).indexOf(include.toLowerCase()) !== -1) {
-                        filterArray[1].push(true)
-                    } else filterArray[1].push(false)
-                } else filterArray[1].push(true)
+                        filterArray[0].push(true)
+                    } else filterArray[0].push(false)
+                } else filterArray[0].push(true)
             }
         }
 
         // only add pokemon to filtered list if all of the filter criteria are met
         let filteredAbilities = []
-        for(let i = 0; i < 233; i++) {
-            if(filterArray[0][i] &&
-                filterArray[1][i]) {
+        for(let i = 0; i < this.state.numAbilities; i++) {
+            if(filterArray[0][i]) {
                 filteredAbilities.push(i)
             }
         }
@@ -170,6 +200,88 @@ class Abilities extends React.Component {
             numFiltered: filteredAbilities.length,
         })
     }
+
+    sort(sortBy) {
+        console.log(sortBy)
+        if(this.state.numLoaded < this.state.numAbilities) {
+            alert("Wait for all the pokemon to finish loading first!")
+            return
+        }
+
+        if(sortBy === "None") {
+            this.setState({
+                isSorted: false
+            })
+            return
+        }
+
+        switch(sortBy) {
+            case("ascAZ"):
+                let sortedArr = []
+                let sorted = []
+                for(let i = 0; i < 50; i++) {
+                    sorted.push([])
+                }
+
+                for(let k = 0; k < this.state.numAbilities; k++) {
+                    let i = Math.floor(k /this.state.pageSize);
+                    let j = k%this.state.pageSize;
+                    sortedArr[k] = this.state.ability[i][j]
+                }
+
+                console.log(sortedArr)
+                sortedArr.sort((a, b) => {
+                    return a.name > b.name ? 1 : -1
+                })
+
+                console.log(sortedArr)
+                for(let k = 0; k < sortedArr.length; k++) {
+                    let i = Math.floor(k /this.state.pageSize);
+                    let j = k%this.state.pageSize;
+                    sorted[i][j] = sortedArr[k]
+                }
+
+                this.setState({
+                    sortedAbilities: sorted,
+                    isFiltered: false,
+                    isSorted: true
+                })
+                break
+            case("descZA"):
+                let sortedAr = []
+                let sort = []
+                for(let i = 0; i < 50; i++) {
+                    sort.push([])
+                }
+
+                for(let k = 0; k < this.state.numAbilities; k++) {
+                    let i = Math.floor(k /this.state.pageSize);
+                    let j = k%this.state.pageSize;
+                    sortedAr[k] = this.state.ability[i][j]
+                }
+
+                sortedAr.sort((a, b) => {
+                    return a.name < b.name ? 1 : -1
+                })
+
+                for(let k = 0; k < sortedAr.length; k++) {
+                    let i = Math.floor(k /this.state.pageSize);
+                    let j = k%this.state.pageSize;
+                    sort[i][j] = sortedAr[k]
+                }
+
+                this.setState({
+                    sortedAbilities: sort,
+                    isFiltered: false,
+                    isSorted: true
+                })
+                break
+            default:
+                console.log("error: should not be here")
+                console.log("sorted by is: " + sortBy)
+        }
+    }
+
     reset() {
         this.setState({
             isFiltered: false,
@@ -202,20 +314,33 @@ class Abilities extends React.Component {
 
     render()
     {
-        let abilities = this.state.isFiltered ?
-            this.state.filteredAbilities.map(item => {
-                let pageNum = Math.floor((item)/this.state.pageSize);
-                let index = (item)%this.state.pageSize;
-                let ability = this.state.ability[pageNum][index]
+        let abilities = []
+        if(this.state.isFiltered) {
+            abilities =
+                this.state.filteredAbilities.map(item => {
+                    let pageNum = Math.floor((item) / this.state.pageSize);
+                    let index = (item) % this.state.pageSize;
+                    let ability = this.state.ability[pageNum][index]
 
-                return <AbilitiesBox
-                    generation={ability.generation}
-                    id={ability.id}
-                    name={ability.name}
-                    description={ability.description}
-                />
-            }) :
-            this.state.ability[this.state.currentPage].map(item => {
+                    return <AbilitiesBox
+                        generation={ability.generation}
+                        id={ability.id}
+                        name={ability.name}
+                        description={ability.description}
+                    />
+                })
+        }else if(this.state.isSorted){
+            abilities =
+                this.state.sortedAbilities[this.state.currentPage].map(item => {
+                    return <AbilitiesBox
+                        generation={item.generation}
+                        id={item.id}
+                        name={item.name}
+                        description={item.description}
+                    />
+                })
+        } else {
+            abilities = this.state.ability[this.state.currentPage].map(item => {
                 return <AbilitiesBox
                     generation={item.generation}
                     id={item.id}
@@ -223,6 +348,8 @@ class Abilities extends React.Component {
                     description={item.description}
                 />
             })
+        }
+
         let buttons = this.state.isFiltered ? null : this.state.buttons.map((item, index) => {
             let className = (this.state.currentPage == index) ? "btn btn-success":"btn btn-light"
             if(item == undefined) return undefined
@@ -242,6 +369,8 @@ class Abilities extends React.Component {
                 <br/>
                 <br/>
                 <AbilitiesSearchFilter
+                    onSearch={this.search}
+                    onSort={this.sort}
                     onFilter={this.filter}
                     onReset={this.reset}
                 />

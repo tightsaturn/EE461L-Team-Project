@@ -360,7 +360,8 @@ class Pokemon extends React.Component {
 
     componentDidMount() {
         this.setState({
-            isFiltered: false
+            isFiltered: false,
+            isSorted: false
         })
         this.fetchPokemon();
     }

@@ -85,11 +85,11 @@ class Pokemon_Team extends React.Component {
         this.setState(savedState)
 
         // fix bug with local state not having attributes
-        this.setState({
+        /*this.setState({
             pokemonCards: this.state.pokemonCards.map((item, index) =>
                 index < 6 ? { ...item, available_abilities: [] } : item,
             )
-        })
+        })*/
     }
 
     componentDidMount() {
