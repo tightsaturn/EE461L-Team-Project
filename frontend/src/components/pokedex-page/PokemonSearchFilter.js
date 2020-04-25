@@ -56,7 +56,7 @@ class PokemonSearchFilter extends React.Component {
     render() {
         return (
             <Form inline>
-                <div className="row--12 filterRow">
+                <div className="row col-12 filterRow">
                     <FormControl type="text" name="name" onChange={this.handleChange} placeholder="Name" className="mr-sm-2 mr-5"/>
                     <Button variant="outline-success" onClick={this.search}>Search</Button>
                     <label className="mr-sm-2" htmlFor="sortBy" style={whitespacable}>    Sort By</label>
