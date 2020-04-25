@@ -34,6 +34,7 @@ class Pokemon extends React.Component {
         this.capitalize = this.capitalize.bind(this)
         this.search = this.search.bind(this)
         this.filter = this.filter.bind(this)
+        this.sort = this.sort.bind(this)
         this.reset = this.reset.bind(this)
         this.handlePageClick = this.handlePageClick.bind(this)
         this.fetchOnePokemon = this.fetchOnePokemon.bind(this)
@@ -251,28 +252,92 @@ class Pokemon extends React.Component {
                 break
             case("descID"):
                 // reverse pokemon array (gets last pokemon and places it to front of sorted array)
-                let descI = Math.floor((this.state.numPokemon-1)/this.state.pageSize);
-                let descJ = (this.state.numPokemon-1)%this.state.pageSize;
-
                 let sortedArray = []
                 for(let i = 0; i < 50; i++) {
                     sortedArray.push([])
                 }
 
-                let i, j = 0
                 for(let k = 0; k < this.state.numPokemon; k++) {
-                    sortedArray[i][j] = this.state.pokemon[descI][descJ]
-                    console.log(i, j, descI, descJ)
+                    let i = Math.floor(k /this.state.pageSize);
+                    let j = k%this.state.pageSize;
+                    let descI = Math.floor((this.state.numPokemon-k-1)/this.state.pageSize);
+                    let descJ = (this.state.numPokemon-k-1)%this.state.pageSize;
 
-                    let i = Math.floor((i+1)/this.state.pageSize);
-                    let j = (i+1)%this.state.pageSize;
-                    let descI = Math.floor((descI-1)/this.state.pageSize);
-                    let descJ = (descJ-1)%this.state.pageSize;
+                    // console.log(i, j, descI, descJ)
+                    // console.log(this.state.pokemon[i][j], this.state.pokemon[descI][descJ])
+
+                    sortedArray[i][j] = this.state.pokemon[descI][descJ]
                 }
+
+                this.setState({
+                    sortedPokemon: sortedArray,
+                    isFiltered: false,
+                    isSorted: true
+                })
+                break
+            case("ascAZ"):
+                let sortedArr = []
+                let sorted = []
+                for(let i = 0; i < 50; i++) {
+                    sorted.push([])
+                }
+
+                for(let k = 0; k < this.state.numPokemon; k++) {
+                    let i = Math.floor(k /this.state.pageSize);
+                    let j = k%this.state.pageSize;
+                    sortedArr[k] = this.state.pokemon[i][j]
+                }
+
+                sortedArr.sort((a, b) => {
+                    return a.name > b.name ? 1 : -1
+                })
+
+                for(let k = 0; k < sortedArr.length; k++) {
+                    let i = Math.floor(k /this.state.pageSize);
+                    let j = k%this.state.pageSize;
+                    sorted[i][j] = sortedArr[k]
+                }
+
+                this.setState({
+                    sortedPokemon: sorted,
+                    isFiltered: false,
+                    isSorted: true
+                })
+                break
+            case("descZA"):
+                let sortedAr = []
+                let sort = []
+                for(let i = 0; i < 50; i++) {
+                    sort.push([])
+                }
+
+                for(let k = 0; k < this.state.numPokemon; k++) {
+                    let i = Math.floor(k /this.state.pageSize);
+                    let j = k%this.state.pageSize;
+                    sortedAr[k] = this.state.pokemon[i][j]
+                }
+
+                sortedAr.sort((a, b) => {
+                    return a.name < b.name ? 1 : -1
+                })
+
+                for(let k = 0; k < sortedAr.length; k++) {
+                    let i = Math.floor(k /this.state.pageSize);
+                    let j = k%this.state.pageSize;
+                    sort[i][j] = sortedAr[k]
+                }
+
+                this.setState({
+                    sortedPokemon: sort,
+                    isFiltered: false,
+                    isSorted: true
+                })
+                break
+            default:
+                console.log("error: should not be here")
+                console.log("sorted by is: " + sortBy)
         }
     }
-
-
 
     reset() {
         this.setState({
@@ -302,26 +367,39 @@ class Pokemon extends React.Component {
 
     render() {
         // conditional rendering with filtering
-        let pokemon = this.state.isFiltered ?
-            // item holds id of pokemon to be rendered
-            this.state.filteredPokemon.map(item => {
-                let pageNum = Math.floor((item)/this.state.pageSize);
-                let index = (item)%this.state.pageSize;
-                let pokemon = this.state.pokemon[pageNum][index]
+        let pokemon = []
+        if(this.state.isFiltered) {
+            pokemon =
+                this.state.filteredPokemon.map(item => {
+                    let pageNum = Math.floor((item)/this.state.pageSize);
+                    let index = (item)%this.state.pageSize;
+                    let pokemon = this.state.pokemon[pageNum][index]
 
-                return <PokemonBox
-                    imgURL={pokemon.imgURL}
-                    id={pokemon.id}
-                    name={pokemon.name}
-                />
-            }) :
-            this.state.pokemon[this.state.currentPage].map(item => {
+                    return <PokemonBox
+                        imgURL={pokemon.imgURL}
+                        id={pokemon.id}
+                        name={pokemon.name}
+                    />
+                })
+        } else if(this.state.isSorted) {
+            pokemon =
+                this.state.sortedPokemon[this.state.currentPage].map(item => {
+                    return <PokemonBox
+                        imgURL={item.imgURL}
+                        id={item.id}
+                        name={item.name}
+                    />
+                })
+        } else {
+            pokemon = this.state.pokemon[this.state.currentPage].map(item => {
                 return <PokemonBox
                     imgURL={item.imgURL}
                     id={item.id}
                     name={item.name}
                 />
             })
+        }
+
         let buttons = this.state.isFiltered ? null : this.state.buttons.map((item, index) => {
             let className = (this.state.currentPage == index) ? "btn btn-success":"btn btn-light"
             if(item == undefined) return undefined
