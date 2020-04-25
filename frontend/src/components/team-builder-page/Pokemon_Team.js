@@ -71,6 +71,7 @@ class Pokemon_Team extends React.Component {
             pokemonCards : pokemonTeam,                 // Stores the data of each team member
         }
         this.resetTeam = this.resetTeam.bind(this);
+        this.saveState = this.saveState.bind(this);
         this.capitalize = this.capitalize.bind(this);
         this.changeNickname = this.changeNickname.bind(this);
         this.submitNickname = this.submitNickname.bind(this);
@@ -80,16 +81,13 @@ class Pokemon_Team extends React.Component {
         this.submitMove = this.submitMove.bind(this);
     }
 
-    UNSAFE_componentWillMount() {
-        const savedState = JSON.parse(localStorage.getItem('teamBuilderState'));
-        this.setState(savedState)
+    saveState() {
+        localStorage.setItem('teamBuilderState_v2', JSON.stringify(this.state));
+    }
 
-        // fix bug with local state not having attributes
-        /*this.setState({
-            pokemonCards: this.state.pokemonCards.map((item, index) =>
-                index < 6 ? { ...item, available_abilities: [] } : item,
-            )
-        })*/
+    UNSAFE_componentWillMount() {
+        const savedState = JSON.parse(localStorage.getItem('teamBuilderState_v2'));
+        this.setState(savedState)
     }
 
     componentDidMount() {
@@ -173,7 +171,7 @@ class Pokemon_Team extends React.Component {
     }
 
     componentWillUnmount() {
-        localStorage.setItem('teamBuilderState', JSON.stringify(this.state));
+        this.saveState();
     }
 
     resetTeam() {
@@ -490,6 +488,7 @@ class Pokemon_Team extends React.Component {
         return (
             <div>
                 <div style={{width: "100%"}}>
+                    <Button variant = "outline-success" onClick = {this.saveState}>Save Team</Button>
                     <Link to = "/teambuilder/resetTeam">
                         <Button variant="outline-danger" onClick = {this.resetTeam}>Reset Team</Button>
                     </Link>
