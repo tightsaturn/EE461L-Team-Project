@@ -38,7 +38,7 @@ class Moves extends React.Component {
     }
 
     fetchOneMove = async (id) => {
-        let url = 'https://pokebackend-461l.appspot.com/pokemoncards/' + id;
+        let url = 'https://pokebackend-461l.appspot.com/movecards/' + id;
         await fetch(url)
             .then((response) => {
                 return response.json();
