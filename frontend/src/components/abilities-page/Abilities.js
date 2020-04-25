@@ -151,7 +151,7 @@ class Abilities extends React.Component {
         })
     }
 
-    filter (include) {
+    filter (include, gen) {
         // check if all pokemon are finished loading (alert if not)
         if(this.state.numLoaded < this.state.numAbilities) {
             alert("Wait for all the abilities to finish loading first!" + this.state.numLoaded)
@@ -159,37 +159,44 @@ class Abilities extends React.Component {
         }
 
         // check if all the fields are empty
-        if(include === "") {
-            console.log(1)
+        if(include === "" && gen === "") {
             this.setState({
                 isFiltered: false
             })
             return
         }
 
+        console.log("include " + include + " gen " + gen)
+
         // keep a subarray for each filter option and combine at the end
         // a true entry means pokemon i fits the filter criteria (e.g. name or type1)
-        let filterArray = [[]]
+        let filterArray = [[], []]
         for(let i = 0; i < this.state.ability.length; i++) {
             for(let j = 0; j < this.state.pageSize; j++) {
                 // get pokemon and find out if it matches filter criteria
                 let abilityJSON = {...this.state.ability[i][j]}
                 if (abilityJSON.name === undefined) break
 
-                // console.log(pokeJSON.name)
                 // check if substring include is in pokemon name
                 if (include !== "") {
                     if ((abilityJSON.name.toLowerCase()).indexOf(include.toLowerCase()) !== -1) {
                         filterArray[0].push(true)
                     } else filterArray[0].push(false)
                 } else filterArray[0].push(true)
+
+                if(gen !== "") {
+                    if((abilityJSON.generation.substring(11) === gen)){
+                        filterArray[1].push(true)
+                    } else filterArray[1].push(false)
+                } else filterArray[1].push(true)
             }
         }
 
         // only add pokemon to filtered list if all of the filter criteria are met
         let filteredAbilities = []
         for(let i = 0; i < this.state.numAbilities; i++) {
-            if(filterArray[0][i]) {
+            if(filterArray[0][i] &&
+                filterArray[1][i]) {
                 filteredAbilities.push(i)
             }
         }
@@ -229,12 +236,10 @@ class Abilities extends React.Component {
                     sortedArr[k] = this.state.ability[i][j]
                 }
 
-                console.log(sortedArr)
                 sortedArr.sort((a, b) => {
                     return a.name > b.name ? 1 : -1
                 })
 
-                console.log(sortedArr)
                 for(let k = 0; k < sortedArr.length; k++) {
                     let i = Math.floor(k /this.state.pageSize);
                     let j = k%this.state.pageSize;

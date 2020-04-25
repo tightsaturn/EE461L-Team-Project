@@ -14,6 +14,7 @@ class AbilitiesSearchFilter extends React.Component {
         this.state = ({
             name: "",
             include: "",
+            gen: "",
             type: "None",
             sortBy: "None"
         })
@@ -28,7 +29,7 @@ class AbilitiesSearchFilter extends React.Component {
     filter() {
         this.props.onFilter(
             this.state.include,
-            this.state.type
+            this.state.gen
         )
     }
 
@@ -68,14 +69,14 @@ class AbilitiesSearchFilter extends React.Component {
                 <div className="row col-12 filterRow">
                     <label className="mr-sm-2" htmlFor="inlineFormCustomSelect">Includes</label>
                     <FormControl type="text" name="include" onChange={this.handleChange} placeholder="Search" className="mr-sm-2 mr-5"/>
-                    <label className="mr-sm-2" htmlFor="type1" style={whitespacable}>  Generation</label>
+                    <label className="mr-sm-2" htmlFor="gen" style={whitespacable}>  Generation</label>
                     <select className="custom-select mr-sm-2" onChange={this.handleChange} name="gen">
-                        <option selected>None</option>
-                        <option value="Bug">III</option>
-                        <option value="Dark">VI</option>
-                        <option value="Dragon">V</option>
-                        <option value="Electric">VI</option>
-                        <option value="Fairy">VII</option>
+                        <option selected value="">None</option>
+                        <option value="III">III</option>
+                        <option value="VI">VI</option>
+                        <option value="V">V</option>
+                        <option value="VI">VI</option>
+                        <option value="VII">VII</option>
                     </select>
                     <Button variant="outline-danger" onClick={this.reset} style={{marginLeft: "15px", marginRight: "10px"}}>Reset</Button>
                     <Button variant="outline-success" onClick={this.filter}>Filter</Button>
