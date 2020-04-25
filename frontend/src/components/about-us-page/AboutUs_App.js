@@ -181,8 +181,8 @@ class AboutUs_App extends React.Component {
                         Jimmy: {this.state.numCommits[2]} <br></br>
                         Mihir: {this.state.numCommits[3]} <br></br>
                         Total commits: {this.state.totalNumCommits} <br></br>
-                        Number of Closed Issues: {this.state.numIssues[0]} <br></br>
-                        Number of Open Issues: {this.state.numIssues[1]} <br></br>
+                        Number of Open Issues: {this.state.numIssues[0]} <br></br>
+                        Number of Closed Issues: {this.state.numIssues[1]} <br></br>
                         Total number of Issues: {this.state.totalNumIssues} <br></br>
                         Number of tests: 0 <br></br>
                     </div>
