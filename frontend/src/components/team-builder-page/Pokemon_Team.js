@@ -45,6 +45,8 @@ class Pokemon_Team extends React.Component {
             happiness: 255,
             shiny: "no",
             item: "none",
+            item_buffer: "",
+            available_items: [],
             itemInEditMode: false,
             ability: "none",
             ability_buffer: "",
@@ -115,6 +117,12 @@ class Pokemon_Team extends React.Component {
                 for (let i = 0; i < response.data.moves.length; i++) {
                     new_state[memberNum - 1].available_moves.push(response.data.moves[i].move.name);
                 }
+
+                new_state[memberNum - 1].available_items = [];
+
+                // for (let i = 0; i < response.data.items.length; i++) {
+                //     new_state[memberNum - 1].available_items.push(response.data.moves[i].item.name);
+                // }
 
                 new_state[memberNum - 1].gender = "Male";
 
@@ -243,6 +251,27 @@ class Pokemon_Team extends React.Component {
         event.preventDefault();
     }
 
+    changeItem(i, item) {
+        var new_state = this.state.pokemonCards.slice();
+        new_state[i].items_buffer = item;
+        this.setState({
+            pokemonCards: new_state
+        });
+        console.log(this.state.pokemonCards[i]);
+        //this.refs.nickname_overlay.hide();
+    }
+
+    submitItem(i, event) {
+        //let i = 1;
+        var new_state = this.state.pokemonCards.slice();
+        new_state[i].item = new_state[i].items_buffer;
+        this.setState({
+            pokemonCards: new_state
+        });
+        console.log(this.state.pokemonCards[i]);
+        event.preventDefault();
+    }
+
     render() {
         let pokemonCardArray = []
         let pokemonStatsArray = []
@@ -332,6 +361,20 @@ class Pokemon_Team extends React.Component {
                 </Popover>
             );
 
+            const item_popover = (
+                <Popover id = "moves_popover">
+                    <Popover.Title as = "h3">Change Item</Popover.Title>
+                    <Popover.Content>
+                        <form onSubmit = {(e) => {this.submitItem(i, e)}}>
+                            <select onChange = {(e) => this.changeItem(i, e.target.value)}>
+                                {this.state.pokemonCards[i].available_items.map((x, y) => <option key = {y}>{x}</option>)}
+                            </select>
+                            <input type = "submit" value = "Submit"/>
+                        </form>
+                    </Popover.Content>
+                </Popover>
+            );
+
             pokemonCardArray.push(
                 <div className = "col-lg-2 grid-margin" id = "card-col">
                     <Pokemon_Card
@@ -387,11 +430,13 @@ class Pokemon_Team extends React.Component {
                                             <br/>
                                             {/* <EditIcon/> */}
                                         </tr>
-                                        <tr>
+                                        {/* <tr>
                                             <td>Item:</td>
                                             <td>{this.state.pokemonCards[i].item}</td>
-                                            <EditIcon/>
-                                        </tr>
+                                            <OverlayTrigger trigger = "click" placement = "left" overlay = {item_popover} ref = "item_overlay">
+                                                <EditIcon/>
+                                            </OverlayTrigger>
+                                        </tr> */}
                                         <tr>
                                             <td>Ability:</td>
                                             <td>{this.state.pokemonCards[i].ability}</td>
