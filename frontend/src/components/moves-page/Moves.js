@@ -2,8 +2,10 @@ import React from 'react';
 import "../../css/page.css"
 import MovesSearchFilter from "./MovesSearchFilter";
 import MovesBox from "./MovesBox";
-import { fetchToState, search, filter, sort, reset } from "./MovesFxns"
+import { fetchToState, filter, sort } from "./MovesFxns"
 import DataFetcher from "../DataFetcher";
+import {search} from "../componentFunctions";
+import {reset} from "../componentFunctions";
 
 const Moves = () => {
     return (

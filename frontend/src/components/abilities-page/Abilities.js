@@ -2,8 +2,10 @@ import React from 'react';
 import "../../css/page.css"
 import AbilitiesSearchFilter from "./AbilitiesSearchFilter";
 import AbilitiesBox from "./AbilitiesBox";
-import { fetchToState, search, filter, sort, reset } from "./AbilitiesFxns"
+import { fetchToState, filter, sort } from "./AbilitiesFxns"
 import DataFetcher from "../DataFetcher";
+import {search} from "../componentFunctions";
+import {reset} from "../componentFunctions";
 
 const Abilities = () => {
     return (

@@ -1,41 +1,6 @@
 /* Holds all function for searching, filter, and sorting pokemon*/
 import {capitalize} from "../componentFunctions";
 
-export const search = (name, that) => {
-    if(that.state.numLoaded < that.state.numInstances) {
-        alert("Wait for all the pokemon to finish loading first!")
-        return
-    }
-
-    if(name === "") {
-        this.setState({
-            isFiltered: false,
-        })
-        return
-    }
-
-    let id = null
-    for(let i = 0; i < that.state.instances.length; i++) {
-        for (let j = 0; j < that.state.pageSize; j++) {
-            let pokeJSON = {...that.state.instances[i][j]}
-            if (pokeJSON.name === undefined) break
-            if(pokeJSON.name.toLowerCase() == name.toLowerCase()){
-                id = pokeJSON.id - 1
-                break
-            }
-        }
-    }
-
-    if(id == null) return
-
-    that.setState({
-        filteredInstances: [id],
-        isFiltered: true,
-        isSorted: false,
-        numDisplayed: 1
-    })
-}
-
 export const filter = (include, type1, type2, context) => {
     const that = context
     // check if all pokemon are finished loading (alert if not)
@@ -224,13 +189,6 @@ export const sort = (sortBy, that) => {
             console.log("error: should not be here")
             console.log("sorted by is: " + sortBy)
     }
-}
-
-export const reset = (that) => {
-    that.setState({
-        isFiltered: false,
-        isSorted: false
-    })
 }
 
 export const fetchToState = (data, id, that) => {

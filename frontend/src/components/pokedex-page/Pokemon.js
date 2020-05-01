@@ -4,9 +4,10 @@ import "../../App.css"
 import "../../css/page.css"
 import PokemonBox from "./PokemonBox";
 import PokemonSearchFilter from "./PokemonSearchFilter";
-import { fetchToState, search, filter, sort, reset } from "./PokemonFxns"
+import { fetchToState, filter, sort } from "./PokemonFxns"
 import DataFetcher from "../DataFetcher";
-
+import {search} from "../componentFunctions";
+import {reset} from "../componentFunctions";
 const Pokemon = () => {
     return (
         <DataFetcher

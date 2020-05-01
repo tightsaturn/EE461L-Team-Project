@@ -10,6 +10,48 @@ export function capitalizeG(generation) {
     return (firstLetter + generation.substring(1,11) + romanGeneration)
 }
 
+export const search = (name, that) => {
+    if(that.state.numLoaded < that.state.numInstances) {
+        alert("Wait for all the abilities to finish loading first!")
+        return
+    }
+
+    if(name === "") {
+        that.setState({
+            isFiltered: false,
+        })
+        return
+    }
+
+    let id = null
+    for(let i = 0; i < that.state.instances.length; i++) {
+        for (let j = 0; j < that.state.pageSize; j++) {
+            let instanceJSON = {...that.state.instances[i][j]}
+            if (instanceJSON.name === undefined) break
+            if(instanceJSON.name.toLowerCase() == name.toLowerCase()){
+                id = instanceJSON.id - 1
+                break
+            }
+        }
+    }
+
+    if(id == null) return
+
+    that.setState({
+        filteredInstances: [id],
+        isFiltered: true,
+        isSorted: false,
+        numDisplayed: 1
+    })
+}
+
+export const reset = (that) => {
+    that.setState({
+        isFiltered: false,
+        isSorted: false
+    })
+}
+
 export function colourNameToHex(colour)
 {
     var colours = {"aliceblue":"#f0f8ff","antiquewhite":"#faebd7","aqua":"#00ffff","aquamarine":"#7fffd4","azure":"#f0ffff",
