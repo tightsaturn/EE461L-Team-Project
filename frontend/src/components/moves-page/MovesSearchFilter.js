@@ -28,20 +28,21 @@ class MovesSearchFilter extends React.Component {
     filter() {
         this.props.onFilter(
             this.state.include,
-            this.state.type
+            this.state.type,
+            this.props.this
             )
     }
 
     search() {
-        this.props.onSearch(this.state.name)
+        this.props.onSearch(this.state.name, this.props.this)
     }
 
     sort() {
-        this.props.onSort(this.state.sortBy)
+        this.props.onSort(this.state.sortBy, this.props.this)
     }
 
     reset() {
-        this.props.onReset()
+        this.props.onReset(this.props.this)
     }
 
     handleChange(event) {

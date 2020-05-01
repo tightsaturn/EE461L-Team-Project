@@ -4,7 +4,7 @@ import {capitalizeG} from "../componentFunctions";
 
 export const search = (name, that) => {
     if(that.state.numLoaded < that.state.numInstances) {
-        alert("Wait for all the abilities to finish loading first!")
+        alert("Wait for all the moves to finish loading first!")
         return
     }
 
@@ -18,10 +18,10 @@ export const search = (name, that) => {
     let id = null
     for(let i = 0; i < that.state.instances.length; i++) {
         for (let j = 0; j < that.state.pageSize; j++) {
-            let abilityJSON = {...that.state.instances[i][j]}
-            if (abilityJSON.name === undefined) break
-            if(abilityJSON.name.toLowerCase() == name.toLowerCase()){
-                id = abilityJSON.id - 1
+            let moveJSON = {...that.state.instances[i][j]}
+            if (moveJSON.name === undefined) break
+            if(moveJSON.name.toLowerCase() == name.toLowerCase()){
+                id = moveJSON.id - 1
                 break
             }
         }
@@ -33,66 +33,66 @@ export const search = (name, that) => {
         filteredInstances: [id],
         isFiltered: true,
         isSorted: false,
-        numDisplayed: 1
+        numFiltered: 1
     })
 }
 
-export const filter = (include, gen, context) => {
+export const filter = (include, type, context) => {
     const that = context
     // check if all pokemon are finished loading (alert if not)
     if(that.state.numLoaded < that.state.numInstances) {
-        alert("Wait for all the abilities to finish loading first!" + that.state.numLoaded)
+        alert("Wait for all the moves to finish loading first!" + that.state.numLoaded)
         return
     }
 
     // check if all the fields are empty
-    if(include === "" && gen === "") {
+    if(include === "" && type === "None") {
         that.setState({
             isFiltered: false
         })
         return
     }
 
-    console.log("include " + include + " gen " + gen)
-
     // keep a subarray for each filter option and combine at the end
-    // a true entry means pokemon i fits the filter criteria (e.g. name or type1)
+    // a true entry means instances i fits the filter criteria (e.g. name or type1)
     let filterArray = [[], []]
     for(let i = 0; i < that.state.instances.length; i++) {
         for(let j = 0; j < that.state.pageSize; j++) {
             // get pokemon and find out if it matches filter criteria
-            let abilityJSON = {...that.state.instances[i][j]}
-            if (abilityJSON.name === undefined) break
+            let moveJSON = {...that.state.instances[i][j]}
+            if(moveJSON.name === undefined) break
 
             // check if substring include is in pokemon name
-            if (include !== "") {
-                if ((abilityJSON.name.toLowerCase()).indexOf(include.toLowerCase()) !== -1) {
+            if(include !== "") {
+                if((moveJSON.name.toLowerCase()).indexOf(include.toLowerCase()) !== -1) {
                     filterArray[0].push(true)
                 } else filterArray[0].push(false)
-            } else filterArray[0].push(true)
+            }
+            else filterArray[0].push(true)
 
-            if(gen !== "") {
-                if((abilityJSON.generation.substring(11) === gen)){
+            if(type !== "None") {
+                if(moveJSON.type.toLowerCase() == type.toLowerCase()) {
                     filterArray[1].push(true)
                 } else filterArray[1].push(false)
-            } else filterArray[1].push(true)
+            }
+            else filterArray[1].push(true)
         }
     }
 
     // only add pokemon to filtered list if all of the filter criteria are met
-    let filteredAbilities = []
+    let filteredMoves = []
     for(let i = 0; i < that.state.numInstances; i++) {
         if(filterArray[0][i] &&
-            filterArray[1][i]) {
-            filteredAbilities.push(i)
+            filterArray[1][i]){
+            filteredMoves.push(i)
         }
     }
 
     that.setState({
-        filteredInstances: filteredAbilities,
+        filteredInstances: filteredMoves,
         isFiltered: true,
         isSorted: false,
-        numFiltered: filteredAbilities.length,
+        numFiltered: filteredMoves.length,
     })
 }
 
@@ -124,10 +124,12 @@ export const sort = (sortBy, that) => {
                 sortedArr[k] = that.state.instances[i][j]
             }
 
+            console.log(sortedArr)
             sortedArr.sort((a, b) => {
                 return a.name > b.name ? 1 : -1
             })
 
+            console.log(sortedArr)
             for(let k = 0; k < sortedArr.length; k++) {
                 let i = Math.floor(k /that.state.pageSize);
                 let j = k%that.state.pageSize;
@@ -201,10 +203,10 @@ export const fetchToState = (data, id, that) => {
     that.setState(prevState => {
         let instanceArray = [...prevState.instances]
         instanceArray[pageNum][index] = {
-            generation: capitalizeG(data.generation[0].name),
-            description: data.effect[0].short_effect,
+            type: capitalize(data.type[0].name),
+            effect: data.effect[0].effect,
             name: capitalize(data.name),
-            id: data.id,
+            id: data.id
         }
 
         return {
