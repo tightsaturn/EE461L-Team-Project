@@ -14,7 +14,6 @@ import Types from "./components/types-page/Types"
 import TypeDisplay from "./components/types-page/TypesDisplay"
 
 // Team Builder Page Links
-import TeamList from "./components/team-builder-page/TeamListPage"
 import TeamPageMain from "./components/team-builder-page/Pokemon_Team"
 import AddPokemon from "./components/team-builder-page/AddPokemon"
 

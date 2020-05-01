@@ -2,19 +2,55 @@ import React from "react";
 import {Link} from "react-router-dom";
 import { Button } from 'react-bootstrap';
 import EditIcon from '@material-ui/icons/Edit';
-import CheckIcon from '@material-ui/icons/Check'
-import ClearIcon from '@material-ui/icons/Clear'
 import './css/Pokemon_Team.css';
 import BlankPokemon from './css/BlankPokemon.png';
 import axios from 'axios';
 import { Card } from 'react-bootstrap';
-import { Chip, Icon, Select } from '@material-ui/core' ;
-import { Avatar } from "@material-ui/core";
 import Table from 'react-bootstrap/Table'
 import Popover from 'react-bootstrap/Popover'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 
+// Acts as a template for the default team when either
+// the component is constructed for the first time or
+// the user decides to press "Reset Team" button
+const blankCard = {
+    image: BlankPokemon,
+    name: "Who's that Pokemon?",
+    nickname: "",
+    nickname_buffer: "",
+    level: 100,
+    gender: "male",
+    happiness: 255,
+    shiny: "no",
+    item: "none",
+    item_buffer: "",
+    available_items: [],
+    itemInEditMode: false,
+    ability: "none",
+    ability_buffer: "",
+    available_abilities: [],
+    moves: [],
+    moves_buffer: "",
+    available_moves: [],
+    HP: 0,
+    attack: 0,
+    defense: 0,
+    spAttack: 0,
+    spDefense: 0,
+    speed: 0,
+    type: "Unknown"
+}
 
+// ***************** Pokemon_Card() *********************
+// Provides a template for each of the cards at the top
+// of the team builder page that display basic info for
+// each team member.
+// input: object that contains the following
+//          * image: front-sprite of the pokemon
+//          * number: assigned number to pokemon (ranges from 1 to 6)
+//          * name: official name of the pokemon
+//          * type: string of all of the pokemon's types concatinated
+// output: card that is rendered to display with all data filled-in
 function Pokemon_Card(props) {
     return (
         <Card>
@@ -35,36 +71,10 @@ class Pokemon_Team extends React.Component {
         super(props);
 
         let pokemonTeam = []
-        const pokemonCard = {
-            image: BlankPokemon,
-            name: "Who's that Pokemon?",
-            nickname: "",
-            nickname_buffer: "",
-            level: 100,
-            gender: "male",
-            happiness: 255,
-            shiny: "no",
-            item: "none",
-            item_buffer: "",
-            available_items: [],
-            itemInEditMode: false,
-            ability: "none",
-            ability_buffer: "",
-            available_abilities: [],
-            moves: [],
-            moves_buffer: "",
-            available_moves: [],
-            HP: 0,
-            attack: 0,
-            defense: 0,
-            spAttack: 0,
-            spDefense: 0,
-            speed: 0,
-            type: "Unknown"
-        }
 
+        // Construct initial team full of default (i.e. blank) team members
         for(let i = 0; i < 6; i++) {
-            pokemonTeam.push(pokemonCard)
+            pokemonTeam.push(blankCard)
         }
 
         this.state = {
@@ -81,202 +91,242 @@ class Pokemon_Team extends React.Component {
         this.submitMove = this.submitMove.bind(this);
     }
 
+    // ***************** saveState() *********************
+    // Saves the current state of this component to the
+    // user's local storage in their web browser.
     saveState() {
         localStorage.setItem('teamBuilderState_v2', JSON.stringify(this.state));
     }
 
+    // ***************** UNSAFE_componentWillMount() *********************
+    // Called anytime the page is going to be mounted (displayed). Checks
+    // if the user has ever used team builder before by checking for saved
+    // data of previous teams in local storage. If so, set the component
+    // state to reflect this data.
     UNSAFE_componentWillMount() {
         const savedState = JSON.parse(localStorage.getItem('teamBuilderState_v2'));
         this.setState(savedState)
     }
 
+    // ***************** componentDidMount() *********************
+    // Called anytime the page has been mounted. Checks URL to see
+    // if any action needs to be taken.
     componentDidMount() {
-        // Check URL to see if an action needs to be done
-        // console.log(window.location.pathname);
-        let path = window.location.pathname.split('/')
-        // console.log(path);
+        let path = window.location.pathname.split('/');
 
-        if (path.length == 5 && path[2].localeCompare("change") == 0) {             // If '/teambuilder/change/:memberNum/:pokemonId', update the team member with the new pokemon
+        // Condition 1: .../change/<member_num>/<pokemon_id>
+        //      Path contains the command for changing a team member
+        //      to a certain pokemon.
+        //      URL input:
+        //          member_num: team member number that will be changed (range: 1 to 6)
+        //          pokemon_id: pokeapi id corresponding to pokemon that member_num will be changed to
+        if (path.length == 5 && path[2].localeCompare("change") == 0) {
             let memberNum = Number(path[3]);
             let pokemonId = Number(path[4]);
 
-            console.log("memberNum: " + memberNum);
-            console.log("pokemonId: " + pokemonId);
+            this.changeTeamMember(pokemonId, memberNum);
+        }
 
-            // fetch the pokemon
-            axios.get('https://pokeapi.co/api/v2/pokemon/' + pokemonId)
+        // Condition 2: .../resetTeam
+        //      Path contains the command for reseting the team back to the
+        //      default pokemon (i.e. blank team)
+        else if (path.length == 3 && path[2].localeCompare("resetTeam") == 0) {
+            this.resetTeam();
+        }
+    }
+
+    // ***************** resetTeam() *********************
+    // Resets the pokemon team back to the default team 
+    // (i.e. blank)
+    resetTeam() {
+        localStorage.clear();
+        let new_state = this.state.pokemonCards.slice();
+
+        for (let i = 0; i < 6; i++) {
+            new_state[i] = blankCard;
+        }
+
+        this.setState({ pokemonCards: new_state });
+    }
+
+    // ***************** changeTeamMember() *********************
+    // Replaces a specified team member with a different pokemon
+    // input:
+    //      pokemonId: pokeapi id of incoming pokemon being added
+    //      memberNum: team member number of pokemon to replace
+    changeTeamMember(pokemonId, memberNum) {
+        axios.get('https://pokeapi.co/api/v2/pokemon/' + pokemonId)
             .then(response => {
-                console.log(response.data)
                 let new_state = this.state.pokemonCards.slice();
                 var type = "";
                 new_state[memberNum - 1].image = response.data.sprites.front_default;
                 new_state[memberNum - 1].name = this.capitalize(response.data.name);
                 new_state[memberNum - 1].available_abilities = [];
-
                 for (let i = 0; i < response.data.abilities.length; i++) {
                     new_state[memberNum - 1].available_abilities.push(response.data.abilities[i].ability.name);
                 }
-
                 new_state[memberNum - 1].available_moves = [];
-
                 for (let i = 0; i < response.data.moves.length; i++) {
                     new_state[memberNum - 1].available_moves.push(response.data.moves[i].move.name);
                 }
-
                 new_state[memberNum - 1].available_items = [];
-
-                // for (let i = 0; i < response.data.items.length; i++) {
-                //     new_state[memberNum - 1].available_items.push(response.data.moves[i].item.name);
-                // }
-
                 new_state[memberNum - 1].gender = "Male";
-
                 for (let i = 0; i < response.data.types.length; i++) {
                     type += response.data.types[i].type.name + "\n";
                 }
-
                 new_state[memberNum - 1].type = type;
-                this.setState({ pokemonCards: new_state})
-
+                this.setState({ pokemonCards: new_state });
             })
             .catch((error) => {
                 console.log(error);
-            })
-        }
-        else if (path.length == 3 && path[2].localeCompare("resetTeam") == 0) {
-            console.log("Resetting pokemon team");
-            let new_state = this.state.pokemonCards.slice();
-            for (let i = 0; i < 6; i++) {
-                new_state[i].image = BlankPokemon;
-                new_state[i].name = "Who's that Pokemon?";
-                new_state[i].nickname = "";
-                new_state[i].level = 100;
-                new_state[i].gender = "male";
-                new_state[i].happiness = 0;
-                new_state[i].shiny = "no";
-                new_state[i].item = "none";
-                new_state[i].ability = "none";
-                new_state[i].available_abilities = [];
-                new_state[i].moves = [];
-                new_state[i].HP = 0;
-                new_state[i].attack = 0;
-                new_state[i].defense = 0;
-                new_state[i].spAttack = 0;
-                new_state[i].spDefense = 0;
-                new_state[i].speed = 0;
-                new_state[i].type = "Unknown";
-            }
-            this.setState({ pokemonCards: new_state })
-        }
+            });
     }
 
+    // ***************** componentWillUnmount() *********************
+    // Called anytime the page will no longer be displayed. Saves the
+    // state of the team.
     componentWillUnmount() {
         this.saveState();
     }
 
-    resetTeam() {
-        localStorage.clear();
-        console.log("Resetting pokemon team");
-        let new_state = this.state.pokemonCards.slice();
-        for (let i = 0; i < 6; i++) {
-            new_state[i].image = BlankPokemon;
-            new_state[i].name = "Who's that Pokemon?";
-            new_state[i].type = "Unknown";
-            new_state[i].available_abilities = [];
-            new_state[i].available_moves = [];
-        }
-        this.setState({ pokemonCards: new_state }) 
-    }
-
+    // ***************** capitalize() *********************
+    // Capitalizes the first letter of the input string
+    // input:
+    //      name: string to capitalize first character
+    // output: name with first character capitalized
     capitalize(name) {
         let firstLetter = name.charAt(0).toUpperCase();
         return (firstLetter + name.substring(1));
     }
 
-    changeNickname(i, nickname) {
+    // ***************** changeNickname() *********************
+    // Called everytime a user updates the value of the textbox
+    // field of the nickname pop-up. Updates a buffer with user input.
+    // input:
+    //      memberNum: team member number of pokemon to change nickname
+    //      nickname: new nickname to assign to pokemon
+    changeNickname(memberNum, nickname) {
         var new_state = this.state.pokemonCards.slice();
-        new_state[i].nickname_buffer = nickname;
+        new_state[memberNum].nickname_buffer = nickname;
         this.setState({
             pokemonCards: new_state
         });
-        console.log(this.state.pokemonCards[i]);
-        //this.refs.nickname_overlay.hide();
     }
 
-    submitNickname(i, event) {
-        //let i = 1;
+    // ***************** submitNickname() *********************
+    // Called when a user clicks save on the nickname pop-up.
+    // Actually changes the pokemon's nickname to the buffer
+    // value.
+    // input:
+    //      memberNum: team member numer of pokemon to change nickname
+    //      event: button press event 
+    submitNickname(memberNum, event) {
         var new_state = this.state.pokemonCards.slice();
-        new_state[i].nickname = new_state[i].nickname_buffer;
+        new_state[memberNum].nickname = new_state[memberNum].nickname_buffer;
         this.setState({
             pokemonCards: new_state
         });
-        console.log(this.state.pokemonCards[i]);
+
         event.preventDefault();
     }
 
-    changeAbility(i, ability) {
+    // ***************** changeAbility() *********************
+    // Called everytime a user updates the value of the dropdown
+    // field of the ability pop-up. Updates a buffer with user input.
+    // input:
+    //      memberNum: team member number of pokemon to change ability
+    //      ability: new ability to assign to pokemon
+    changeAbility(memberNum, ability) {
         var new_state = this.state.pokemonCards.slice();
-        new_state[i].ability_buffer = ability;
+        new_state[memberNum].ability_buffer = ability;
         this.setState({
             pokemonCards: new_state
         });
-        console.log(this.state.pokemonCards[i]);
-        //this.refs.nickname_overlay.hide();
     }
 
-    submitAbility(i,event) {
-        //let i = 1;
+    // ***************** submitAbility() *********************
+    // Called when a user clicks save on the ability pop-up.
+    // Actually changes the pokemon's ability to the buffer
+    // value.
+    // input:
+    //      memberNum: team member numer of pokemon to change ability
+    //      event: button press event 
+    submitAbility(memberNum,event) {
         var new_state = this.state.pokemonCards.slice();
-        new_state[i].ability = new_state[i].ability_buffer;
+        new_state[memberNum].ability = new_state[memberNum].ability_buffer;
         this.setState({
             pokemonCards: new_state
         });
-        console.log(this.state.pokemonCards[i]);
+
         event.preventDefault();
     }
 
-    changeMove(i, move) {
+    // ***************** changeMove() *********************
+    // Called everytime a user updates the value of the dropdown
+    // field of the move pop-up. Updates a buffer with user input.
+    // input:
+    //      memberNum: team member number of pokemon to change move
+    //      move: new move to assign to pokemon
+    changeMove(memberNum, move) {
         var new_state = this.state.pokemonCards.slice();
-        new_state[i].moves_buffer = move;
+        new_state[memberNum].moves_buffer = move;
         this.setState({
             pokemonCards: new_state
         });
-        console.log(this.state.pokemonCards[i]);
-        //this.refs.nickname_overlay.hide();
     }
 
-    submitMove(i,move_index, event) {
-        //let i = 1;
+    // ***************** submitMove() *********************
+    // Called when a user clicks save on the move pop-up.
+    // Actually changes the pokemon's move to the buffer
+    // value.
+    // input:
+    //      memberNum: team member numer of pokemon to change move
+    //      move_index: dictates which of the four moves a pokemon can perform gets changed
+    //      event: button press event 
+    submitMove(memberNum,move_index, event) {
         var new_state = this.state.pokemonCards.slice();
-        new_state[i].moves[move_index] = new_state[i].moves_buffer;
+        new_state[memberNum].moves[move_index] = new_state[memberNum].moves_buffer;
         this.setState({
             pokemonCards: new_state
         });
-        console.log(this.state.pokemonCards[i]);
+
         event.preventDefault();
     }
 
-    changeItem(i, item) {
+     // ***************** changeItem() *********************
+    // Called everytime a user updates the value of the dropdown
+    // field of the item pop-up. Updates a buffer with user input.
+    // input:
+    //      memberNum: team member number of pokemon to change item
+    //      item: new item to assign to pokemon
+    changeItem(memberNum, item) {
         var new_state = this.state.pokemonCards.slice();
-        new_state[i].items_buffer = item;
+        new_state[memberNum].items_buffer = item;
         this.setState({
             pokemonCards: new_state
         });
-        console.log(this.state.pokemonCards[i]);
-        //this.refs.nickname_overlay.hide();
     }
 
-    submitItem(i, event) {
-        //let i = 1;
+    // ***************** submitItem() *********************
+    // Called when a user clicks save on the item pop-up.
+    // Actually changes the pokemon's item to the buffer
+    // value.
+    // input:
+    //      memberNum: team member numer of pokemon to change item
+    //      event: button press event
+    submitItem(memberNum, event) {
         var new_state = this.state.pokemonCards.slice();
-        new_state[i].item = new_state[i].items_buffer;
+        new_state[memberNum].item = new_state[memberNum].items_buffer;
         this.setState({
             pokemonCards: new_state
         });
-        console.log(this.state.pokemonCards[i]);
+
         event.preventDefault();
     }
 
+    // ***************** render() *********************
+    // Called each time team builder page is going to be
+    // rendered.
     render() {
         let pokemonCardArray = []
         let pokemonStatsArray = []
@@ -366,20 +416,6 @@ class Pokemon_Team extends React.Component {
                 </Popover>
             );
 
-            const item_popover = (
-                <Popover id = "moves_popover">
-                    <Popover.Title as = "h3">Change Item</Popover.Title>
-                    <Popover.Content>
-                        <form onSubmit = {(e) => {this.submitItem(i, e)}}>
-                            <select onChange = {(e) => this.changeItem(i, e.target.value)}>
-                                {this.state.pokemonCards[i].available_items.map((x, y) => <option key = {y}>{x}</option>)}
-                            </select>
-                            <input type = "submit" value = "Submit"/>
-                        </form>
-                    </Popover.Content>
-                </Popover>
-            );
-
             pokemonCardArray.push(
                 <div className = "col-lg-2 grid-margin" id = "card-col">
                     <Pokemon_Card
@@ -427,21 +463,12 @@ class Pokemon_Team extends React.Component {
                                             <td>Gender:</td>
                                             <td>{this.state.pokemonCards[i].gender}</td>
                                             <br/>
-                                            {/* <EditIcon/> */}
                                         </tr>
                                         <tr>
                                             <td>Level:</td>
                                             <td>{this.state.pokemonCards[i].level}</td>
                                             <br/>
-                                            {/* <EditIcon/> */}
                                         </tr>
-                                        {/* <tr>
-                                            <td>Item:</td>
-                                            <td>{this.state.pokemonCards[i].item}</td>
-                                            <OverlayTrigger trigger = "click" placement = "left" overlay = {item_popover} ref = "item_overlay">
-                                                <EditIcon/>
-                                            </OverlayTrigger>
-                                        </tr> */}
                                         <tr>
                                             <td>Ability:</td>
                                             <td>{this.state.pokemonCards[i].ability}</td>
