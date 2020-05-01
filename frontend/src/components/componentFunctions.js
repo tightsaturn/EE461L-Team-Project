@@ -4,6 +4,12 @@ export function capitalize(name) {
     return (firstLetter + name.substring(1))
 }
 
+export function capitalizeG(generation) {
+    let firstLetter = generation.charAt(0).toUpperCase()
+    let romanGeneration = generation.substring(11).toUpperCase()
+    return (firstLetter + generation.substring(1,11) + romanGeneration)
+}
+
 export function colourNameToHex(colour)
 {
     var colours = {"aliceblue":"#f0f8ff","antiquewhite":"#faebd7","aqua":"#00ffff","aquamarine":"#7fffd4","azure":"#f0ffff",
