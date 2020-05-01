@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Homepage from "./components/home-page/Homepage"
 import Pokemon from './components/pokedex-page/Pokemon';
 import PokemonInfo from "./components/pokedex-page/PokemonInfo";
-import PokemonLocation from "./components/pokedex-page/PokemonLocation";
 import Abilities from './components/abilities-page/Abilities';
 import AbilitiesInfo from "./components/abilities-page/AbilitiesInfo"
 import Moves from './components/moves-page/Moves';
@@ -13,6 +12,8 @@ import ItemsInfo from "./components/items-page/ItemsInfo"
 import Types from "./components/types-page/Types"
 import TypeDisplay from "./components/types-page/TypesDisplay"
 
+import DataFetcher from "./components/DataFetcher"
+
 // Team Builder Page Links
 import TeamList from "./components/team-builder-page/TeamListPage"
 import TeamPageMain from "./components/team-builder-page/Pokemon_Team"
@@ -20,12 +21,12 @@ import AddPokemon from "./components/team-builder-page/AddPokemon"
 
 // About Us Page Links
 import AboutUs from "./components/about-us-page/AboutUs_App"
-
 import Thankyou from "./components/feedback-page/Thankyou";
 import Feedback from "./components/feedback-page/Feedback"
 import Error from './components/Error';
 import Header from './components/Header';
 import Background from "./components/Background"
+import {Home} from "@material-ui/icons";
 
 
 class App extends Component {
@@ -43,7 +44,6 @@ class App extends Component {
                     <Route exact path="/items/:item" component={ItemsInfo}/>
                     <Route exact path="/pokemon" component={Pokemon}/>
                     <Route exact path="/pokemon/:id" component={PokemonInfo}/>
-                    <Route exact path="/pokemon/:id/location" component={PokemonLocation}/>
                     <Route exact path="/types" component={Types}/>
                     <Route exact path="/types/:type" component={TypeDisplay}/>
                     <Route exact path="/feedback" component={Feedback}/>

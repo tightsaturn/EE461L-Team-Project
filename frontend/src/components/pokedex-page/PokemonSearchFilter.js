@@ -18,35 +18,30 @@ class PokemonSearchFilter extends React.Component {
             type2: "None",
             sortBy: "Ascending id"
         })
-
-        this.search = this.search.bind(this)
-        this.filter = this.filter.bind(this)
-        this.sort = this.sort.bind(this)
-        this.reset = this.reset.bind(this)
-        this.handleChange = this.handleChange.bind(this)
     }
 
-    filter() {
+    filter = () => {
         this.props.onFilter(
             this.state.include,
             this.state.type1,
-            this.state.type2
+            this.state.type2,
+            this.props.this
         )
     }
 
-    search() {
-        this.props.onSearch(this.state.name)
+    search = () => {
+        this.props.onSearch(this.state.name, this.props.this)
     }
 
-    sort() {
-        this.props.onSort(this.state.sortBy)
+    sort = () => {
+        this.props.onSort(this.state.sortBy, this.props.this)
     }
 
-    reset() {
-        this.props.onReset()
+    reset = () => {
+        this.props.onReset(this.props.this)
     }
 
-    handleChange(event) {
+    handleChange = (event) => {
         const {name, value} = event.target
         this.setState({
             [name]: value

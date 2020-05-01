@@ -1,5 +1,3 @@
-
-
 export function capitalize(name) {
     name = String(name)
     let firstLetter = name.charAt(0).toUpperCase()
