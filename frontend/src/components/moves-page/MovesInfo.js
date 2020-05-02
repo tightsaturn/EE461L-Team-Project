@@ -3,7 +3,6 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import "../../css/page.css"
 import {Link} from "react-router-dom";
 
-
 class MovesInfo extends React.Component {
     constructor(){
         super();

@@ -1,7 +1,6 @@
 import React from 'react'
 import "../splash-page/Background.css"
 import Developer_Card from "./Developer_Card";
-import Background from "../splash-page/Background"
 import tristan from "./css/tristan.jpeg"
 import jaime from "./css/jaime.jpg"
 import jimmy from "./css/jimmy.jpg"

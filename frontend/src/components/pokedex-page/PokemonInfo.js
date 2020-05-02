@@ -7,7 +7,6 @@ import "../../css/info.css"
 import { capitalize, colourNameToHex } from "../componentFunctions";
 import {lighten} from "@material-ui/core";
 
-
 class PokemonInfo extends React.Component {
     constructor(){
         super();

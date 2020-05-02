@@ -1,7 +1,4 @@
 import React from "react"
-import pikachu from "../../images/pikachu.png"
-import bulbasaur from "../../images/bulbasaur.png"
-
 
 const pokemon = {
     position: "absolute",
