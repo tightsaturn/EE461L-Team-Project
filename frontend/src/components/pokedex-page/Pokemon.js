@@ -6,8 +6,8 @@ import PokemonBox from "./PokemonBox";
 import PokemonSearchFilter from "./PokemonSearchFilter";
 import { fetchToState, filter, sort } from "./PokemonFxns"
 import DataFetcher from "../DataFetcher";
-import {search} from "../componentFunctions";
-import {reset} from "../componentFunctions";
+import { search, reset } from "../componentFunctions";
+
 const Pokemon = () => {
     return (
         <DataFetcher

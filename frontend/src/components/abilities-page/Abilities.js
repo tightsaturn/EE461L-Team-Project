@@ -12,7 +12,7 @@ const Abilities = () => {
         <DataFetcher
             url={"https://pokebackend-461l.appspot.com/abilitycards/"}
             numInstances={232}
-            pageSize={48}
+            pageSize={32}
 
             render={(data) => (
                 <div className="container-fluid" id="mainContent">
