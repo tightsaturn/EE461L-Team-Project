@@ -22,9 +22,9 @@ import AddPokemon from "./components/team-builder-page/AddPokemon"
 import AboutUs from "./components/about-us-page/AboutUs_App"
 import Thankyou from "./components/feedback-page/Thankyou";
 import Feedback from "./components/feedback-page/Feedback"
-import Error from './components/Error';
-import Header from './components/Header';
-import Background from "./components/Background"
+import Error from './components/splash-page/Error';
+import Header from './components/splash-page/Header';
+import Background from "./components/splash-page/Background"
 import {Home} from "@material-ui/icons";
 
 
