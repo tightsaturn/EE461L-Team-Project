@@ -3,7 +3,6 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import "../App.css"
 import logo from "../images/logo.jpg"
 import { Link } from 'react-router-dom';
-import GoogleLogin from "react-google-login";
 
 const navBar = {
     position: "fixed",
@@ -25,15 +24,6 @@ const modelLink = {
     fontFamily: "Chilanka"
 };
 
-const modelLogin = {
-    marginBottom: "10px",
-    border: "none",
-    color: "white",
-    textAlign: "center",
-    fontFamily: "Chilanka",
-    backgroundColor: "black"
-};
-
 const logoBlock = {
     display: "block",
     maxHeight: "12vh",
@@ -42,15 +32,6 @@ const logoBlock = {
     width: "auto",
     paddingBottom: "20px"
 };
-
-const logIn = {
-    marginBottom: "10px",
-    fontFamily: "Calibri"
-};
-
-const responseGoogle = (response) => {
-    console.log(response)
-}
 
 const Header = () => {
     return (
@@ -67,16 +48,6 @@ const Header = () => {
                 "der"}> <a className="navbar-brand" style={modelLink}>Team Builder</a> </Link>
                 <Link to={"/aboutus"}> <a className="navbar-brand" style={modelLink}>About Us</a> </Link>
                 <Link to={"/feedback"}> <a className="navbar-brand" style={modelLink}>Feedback</a> </Link>
-                <GoogleLogin
-                    clientId="415407691181-n8n6knf6tbhc1gsm0rd2cuk2lmgv84nt.apps.googleusercontent.com"
-                    render={renderProps => (
-                        <button onClick={renderProps.onClick} className="navbar-brand" style={modelLogin} disabled={renderProps.disabled}>Signin</button>
-                    )}
-                    buttonText="Login"
-                    onSuccess={responseGoogle}
-                    onFailure={responseGoogle}
-                    cookiePolicy={'single_host_origin'}
-                />
             </div>
         </div>
     )
