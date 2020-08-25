@@ -10,7 +10,7 @@ import {reset} from "../componentFunctions";
 const Moves = () => {
     return (
         <DataFetcher
-            url={"https://pokebackend-461l.appspot.com/movecards/"}
+            url={"https://togeapi.uc.r.appspot.com/movecards/"}
             numInstances={728}
             pageSize={48}
 

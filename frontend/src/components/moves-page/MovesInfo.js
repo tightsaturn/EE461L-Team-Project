@@ -26,7 +26,7 @@ class MovesInfo extends React.Component {
 
     componentDidMount() {
         let moveName = this.props.match.params.move
-        let url = 'https://pokebackend-461l.appspot.com/moves/name/' + moveName.toLowerCase();
+        let url = 'https://togeapi.uc.r.appspot.com/moves/name/' + moveName.toLowerCase();
 
         fetch(url)
             .then((response) => {
@@ -49,7 +49,7 @@ class MovesInfo extends React.Component {
                 console.log(err)
             });
 
-        let url2 = 'https://pokebackend-461l.appspot.com/moves2/' + moveName.toLowerCase()
+        let url2 = 'https://togeapi.uc.r.appspot.com/moves2/' + moveName.toLowerCase()
         fetch(url2)
             .then((response) => {
                 return response.json();
@@ -67,7 +67,7 @@ class MovesInfo extends React.Component {
 
                 // get abilities for all pokemon
                 for(let i = 0; i < data.pokemon.length; i++) {
-                    let url3 = 'https://pokebackend-461l.appspot.com/pokemon/' + data.pokeID[i]
+                    let url3 = 'https://togeapi.uc.r.appspot.com/pokemon/' + data.pokeID[i]
                     fetch(url3)
                         .then(response => { return response.json() })
                         .then(data => {

@@ -10,7 +10,7 @@ import {reset} from "../componentFunctions";
 const Abilities = () => {
     return (
         <DataFetcher
-            url={"https://pokebackend-461l.appspot.com/abilitycards/"}
+            url={"https://togeapi.uc.r.appspot.com/abilitycards/"}
             numInstances={232}
             pageSize={32}
 

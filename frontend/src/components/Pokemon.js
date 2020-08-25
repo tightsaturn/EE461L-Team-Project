@@ -41,7 +41,7 @@ class Pokemon extends React.Component {
     }
 
     fetchOnePokemon = async (id) => {
-        let url = 'https://pokebackend-461l.appspot.com/pokemoncards/' + id;
+        let url = 'https://togeapi.uc.r.appspot.com/pokemoncards/' + id;
         await fetch(url)
             .then((response) => {
                 return response.json();
@@ -73,7 +73,7 @@ class Pokemon extends React.Component {
     fetchPokemon(){
         // fetch each pokemon and add to state
         for(let id = 1; id <= this.state.numPokemon; id++){
-            let url = 'https://pokebackend-461l.appspot.com/pokemoncards/' + id;
+            let url = 'https://togeapi.uc.r.appspot.com/pokemoncards/' + id;
             fetch(url)
                 .then((response) => {
                     if(response.ok){ return response.json(); }

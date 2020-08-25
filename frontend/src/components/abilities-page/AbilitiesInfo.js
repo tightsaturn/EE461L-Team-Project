@@ -21,7 +21,7 @@ class AbilitiesInfo extends React.Component {
 
     componentDidMount() {
         let id = this.props.match.params.ability
-        let url = 'https://pokebackend-461l.appspot.com/abilities/' + id;
+        let url = 'https://togeapi.uc.r.appspot.com/abilities/' + id;
 
         fetch(url)
             .then((response) => {
@@ -46,7 +46,7 @@ class AbilitiesInfo extends React.Component {
                 for(let i = 0; i < data.pokemon.length; i++) {
                     let id = data.pokemon[i].pokemon.url.substring(34)
 
-                    let url2 = 'https://pokebackend-461l.appspot.com/pokemon/' + id
+                    let url2 = 'https://togeapi.uc.r.appspot.com/pokemon/' + id
                     fetch(url2)
                         .then(response => { return response.json() })
                         .then(data => {

@@ -20,7 +20,7 @@ class ItemsInfo extends React.Component {
 
     componentDidMount() {
         let id = this.props.match.params.item
-        let url = 'https://pokebackend-461l.appspot.com/items/' + id;
+        let url = 'https://togeapi.uc.r.appspot.com/items/' + id;
 
         fetch(url)
             .then((response) => {

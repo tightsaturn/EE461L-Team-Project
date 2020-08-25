@@ -33,7 +33,7 @@ class Items extends React.Component{
     fetchItem(){
         // fetch from mongodb
         for(let id = 1; id < 954; id++){
-            let url = 'https://pokebackend-461l.appspot.com/itemcards/' + id;
+            let url = 'https://togeapi.uc.r.appspot.com/itemcards/' + id;
             fetch(url)
                 .then((response) => {
                     if(response.ok){

@@ -25,7 +25,7 @@ class PokemonInfo extends React.Component {
         let id = this.props.match.params.id
         let context = this.context
 
-        fetch('https://pokebackend-461l.appspot.com/pokemon/' + id)
+        fetch('https://togeapi.uc.r.appspot.com/pokemon/' + id)
             .then(response => { return response.json() })
             .then(data => {
                 let typesArray = []

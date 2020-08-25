@@ -65,7 +65,7 @@ class AddPokemon extends React.Component {
         for (let id = 1; id < 808; id++) {
             // fetch each pokemon and add to state
             let url = 'https://pokeapi.co/api/v2/pokemon/' + id;
-            //let url = 'https://pokebackend-461l.appspot.com/pokemon/' + id;
+            //let url = 'https://togeapi.uc.r.appspot.com/pokemon/' + id;
             fetch(url)
                 .then((response) => {
                     return response.json();
