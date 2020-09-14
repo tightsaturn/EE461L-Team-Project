@@ -1,6 +1,5 @@
 import React from "react"
 import {Link} from "react-router-dom";
-import normal from "../../images/Types/Normal.png";
 
 const TypeBox = (props) => {
     return (

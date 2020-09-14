@@ -210,7 +210,7 @@ export const fetchToState = (data, id, that) => {
     that.setState(prevState => {
         let instanceArray = [...prevState.instances]
         instanceArray[pageNum][index] = {
-            imgURL: data.frontSprite,
+            imgURL: data.sprites.front_default,
             id: id,
             name: capitalize(data.name),
             types: data.types

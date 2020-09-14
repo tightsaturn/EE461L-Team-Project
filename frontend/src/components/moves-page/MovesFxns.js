@@ -160,8 +160,8 @@ export const fetchToState = (data, id, that) => {
     that.setState(prevState => {
         let instanceArray = [...prevState.instances]
         instanceArray[pageNum][index] = {
-            type: capitalize(data.type[0].name),
-            effect: data.effect[0].effect,
+            type: capitalize(data.type.name),
+            effect: data.effect_entries[0].effect,
             name: capitalize(data.name),
             id: data.id
         }

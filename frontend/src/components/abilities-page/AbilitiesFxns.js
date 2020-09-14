@@ -157,11 +157,13 @@ export const fetchToState = (data, id, that) => {
         return { buttons: buttonArray }
     })
 
+    console.log(data)
+
     that.setState(prevState => {
         let instanceArray = [...prevState.instances]
         instanceArray[pageNum][index] = {
-            generation: capitalizeG(data.generation[0].name),
-            description: data.effect[0].short_effect,
+            generation: capitalizeG(data.generation.name),
+            description: data.effect_entries[0].short_effect,
             name: capitalize(data.name),
             id: data.id,
         }

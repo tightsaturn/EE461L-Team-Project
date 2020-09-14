@@ -54,7 +54,6 @@ class DataFetcher extends Component {
                     return this.props.instanceBox(instance)
             })
         } else if (this.state.isSorted) {
-            console.log("sorting")
             return this.state.sortedInstances[this.state.currentPage].map(item => {
                 return this.props.instanceBox(item)
             })

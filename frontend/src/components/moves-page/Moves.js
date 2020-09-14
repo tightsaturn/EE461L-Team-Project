@@ -10,7 +10,7 @@ import {reset} from "../componentFunctions";
 const Moves = () => {
     return (
         <DataFetcher
-            url={"https://togeapi.uc.r.appspot.com/movecards/"}
+            url={"https://pokeapi.co/api/v2/move/"}
             numInstances={728}
             pageSize={48}
 

@@ -33,7 +33,7 @@ class Items extends React.Component{
     fetchItem(){
         // fetch from mongodb
         for(let id = 1; id < 954; id++){
-            let url = 'https://togeapi.uc.r.appspot.com/itemcards/' + id;
+            let url = 'https://pokeapi.co/api/v2/item/' + id;
             fetch(url)
                 .then((response) => {
                     if(response.ok){
@@ -66,8 +66,8 @@ class Items extends React.Component{
                             let itemArray = [...prevState.item]
                             itemArray[pageNum][index] =
                                 <ItemsBox
-                                    picture={data.sprite}
-                                    effect={data.effect[0].effect}
+                                    picture={data.sprites.default}
+                                    effect={data.effect_entries[0].effect}
                                     name={this.capitalize(data.name)}
                                     id={data.id}
                                 />;

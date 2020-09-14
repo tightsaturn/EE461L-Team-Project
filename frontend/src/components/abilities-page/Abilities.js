@@ -10,7 +10,7 @@ import {reset} from "../componentFunctions";
 const Abilities = () => {
     return (
         <DataFetcher
-            url={"https://togeapi.uc.r.appspot.com/abilitycards/"}
+            url={"https://pokeapi.co/api/v2/ability/"}
             numInstances={232}
             pageSize={32}
 

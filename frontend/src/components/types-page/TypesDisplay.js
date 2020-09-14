@@ -19,7 +19,7 @@ class TypesDisplay extends React.Component {
 
     componentDidMount() {
         let id = this.props.match.params.type
-        let url = 'https://togeapi.uc.r.appspot.com/types/' + id;
+        let url = 'https://pokeapi.co/api/v2/type/' + id;
 
         fetch(url)
             .then((response) => {

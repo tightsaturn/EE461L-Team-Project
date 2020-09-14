@@ -11,7 +11,7 @@ import { search, reset } from "../componentFunctions";
 const Pokemon = () => {
     return (
         <DataFetcher
-            url={"https://togeapi.uc.r.appspot.com/pokemoncards/"}
+            url={"https://pokeapi.co/api/v2/pokemon/"}
             numInstances={807}
             pageSize={40}
 
